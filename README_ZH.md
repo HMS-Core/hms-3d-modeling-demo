@@ -8,7 +8,7 @@
 
 本项目包含基于华为3D建模服务(3D Modeling Kit)开发的APP。工程目录如下：
 
-|-- 3DModelingKit-Sample // 3D Modeling Kit 示例代码
+|-- 3DModeling-Sample // 3D Modeling Kit 示例代码
 
 ## 注意事项
 

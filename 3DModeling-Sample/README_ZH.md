@@ -1,7 +1,7 @@
-# 3DModelingKit-Sample
+# 3DModeling-Sample
 [![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-introduction-4)
 
-中文 | [English](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/README.md)
+中文 | [English](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/README.md)
 ## 目录
 
  * [介绍](#介绍)
@@ -19,9 +19,9 @@
 其中包括：上传采集图片、查询建模进度、下载模型。
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelCapture.png" width=300 title="capture page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelUpload.png" width=300 title="upload page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelDownload.png" width=300 title="download page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCapture.png" width=300 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelUpload.png" width=300 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelDownload.png" width=300 title="download page" border=2></td>
 </tr></table>
 
 
@@ -29,9 +29,9 @@
 其中包括：上传采集图片，查询材质生成进度、下载材质。
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialCapture.png" width=320 title="capture page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialUpload.png" width=320 title="upload page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialDownload.png" width=320 title="download page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialCapture.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialUpload.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialDownload.png" width=320 title="download page" border=2></td>
 </tr></table>
 
 

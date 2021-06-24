@@ -1,5 +1,5 @@
-# 3DModelingKit-Sample
-English | [中文](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/README_ZH.md)
+# 3DModeling-Sample
+English | [中文](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/README_ZH.md)
 
 ## Table of Contents
 
@@ -18,9 +18,9 @@ This sample code describes how to use the 3D Modeling Kit SDK, including the fol
 It includes image uploading, task query and model downloadling.
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelCaptureEN.png" width=320 title="capture page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelUploadEN.png" width=320 title="upload page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/ModelDownloadEN.png" width=320 title="download page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureEN.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelUploadEN.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelDownloadEN.png" width=320 title="download page" border=2></td>
 </tr></table>
 
 
@@ -28,9 +28,9 @@ It includes image uploading, task query and model downloadling.
 It includes image uploading, task query and material downloadling.
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialCaptureEN.png" width=320 title="capture page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialUploadEN.png" width=320 title="upload page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModelingKit-Sample/resources/MaterialDownloadEN.png" width=320 title="download page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialCaptureEN.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialUploadEN.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialDownloadEN.png" width=320 title="download page" border=2></td>
 </tr></table>
 
 
@@ -70,11 +70,11 @@ For more application scenarios, see: [Huawei 3D Modeling Service Integration Cas
 Attention:
 
 You can only use a custom package name to apply for the agconnect-services.json file.
-In this way, you only need to change the value of applicationId in HUAWEI-HMS-3DModelingKit-Sample\app\build.gradle to the package name used in agconnect-services.json. Then, you can use cloud services of HUAWEI ML Kit.
+In this way, you only need to change the value of applicationId in HUAWEI-HMS-3DModeling-Sample\app\build.gradle to the package name used in agconnect-services.json. Then, you can use cloud services of HUAWEI ML Kit.
 
 ## Supported Environments
 Devices with Android 4.4 or later are recommended.
 
 
 ##  License
-The 3DModelingKit-Sample have obtained the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+The 3DModeling-Sample have obtained the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).

@@ -8,7 +8,7 @@ English | [中文](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/
 
 This project includes apps developed based on HUAWEI 3D Modeling Kit. The project directory is as follows:
 
-|-- 3DModelingKit-Sample // 3D Modeling Kit sample code.
+|-- 3DModeling-Sample // 3D Modeling Kit sample code.
 
 
 ## Precautions
