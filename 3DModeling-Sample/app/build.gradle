@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.huawei.hms.modeling3d"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "Modeling-Demo.apk"
+            }
+    }
+
+    //指定jdk版本
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    // UI
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    // Layout Adjustment
+    implementation 'me.jessyan:autosize:1.2.1'
+    // View Binding
+    api 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    // Permission Management
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    // Image Utils
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+
+    implementation project(path: ':cameratakelib')
+    implementation project(path: ':modelingResource')
+
+    // 3D Modeling Kit SDK
+    implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.0.0.300'
+    implementation 'com.huawei.hms:modeling3d-material-generate:1.0.0.300'
+}
+apply plugin: 'com.huawei.agconnect'

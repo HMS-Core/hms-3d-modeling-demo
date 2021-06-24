@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">3DModelingDemo</string>
+    <string name="splash_power_hms">Power by HMS</string>
+    <string name="main_home">Home</string>
+    <string name="main_mine">My</string>
+    <string name="start_create_model">Start 3D Modeling</string>
+    <string name="create_model_des">Shoot a real object and quickly create a model</string>
+    <string name="create_material">Create Materials</string>
+    <string name="create_material_des">Quickly create PBR materials</string>
+    <string name="mine_model_text">My 3D Models</string>
+    <string name="mine_material_text">My Materials</string>
+    <string name="setting_use_text">Setting</string>
+    <string name="scan_model_text">Scan Mode</string>
+    <string name="history_data_text">History</string>
+    <string name="model_history_text">3D Model</string>
+    <string name="material_history_text">Material</string>
+    <string name="wait_to_upload_text">Waiting to upload</string>
+    <string name="product_doing_text">Generating</string>
+    <string name="wait_product_doing_text">Waiting to generate</string>
+    <string name="finish_text">Complete</string>
+    <string name="finish_fail_text">Reconstruct failed</string>
+    <string name="finish_fail_text1">Generate failed</string>
+    <string name="rgb">RGB</string>
+    <string name="wait_rebuild_text">Waiting to reconstruct</string>
+    <string name="wait_rebuild_doing_text">Reconstructing</string>
+
+    <!-- To review -->
+    <string name="app_logo_desc">Teapot animated logo</string>
+    <string name="delete_text">Delete</string>
+    <string name="save_text">Save</string>
+    <string name="open_folder_text">Show download file path</string>
+
+    <string name="scan_text">scans</string>
+    <string name="scan_doing_text">Scanning</string>
+    <string name="start_scan_tip_text">The target object is detected. Click the button to start scanning.</string>
+    <string name="do_scan_tip_text">Please place the target object in the center of the screen</string>
+    <string name="finish_scan_tip_text">Scan completed</string>
+    <string name="upload_to_service_text">Upload to the cloud?</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="sure_text">Confirm</string>
+    <string name="downloading_dialog_text">Downloading...</string>
+    <string name="uploading_dialog_text">Uploading...</string>
+    <string name="download_text">Download</string>
+    <string name="grouping_text">grouping</string>
+    <string name="upload_yun_text">Uploading Cloud Modeling</string>
+    <string name="start_text">Start</string>
+    <string name="take_photo_tips_text">Put the object on a stable plane in pure color. Ensure the illuminance is soft. Take at least 30 images of the object and make sure not a corner of it is missed out. Ensure that in each image, the object-to-image ratio is as big as possible.</string>
+    <string name="take_photo_sure_text">Got it</string>
+    <string name="take_photo_doing_text">Shooting</string>
+    <string name="doing_post_text">Uploading...</string>
+    <string name="upload_text_success">Upload completed</string>
+    <string name="async_model_text">Asynchronous mode</string>
+    <string name="tip_async_model_text">In asynchronous mode, 1 to 5 images can be uploaded.</string>
+    <string name="upload_text">Upload</string>
+    <string name="scan_again_text">Scan again</string>
+</resources>

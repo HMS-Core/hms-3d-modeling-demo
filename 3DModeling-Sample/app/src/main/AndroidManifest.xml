@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huawei.hms.modeling3d">
+
+    <!-- 联网权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 读取手机状态权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:configChanges="keyboardHidden|locale|orientation|screenLayout|screenSize|smallestScreenSize"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:name=".Modeling3dDemo"
+        android:allowBackup="true"
+        android:icon="@mipmap/modeling3"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/modeling3"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="MainActivity"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.HistoryActivity" />
+
+        <activity android:name=".ui.modelingui.ScanActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".ui.modelingui.CaptureMaterialActivity"
+            android:screenOrientation="portrait"
+            />
+        
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="720" />
+
+    </application>
+
+</manifest>

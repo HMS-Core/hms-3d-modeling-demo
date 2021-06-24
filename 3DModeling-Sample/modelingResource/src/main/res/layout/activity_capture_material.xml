@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/splash_app_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/title_layout"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_80"
+            android:background="@color/shadow_color">
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_mid"
+            android:layout_width="@dimen/dimens_250"
+            android:layout_height="@dimen/dimens_250"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rl_top"
+            android:background="@drawable/bg_capture_border">
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_below="@+id/rl_mid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shadow_color">
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_toRightOf="@+id/rl_mid"
+            android:layout_alignTop="@+id/rl_mid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_250"
+            android:background="@color/shadow_color">
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_toLeftOf="@+id/rl_mid"
+            android:layout_alignTop="@+id/rl_mid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_250"
+            android:background="@color/shadow_color">
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_above="@+id/ll_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_async_model_text"
+            android:textSize="@dimen/dimens_14sp"
+            android:textColor="@color/splash_text_color"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_66"
+            android:layout_above="@+id/ll_bottom"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:overScrollMode="never"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dimens_66"/>
+
+            <RelativeLayout
+                android:background="@drawable/scan_bottom_status_bg"
+                android:id="@+id/rl_scan_doing"
+                android:layout_width="@dimen/dimens_70"
+                android:layout_height="@dimen/dimens_36"
+                android:layout_marginRight="@dimen/dimens_12"
+                android:layout_marginLeft="@dimen/dimens_12"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_text"
+                    android:textColor="@color/splash_text_color"
+                    android:textSize="@dimen/dimens_16sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_100"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bottom_black"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_capture"
+                android:layout_width="@dimen/dimens_60"
+                android:layout_height="@dimen/dimens_60"
+                android:src="@drawable/scan_button_icon"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/pop_window_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:paddingRight="@dimen/dimens_30"
+        android:paddingLeft="@dimen/dimens_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_download"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:text="@string/download_text"
+        android:gravity="center"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_16sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:text="@string/delete_text"
+        android:gravity="center"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_16sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_open_folder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:text="@string/open_folder_text"
+        android:gravity="center"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_16sp"
+        />
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dimens_40"-->
+<!--        android:text="@string/grouping_text"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="@color/scan_tips_color"-->
+<!--        android:textSize="@dimen/dimens_16sp"-->
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dimens_40"-->
+<!--        android:text="@string/upload_mall_text"-->
+<!--        android:gravity="center"-->
+<!--        android:textColor="@color/scan_tips_color"-->
+<!--        android:textSize="@dimen/dimens_16sp"-->
+<!--        />-->
+    </LinearLayout>
+</LinearLayout>

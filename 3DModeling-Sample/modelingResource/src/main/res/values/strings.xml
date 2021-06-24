@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">3DModelingDemo</string>
+    <string name="splash_power_hms">Power by HMS</string>
+    <string name="main_home">首页</string>
+    <string name="main_mine">我的</string>
+    <string name="start_create_model">开始建模</string>
+    <string name="create_model_des">拍摄实物，快速创建一个模型</string>
+    <string name="create_material">创建材质</string>
+    <string name="create_material_des">快速创建实物材质</string>
+    <string name="async_model_text">异步模式</string>
+    <string name="tip_async_model_text">异步模式，支持1~5张素材上传</string>
+    <string name="mine_model_text">我的模型</string>
+    <string name="mine_material_text">我的材质</string>
+    <string name="setting_use_text">设置</string>
+    <string name="scan_model_text">扫描模式</string>
+    <string name="history_data_text">历史记录</string>
+    <string name="model_history_text">模型</string>
+    <string name="material_history_text">材质</string>
+    <string name="wait_to_upload_text">待上传</string>
+    <string name="product_doing_text">生成中</string>
+    <string name="wait_product_doing_text">待生成</string>
+    <string name="finish_text">完成</string>
+    <string name="finish_fail_text">重建失败</string>
+    <string name="finish_fail_text1">生成失败</string>
+    <string name="rgb">RGB</string>
+    <string name="wait_rebuild_text">待建模</string>
+    <string name="wait_rebuild_doing_text">建模中</string>
+
+    <!-- To review -->
+    <string name="app_logo_desc">Teapot animated logo</string>
+    <string name="delete_text">删除</string>
+    <string name="save_text">保存</string>
+    <string name="open_folder_text">显示文件路径</string>
+
+    <string name="scan_text">扫描</string>
+    <string name="scan_doing_text">扫描中</string>
+    <string name="start_scan_tip_text">检测到目标对象，点击按钮开始扫描</string>
+    <string name="do_scan_tip_text">请将目标对象置于屏幕中央</string>
+    <string name="finish_scan_tip_text">扫描完成</string>
+    <string name="upload_to_service_text">是否上传到云端？</string>
+    <string name="cancel_text">取消</string>
+    <string name="sure_text">确定</string>
+    <string name="downloading_dialog_text">下载中...</string>
+    <string name="uploading_dialog_text">正在上传...</string>
+    <string name="download_text">下载</string>
+    <string name="grouping_text">分组</string>
+    <string name="upload_yun_text">上传云端建模</string>
+    <string name="start_text">开始</string>
+    <string name="upload_text">上传</string>
+    <string name="take_photo_tips_text">将物体静置于纯色平面上，光照柔和，环绕物体一周至少拍摄50张，物体屏占比尽量大且完整</string>
+    <string name="take_photo_sure_text">知道了</string>
+    <string name="take_photo_doing_text">拍摄中</string>
+    <string name="doing_post_text">上传中...</string>
+    <string name="upload_text_success">上传完成</string>
+    <string name="scan_again_text">再次扫描</string>
+</resources>

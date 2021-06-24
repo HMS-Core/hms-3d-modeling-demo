@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#FF2A3046</color>
+    <color name="splash_start_color">#FF181B27</color>
+    <color name="splash_end_color">#FF2D1D33</color>
+    <color name="splash_text_color">#FFE8EBF3</color>
+    <color name="splash_pwoer_color">#99E8EBF3</color>
+    <color name="home_text_select">#FF62A6FF</color>
+    <color name="home_text_unSelect">#FFE8EBF3</color>
+    <color name="home_describe_color">#0DFFFFFF</color>
+    <color name="mine_login_color">#1AE8EBF3</color>
+    <color name="login_hwid_color">#FF353041</color>
+    <color name="splits_line_color">#66FFFFFF</color>
+    <color name="scan_model_text_color">#FF878B9A</color>
+    <color name="progress_color">#2A3046</color>
+    <color name="tab_text_color">#FFE8EBF3</color>
+    <color name="memory_size_color">#FF93969E</color>
+    <color name="transparent">#00000000</color>
+    <color name="bottom_whit">#FFF6F6F6</color>
+    <color name="bottom_black">#FF191B27</color>
+    <color name="scan_tips_color">#FF2A3046</color>
+    <color name="download_progress_color">#62A6FF</color>
+    <color name="download_progress_gray">#FFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="gray">#A9A5A5</color>
+    <color name="black_dialog_title_color">#E6000000</color>
+    <color name="gray_dialog_color">#99000000</color>
+    <color name="shadow_color">#BB000000</color>
+    <color name="border_green_color">#FF17CC4E</color>
+</resources>
