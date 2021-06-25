@@ -1,19 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        maven { url "http://szg1.artifactory.inhuawei.com/artifactory/sz-maven-public/" }
-        maven { url 'http://szg1.artifactory.inhuawei.com/artifactory/Product-CloudTest-snapshot' }
-        maven {
-            url 'http://szg1.artifactory.inhuawei.com/artifactory/Product-cloudserviceSDK-release/'
-        }
-        maven {
-            url 'http://szg1.artifactory.inhuawei.com/artifactory/Product-Cloud3rdPartyTemp-release'
-        }
-        maven { url "http://szg1.artifactory.inhuawei.com/artifactory/Product-CBGAI-release" }
-        maven { url 'http://szg1.artifactory.inhuawei.com/artifactory/sz-maven-public/' }
-//        maven { url "http://dgg.maven.repo.cmc.tools.huawei.com/artifactory/Product-cloudserviceSelfDev-release/" }
         maven {url 'https://developer.huawei.com/repo/'}
-        maven {url 'http://developer.huawei.com/repo/'}
         google()
         jcenter()
     }
@@ -27,16 +15,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "http://szg1.artifactory.inhuawei.com/artifactory/sz-maven-public/" }
-        maven { url 'http://szg1.artifactory.inhuawei.com/artifactory/Product-CloudTest-snapshot' }
-        maven {
-            url 'http://szg1.artifactory.inhuawei.com/artifactory/Product-cloudserviceSDK-release/'
-        }
-        maven { url "http://szg1.artifactory.inhuawei.com/artifactory/sz-maven-public/" }
-        maven { url "http://szg1.artifactory.inhuawei.com/artifactory/Product-CBGAI-release" }
-//        maven { url "http://dgg.maven.repo.cmc.tools.huawei.com/artifactory/Product-cloudserviceSelfDev-release/" }
         maven {url 'https://developer.huawei.com/repo/'}
-        maven {url 'http://developer.huawei.com/repo/'}
         google()
         jcenter()
     }
@@ -44,12 +23,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-ext {
-    needHwSign = 'false'
-}
-
-if (null != System.getenv('needHwSign') && (!System.getenv('needHwSign').isEmpty())) {
-    ext.needHwSign = System.getenv('needHwSign')
 }
