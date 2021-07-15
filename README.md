@@ -1,8 +1,8 @@
 # HUAWEI 3D Modeling Kit Sample
 
-[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/en/doc/development/HMSCore-Guides-V5/service-introduction-0000001050040017-V5) 
+[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/en/doc/development/graphics-Guides/introduction-0000001143077297?ha_source=hms1) 
 
-English | [中文](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/README_ZH.md)
+English | [中文](README_ZH.md)
 
 ## Introduction
 
