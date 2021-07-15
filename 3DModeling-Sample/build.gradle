@@ -9,7 +9,6 @@ buildscript {
         classpath 'androidx.benchmark:benchmark-gradle-plugin:1.0.0'
         classpath 'com.huawei.agconnect:agcp:1.5.0.300'
         classpath 'com.android.tools.build:gradle:4.0.1'
-        classpath 'com.huawei.cloudservice.appgallery.tools:HwApkSigner:11.0.0.200'
     }
 }
 
