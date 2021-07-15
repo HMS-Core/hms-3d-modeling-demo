@@ -1,8 +1,8 @@
-# hms-3dmodeling-demo
+# 华为3D建模服务示例代码
 
-[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides-V5/service-introduction-0000001050040017-V5)
+[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/graphics-Guides/introduction-0000001143077297?ha_source=hms1)
 
-[English](https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/README.md) | 中文
+[English](README.md) | 中文
 
 ## 简介
 
