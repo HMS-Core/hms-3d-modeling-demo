@@ -63,7 +63,7 @@ dependencies {
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha20"
 
-    implementation 'com.huawei.hms:modeling3d-material-generate:1.1.0.207'
+    implementation 'com.huawei.hms:modeling3d-material-generate:1.1.0.300'
     implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.1.0.300'
 }
 apply plugin: 'com.huawei.agconnect'
