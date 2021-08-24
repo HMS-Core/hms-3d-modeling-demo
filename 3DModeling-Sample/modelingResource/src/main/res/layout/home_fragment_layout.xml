@@ -21,6 +21,7 @@
             android:background="@drawable/home_model_rl_bg">
 
             <ImageView
+                android:id="@+id/iv_style_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -28,7 +29,8 @@
                 android:src="@drawable/model_style_icon"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/iv_style_icon"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimens_26"
@@ -93,7 +95,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimens_80"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimens_16"
             android:layout_marginTop="@dimen/dimens_24"
             android:layout_marginRight="@dimen/dimens_16"
@@ -176,7 +177,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
 
     </LinearLayout>
 </ScrollView>

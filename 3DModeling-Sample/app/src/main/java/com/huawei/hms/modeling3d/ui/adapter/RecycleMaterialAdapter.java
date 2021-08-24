@@ -1,55 +1,66 @@
 /**
  * Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * https://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-
 package com.huawei.hms.modeling3d.ui.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.huawei.cameratakelib.utils.LogUtil;
-import com.huawei.hms.materialgeneratesdk.Modeling3dTextureConstants;
-import com.huawei.hms.modelingresource.db.TaskInfoAppDb;
-import com.huawei.hms.modelingresource.materialdb.TaskInfoMaterialAppDbUtils;
-import com.huawei.hms.modelingresource.util.Constants;
-import com.huawei.hms.modelingresource.util.FileSizeUtil;
-import com.huawei.hms.modelingresource.util.Utils;
-import com.huawei.hms.modelingresource.view.CustomRoundAngleImageView;
+import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDb;
+import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
+import com.huawei.hms.magicresource.util.Constants;
+import com.huawei.hms.magicresource.util.FileSizeUtil;
+import com.huawei.hms.magicresource.util.Utils;
+import com.huawei.hms.magicresource.view.CustomRoundAngleImageView;
+import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureEngine;
+import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTexturePreviewListener;
+import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureTaskUtils;
+import com.huawei.hms.modeling3d.Modeling3dApp;
 import com.huawei.hms.modeling3d.R;
-import com.huawei.hms.modeling3d.ui.modelingui.widget.HandlerMaterialPopDialog;
+import com.huawei.hms.modeling3d.model.ConstantBean;
+import com.huawei.hms.modeling3d.ui.widget.HandlerMaterialPopDialog;
+import com.huawei.hms.modeling3d.ui.widget.HandlerPopDialog;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterialAdapter.DataViewHolder> {
 
-    private ArrayList<TaskInfoAppDb> dataList;
+    private ArrayList<TaskInfoMaterialAppDb> dataList;
 
     private Context mContext;
 
     private OnItemClickDownloadListener onItemClickDownloadListener = null;
 
-    public RecycleMaterialAdapter(ArrayList<TaskInfoAppDb> dataList, Context context) {
+    public RecycleMaterialAdapter(ArrayList<TaskInfoMaterialAppDb> dataList, Context context) {
         this.dataList = dataList;
         this.mContext = context;
     }
@@ -58,52 +69,72 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_ls_item, parent, false);
-        RecycleMaterialAdapter.DataViewHolder viewHolder = new RecycleMaterialAdapter.DataViewHolder(view);
-        return viewHolder;
+        return new RecycleMaterialAdapter.DataViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
-        TaskInfoAppDb news = dataList.get(position);
+        TaskInfoMaterialAppDb news = dataList.get(position);
         switch (news.getStatus()) {
-            case Modeling3dTextureConstants.ProgressStatus.INITED:
-            case Modeling3dTextureConstants.ProgressStatus.UPLOAD_COMPLETED:
-                holder.tvStatus.setText(R.string.wait_product_doing_text);
-                holder.tvStatus.setBackgroundResource(R.drawable.wait_product_doing_bg);
-                holder.ivShowStatus.setVisibility(View.VISIBLE);
-                holder.ivShowStatus.setImageResource(R.drawable.product_doing_icon);
-                holder.ivShowStatus.setOnClickListener(null);
-                break;
-            case Modeling3dTextureConstants.ProgressStatus.TEXTURE_START:
+            case ConstantBean.MATERIAL_UPLOAD_COMPLETED_STATUS:
+            case ConstantBean.MATERIAL_RECONSTRUCT_START_STATUS:
                 holder.tvStatus.setText(R.string.product_doing_text);
-                holder.tvStatus.setBackgroundResource(R.drawable.product_doing_bg);
                 holder.ivShowStatus.setVisibility(View.VISIBLE);
+                holder.tvStatus.setBackgroundResource(R.drawable.product_doing_bg);
                 holder.ivShowStatus.setImageResource(R.drawable.product_doing_icon);
                 holder.ivShowStatus.setOnClickListener(null);
                 break;
-            case Modeling3dTextureConstants.ProgressStatus.TEXTURE_COMPLETED:
+            case ConstantBean.MATERIAL_RECONSTRUCT_COMPLETED_STATUS:
                 holder.tvStatus.setText(R.string.finish_text);
+                holder.ivShowStatus.setVisibility(View.VISIBLE);
                 holder.tvStatus.setBackgroundResource(R.drawable.finish_status_bg);
-                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+                holder.ivShowStatus.setImageResource(R.drawable.finish_doing_icon);
+                holder.ivShowStatus.setOnClickListener(v -> {
+                        Modeling3dTextureEngine engine = Modeling3dTextureEngine.getInstance(mContext);
+
+                        engine.previewTexture(news.getTaskId(), Modeling3dApp.app, new Modeling3dTexturePreviewListener() {
+                            @Override
+                            public void onResult(String taskId, Object ext) {
+
+                            }
+
+                            @Override
+                            public void onError(String taskId, int errorCode, String message) {
+                                ((Activity)mContext).runOnUiThread(() -> {
+                                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+                                });
+                            }
+                        });
+                });
                 break;
-            case Modeling3dTextureConstants.ProgressStatus.TEXTURE_FAILED:
+            case ConstantBean.MATERIAL_RECONSTRUCT_FAILED_STATUS:
                 holder.tvStatus.setText(R.string.finish_fail_text1);
                 holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
                 holder.ivShowStatus.setVisibility(View.INVISIBLE);
                 break;
-            default:
         }
         holder.tvTime.setText(Utils.systemCurrentToData(news.getCreateTime()));
-        // Set Download
+
         holder.ivPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (news.getStatus() == Modeling3dTextureConstants.ProgressStatus.INITED ||
-                        news.getStatus() == Modeling3dTextureConstants.ProgressStatus.UPLOAD_COMPLETED ||
-                        news.getStatus() == Modeling3dTextureConstants.ProgressStatus.TEXTURE_COMPLETED ||
-                        news.getStatus() == Modeling3dTextureConstants.ProgressStatus.TEXTURE_FAILED) {
-                    new HandlerMaterialPopDialog(mContext, RecycleMaterialAdapter.this, news, holder, dataList);
-                }
+                Modeling3dTextureTaskUtils modeling3dTextureTaskUtils = Modeling3dTextureTaskUtils.getInstance(mContext);
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        int status = modeling3dTextureTaskUtils.queryTaskRestrictStatus(news.getTaskId());
+                        if (news.getStatus() != ConstantBean.MODELS_RECONSTRUCT_START_STATUS) {
+                            ((Activity)mContext).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new HandlerMaterialPopDialog(mContext, RecycleMaterialAdapter.this, news, holder, dataList,status);
+                                }
+                            });
+                        }
+                    }
+                }.start();
             }
         });
 
@@ -111,9 +142,9 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
         File file = new File(news.getFileUploadPath());
         File[] files = file.listFiles();
         if (files != null && files.length > 0) {
-            for (File mFile : files) {
-                if (mFile.getPath().contains("jpg")) {
-                    Glide.with(mContext).load(mFile.getPath()).into(holder.customRoundAngleImageView);
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].getPath().contains("jpg") || files[i].getPath().contains("png") || files[i].getPath().contains("Webp")) {
+                    Glide.with(mContext).load(files[i].getPath()).into(holder.customRoundAngleImageView);
                     break;
                 }
             }
@@ -124,9 +155,8 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
         this.onItemClickDownloadListener = onItemClickDownloadListener;
     }
 
-    // Click Download Event Interface
     public interface OnItemClickDownloadListener {
-        void onClickDownLoad(TaskInfoAppDb appDb, DataViewHolder holder);
+        void onClickDownLoad(TaskInfoMaterialAppDb appDb, DataViewHolder holder);
     }
 
     @Override
@@ -134,26 +164,22 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
         return dataList.size();
     }
 
-    // Click Download.
-    public void setOnDownLoadClick(TaskInfoAppDb appDb, DataViewHolder holder) {
+    public void setOnDownLoadClick(TaskInfoMaterialAppDb appDb, DataViewHolder holder) {
         String downloadPath = new Constants(mContext).getMaterialDownFile() + System.currentTimeMillis() + "/";
         File dir = new File(downloadPath);
         if (!dir.exists()) {
-            boolean isCreate = dir.mkdirs();
-            if (isCreate){
-                LogUtil.d("create successful");
-            }
+            dir.mkdirs();
         }
         appDb.setFileSavePath(downloadPath);
         TaskInfoMaterialAppDbUtils.updatePathByTaskId(appDb.getTaskId(), downloadPath);
         onItemClickDownloadListener.onClickDownLoad(appDb, holder);
     }
 
-    public ArrayList<TaskInfoAppDb> getDataList() {
+    public ArrayList<TaskInfoMaterialAppDb> getDataList() {
         return dataList;
     }
 
-    public void setDataList(ArrayList<TaskInfoAppDb> dataList) {
+    public void setDataList(ArrayList<TaskInfoMaterialAppDb> dataList) {
         this.dataList.clear();
         this.dataList = dataList;
         notifyDataSetChanged();

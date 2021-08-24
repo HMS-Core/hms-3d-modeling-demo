@@ -23,6 +23,17 @@
             android:textColor="@color/black_dialog_title_color"
             android:textSize="@dimen/dimens_16sp" />
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_upload_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/dimens_12"
+            android:text="@string/take_more_than_50_tips"
+            android:textColor="@color/black_dialog_title_color"
+            android:textSize="@dimen/dimens_14sp" />
+
         <LinearLayout
             android:layout_marginTop="@dimen/dimens_8"
             android:layout_width="match_parent"

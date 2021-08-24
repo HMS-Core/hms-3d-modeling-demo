@@ -56,4 +56,5 @@
     <dimen name="dimens_87">87dp</dimen>
     <dimen name="dimens_66">66dp</dimen>
     <dimen name="dimens_45sp">45sp</dimen>
+    <dimen name="dimens_280">280dp</dimen>
 </resources>

@@ -1,22 +1,7 @@
-/**
- * Copyright 2021. Huawei Technologies Co., Ltd. All rights reserved.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-
 package com.huawei.cameratakelib;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -24,22 +9,36 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.os.Build;
+import android.util.Log;
+import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
+
 import com.huawei.cameratakelib.listener.CameraTakeListener;
 import com.huawei.cameratakelib.utils.FileUtil;
 import com.huawei.cameratakelib.utils.LogUtil;
+import com.huawei.hms.magicresource.view.ResizeAbleSurfaceView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class SurfaceViewCallback implements SurfaceHolder.Callback {
+import top.zibin.luban.OnCompressListener;
+
+public class SurfaceViewCallback implements SurfaceHolder.Callback ,Camera.PreviewCallback{
 
     public static final int NORMAL_MODEL = 1;
     public static final int MATERIAL_MODEL = 2;
+    public static final int RGB_MODEL = 3;
 
     private int model = NORMAL_MODEL;
 
@@ -57,8 +56,10 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
 
     int mCurrentCamIndex = 0;
 
+    protected int mCameraInit = 0;
+
     /**
-     * true to start capturing photos
+     * 为true时则开始捕捉照片
      */
     boolean canTake;
 
@@ -77,15 +78,21 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
         this.index = index;
     }
 
-    private Integer index = 0;
+    private Integer index;
 
-    private int cameraFacingBack = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private int CameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK;
+    protected Camera.CameraInfo mCameraInfo = null;
     /**
-     * Callback API for taking photos
+     * 拍照回调接口
      */
     CameraTakeListener listener;
-    SurfaceView surfaceView;
+    ResizeAbleSurfaceView surfaceView;
+
+    private Camera.AutoFocusCallback myAutoFocusCallback = null;
+
     int widthDes;
+    float ratio;
+    int screenType;//0 1k 1 2k  2 4k
 
     public int getWidthDes() {
         return widthDes;
@@ -103,7 +110,7 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
         this.listener = listener;
     }
 
-    public SurfaceViewCallback(Activity activity, CameraTakeListener listener, int model, SurfaceView surfaceView) {
+    public SurfaceViewCallback(Activity activity, CameraTakeListener listener, int model, ResizeAbleSurfaceView surfaceView) {
         previewing = false;
         hasSurface = false;
 
@@ -113,7 +120,7 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
         this.surfaceView = surfaceView;
     }
 
-    public SurfaceViewCallback(Activity activity, CameraTakeListener listener, SurfaceView surfaceView) {
+    public SurfaceViewCallback(Activity activity, CameraTakeListener listener, ResizeAbleSurfaceView surfaceView) {
         previewing = false;
         hasSurface = false;
 
@@ -124,87 +131,71 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        LogUtil.i("surfaceCreated hasSurface = " + hasSurface);
         if (!hasSurface) {
             hasSurface = true;
             mCamera = openBakcFacingCamera();
+            mCameraInit = 1;
             if (mCamera == null) {
-                listener.onFail("No camera available");
+                listener.onFail("没有可用的摄像头");
                 return;
             } else {
                 Camera.Parameters parameters = mCamera.getParameters();
-                List<Camera.Size> pictureSizes = mCamera.getParameters()
-                        .getSupportedPreviewSizes();
-                sizeSort(pictureSizes);
-                Camera.Size fs = null;
-                int type = 0;
-                for (int i = 0; i < pictureSizes.size(); i++) {
-                    Camera.Size psize = pictureSizes.get(i);
-                    if (fs == null && psize.width / 16 == psize.height / 9) {
-                        fs = psize;
-                        type = 1;
-                    }
-                    if (fs == null && psize.width / 4 == psize.height / 3) {
-                        fs = psize;
-                        type = 2;
-                    }
-                }
-                Camera.Size fss = null;
-                List<Camera.Size> pictureSizes1 = parameters.getSupportedPictureSizes();
-                sizeSort(pictureSizes1);
-                for (int i = 0; i < pictureSizes1.size(); i++) {
-                    Camera.Size psize = pictureSizes1.get(i);
-                    if (fss == null && type == 1 && psize.width / 16 == psize.height / 9) {
-                        fss = psize;
-                    }
-                    if (fss == null && type == 2 && psize.width / 4 == psize.height / 3) {
-                        fss = psize;
-                    }
-                }
+                initParameters(parameters);
+                mCamera.cancelAutoFocus();// 只有加上了这一句，才会自动对焦
 
-                if (fss != null) {
-                    parameters.setPictureSize(fss.width, fss.height);
-                }
-                if (fs != null) {
-                    parameters.setPreviewSize(fs.width, fs.height);
-                }
-                if (model == MATERIAL_MODEL) {
-                    parameters.setExposureCompensation(0);
-                }
-
-
-                if (cameraFacingBack == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                List<String> focusModes = parameters.getSupportedFocusModes();
+                if (focusModes != null) {
+                    if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                     } else {
-                        parameters.setFocusMode(parameters.FOCUS_MODE_AUTO);
+                        if (parameters.getMaxNumFocusAreas() > 0) {
+                            List<Camera.Area> focusAreas = new ArrayList<Camera.Area>();
+                            focusAreas.add(new Camera.Area(new Rect(100, 100, 100, 100), 1000));
+                            parameters.setFocusAreas(focusAreas);
+                        }
                     }
                 }
 
                 mCamera.setParameters(parameters);
             }
-            mCamera.setPreviewCallback(new Camera.PreviewCallback() {
-                @Override
-                public void onPreviewFrame(byte[] bytes, Camera camera) {
-                    if (canTake) {
-                        getSurfacePic(bytes, camera);
-                        canTake = false;
-                    }
-                }
-            });
+            mCamera.setPreviewCallback(SurfaceViewCallback.this);
         }
     }
 
-    private void sizeSort(List<Camera.Size> sizeList) {
-        for (int i = 0; i < sizeList.size() - 1; i++) {
-            for (int j = 0; j < sizeList.size() - i - 1; j++) {
-                if (sizeList.get(j).width < sizeList.get(j + 1).width) {
-                    Camera.Size size = sizeList.get(j);
-                    sizeList.set(j, sizeList.get(j + 1));
-                    sizeList.set(j + 1, size);
+    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
+        final double ASPECT_TOLERANCE = 0.1;
+        double targetRatio = (double) w / h;
+        if (sizes == null) return null;
+
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+
+        int targetHeight = h;
+
+        // Try to find an size match aspect ratio and size
+        for (Camera.Size size : sizes) {
+            double ratio = (double) size.width / size.height;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - targetHeight) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - targetHeight);
+            }
+        }
+
+        // Cannot find the one match the aspect ratio, ignore the requirement
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - targetHeight) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - targetHeight);
                 }
             }
         }
+        return optimalSize;
     }
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -219,32 +210,30 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
             previewing = true;
             setCameraDisplayOrientation(activity, mCurrentCamIndex, mCamera);
         } catch (Exception e) {
-            LogUtil.e("Failed to set camera preview: " + e.getLocalizedMessage());
         }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        if (!previewing) {
+        if (!previewing)
             return;
-        }
         holder.removeCallback(this);
+//        mCamera.setPreviewCallback(null);
+//        mCamera.stopPreview();
+//        mCamera.release();
         mCamera = null;
     }
 
     /**
-     * Sets the direction in which the camera plays
-     *
-     * @param activity Interface display
-     * @param cameraId Camera id
-     * @param camera camera
+     * 设置照相机播放的方向
      */
-
     private void setCameraDisplayOrientation(Activity activity, int cameraId, Camera camera) {
         Camera.CameraInfo info = new Camera.CameraInfo();
         Camera.getCameraInfo(cameraId, info);
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
+        /** 度图片顺时针旋转的角度。有效值为0、90、180和270*/
+        /** 起始位置为0（横向）*/
         int degrees = 0;
         switch (rotation) {
             case Surface.ROTATION_0:
@@ -259,22 +248,20 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
             case Surface.ROTATION_270:
                 degrees = 270;
                 break;
-            default:
         }
         int result;
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
             result = (info.orientation + degrees) % 360;
             result = (360 - result) % 360;  // compensate the mirror
         } else {
+            /** 背面*/
             result = (info.orientation - degrees + 360) % 360;
         }
         camera.setDisplayOrientation(result);
     }
 
     /**
-     * Open the camera panel.
-     *
-     * @return camera
+     * 打开摄像头面板
      */
     private Camera openBakcFacingCamera() {
         int cameraCount = 0;
@@ -298,32 +285,42 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
     }
 
     /**
-     * Get Photos
-     *
-     * @param data Byte stream
-     * @param camera camera
+     * 获取照片
      */
     public void getSurfacePic(byte[] data, Camera camera) {
         Camera.Size size = camera.getParameters().getPreviewSize();
         YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compressToJpeg(new Rect(0, 0, size.width, size.height), 100, stream);
-        Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
-        rotateMyBitmap(bmp);
+        if (image != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            switch (model) {
+                case NORMAL_MODEL:
+                    image.compressToJpeg(new Rect(0, 0, size.width, size.height), 100, stream);
+                    break;
+                case MATERIAL_MODEL:
+                    int width = this.width;
+                    int left = this.top;
+                    int top = (size.height - width) / 2;
+                    int right = left + width;
+                    int bottom = top + width;
+                    image.compressToJpeg(new Rect(left, top, right, bottom), 100, stream);
+                    break;
+            }
 
+            Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
+            /** 因为图片会放生旋转，因此要对图片进行旋转到和手机在一个方向上*/
+            rotateMyBitmap(bmp);
+        }
     }
 
-
     /**
-     * Get Photos
-     *
-     * @param data Byte stream
-     * @param camera camera
+     * 获取照片
      */
-
     public void getTakePic(byte[] data, Camera camera) {
         Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+        Camera.Size preSize = camera.getParameters().getPreviewSize();
         Camera.Size picSize = camera.getParameters().getPictureSize();
+        int preWidth = preSize.width;
+        int preHeight = preSize.height;
         int picWidth = picSize.width;
         int picHeight = picSize.height;
         int x = top * picWidth / surfaceView.getHeight();
@@ -339,15 +336,12 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
             Bitmap resBmp1 = Bitmap.createScaledBitmap(resBmp, leng, leng, true);
             saveMyBitmap(FileUtil.compressImage(resBmp1));
         } else {
-            mCamera.startPreview();
-            listener.onFail("Failed to capture the image. The width of the image is as follows:" + bmp.getHeight() + " high：" + bmp.getWidth() + "Truncated start point x axis：" + x + " y-axis：" + y + " Wide interception range：" + hei + " high：" + wid);
+            listener.onFail("图片截取失败 图片宽：" + bmp.getHeight() + " 高：" + bmp.getWidth() + "截取起点 x轴：" + x + " y轴：" + y + " 截取范围 宽：" + hei + " 高：" + wid);
         }
     }
 
     /**
-     * Rotate Pictures
-     *
-     * @param bmp picture
+     * 旋转图片
      */
     public void rotateMyBitmap(Bitmap bmp) {
         Matrix matrix = new Matrix();
@@ -360,54 +354,49 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
     }
 
     /**
-     * Save Pictures
-     *
-     * @param mBitmap picture
+     * 保存图片
      */
     public void saveMyBitmap(final Bitmap mBitmap) {
-        if (model == MATERIAL_MODEL) {
-            mCamera.startPreview();
-        }
         if (FileUtil.getAvailableSize() > 512) {
             index += 1;
             index = index % 100;
             final File filePic = FileUtil.saveBitmap(activity, mBitmap, createTime, index);
             if (filePic == null) {
-                listener.onFail("Failed to save the image.");
+                /** 图片保存失败*/
+                listener.onFail("图片保存失败");
                 return;
             }
             listener.onSuccess(filePic, mBitmap);
         } else {
-            listener.onFail("The storage space is less than 512 MB, and images cannot be saved.");
+            listener.onFail("存储空间小于512M，图片无法正常保存");
         }
     }
 
     /**
-     * Gets the current photo of the camera
+     * 获取相机当前的照片
      */
     public void takePhoto() {
         this.canTake = true;
     }
 
     /**
-     * The camera performs a shooting operation.
-     *
-     * @param top height
-     * @param width width
+     * 相机执行拍摄操作
      */
     public void takePhoto(int top, int width) {
+//        this.canTake = true;
         this.top = top;
         this.width = width;
         mCamera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
+                mCamera.startPreview();
                 getTakePic(data, camera);
             }
         });
     }
 
     /**
-     * release
+     * 释放
      */
     public void destroy() {
         hasSurface = false;
@@ -420,6 +409,121 @@ public class SurfaceViewCallback implements SurfaceHolder.Callback {
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
+        }
+    }
+
+    /**
+     * 获取照片
+     */
+    public void getTakeRgbPic(byte[] data, Camera camera) {
+        Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+        int[] width = {1080, 1440, 2160};
+        int[] height = {1920, 2560, 3840};
+        int getWidthValue = width[0];
+        int getHeightValue = height[0];
+        if (screenType == 0) {
+            getWidthValue = width[0];
+            getHeightValue = height[0];
+        } else if (screenType == 1) {
+            getWidthValue = width[1];
+            getHeightValue = height[1];
+        } else if (screenType == 2) {
+            getWidthValue = width[2];
+            getHeightValue = height[2];
+        }
+        Bitmap resBmp = Bitmap.createScaledBitmap(bmp, getHeightValue, getWidthValue, true);
+        rotateMyBitmap(resBmp);
+    }
+
+    public void takePhotoRgb(float ratio, int type) {
+        this.screenType = type;
+        this.ratio = ratio;
+        mCamera.takePicture(null, null, new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                camera.startPreview();
+                camera.autoFocus(new Camera.AutoFocusCallback() {
+                    @Override
+                    public void onAutoFocus(boolean b, Camera camera) {
+                        if (b){
+                            getTakeRgbPic(data, camera);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+    public void initParameters(Camera.Parameters parameters) {
+        List<Camera.Size> pictureSizes = mCamera.getParameters()
+                .getSupportedPreviewSizes();
+        sizeSort(pictureSizes);
+        Camera.Size fs = null;
+        int type = 0;
+        for (int i = 0; i < pictureSizes.size(); i++) {
+            Camera.Size psize = pictureSizes.get(i);
+
+            if (fs == null && psize.width / 16 == psize.height / 9) {
+                fs = psize;
+                type = 1;
+            }
+            if (fs == null && psize.width / 4 == psize.height / 3) {
+                fs = psize;
+                type = 2;
+            }
+        }
+        if (fs != null) {
+            Display display = activity.getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
+            int height = display.getHeight();
+            DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+            String num = df.format((float)height/width);//返回的是String类型
+            int ratioPx = 0 ;
+            int ratioPxWid = 0 ;
+            if (height-fs.width>0){//以屏幕的高度为基础
+                ratioPx = height-fs.width;
+                ratioPxWid = (int) (ratioPx/Float.valueOf(num));
+                surfaceView.resize(fs.height+ratioPxWid,fs.width+ratioPx);
+            }
+            parameters.setPreviewSize(fs.width, fs.height);
+        }
+        Camera.Size fss = null;
+        List<Camera.Size> pictureSizes1 = parameters.getSupportedPictureSizes();
+        sizeSort(pictureSizes1);
+        for (int i = 0; i < pictureSizes1.size(); i++) {
+            Camera.Size psize = pictureSizes1.get(i);
+            if (fss == null && type == 1 && psize.width / 16 == psize.height / 9) {
+                fss = psize;
+            }
+            if (fss == null && type == 2 && psize.width / 4 == psize.height / 3) {
+                fss = psize;
+            }
+        }
+        if (fss != null) {
+            parameters.setPictureSize(fss.width, fss.height);
+        }
+
+    }
+
+    private void sizeSort(List<Camera.Size> sizeList) {
+        for (int i = 0; i < sizeList.size() - 1; i++) {
+            for (int j = 0; j < sizeList.size() - i - 1; j++) {
+                if (sizeList.get(j).width < sizeList.get(j + 1).width) {
+                    Camera.Size size = sizeList.get(j);
+                    sizeList.set(j, sizeList.get(j + 1));
+                    sizeList.set(j + 1, size);
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public void onPreviewFrame(byte[] bytes, Camera camera) {
+        if (canTake) {
+            getSurfacePic(bytes, camera);
+            canTake = false;
         }
     }
 }

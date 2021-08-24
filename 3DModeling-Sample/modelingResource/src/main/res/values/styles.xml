@@ -8,7 +8,7 @@
     </style>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/dimens_16sp</item>
+        <item name="android:textSize">@dimen/dimens_14sp</item>
     </style>
 
     <style name="BottomAnimDialogStyle" parent="@android:style/Theme.Dialog">

@@ -36,31 +36,35 @@
         />
 
     <TextView
-        android:id="@+id/tv_open_folder"
+        android:id="@+id/tv_open_file"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimens_40"
-        android:text="@string/open_folder_text"
+        android:text="@string/view_download_catalog"
         android:gravity="center"
         android:textColor="@color/scan_tips_color"
         android:textSize="@dimen/dimens_16sp"
         />
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dimens_40"-->
-<!--        android:text="@string/grouping_text"-->
-<!--        android:gravity="center"-->
-<!--        android:textColor="@color/scan_tips_color"-->
-<!--        android:textSize="@dimen/dimens_16sp"-->
-<!--        />-->
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:text="@string/grouping_text"
+        android:gravity="center"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_16sp"
+        />
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dimens_40"-->
-<!--        android:text="@string/upload_mall_text"-->
-<!--        android:gravity="center"-->
-<!--        android:textColor="@color/scan_tips_color"-->
-<!--        android:textSize="@dimen/dimens_16sp"-->
-<!--        />-->
+    <TextView
+        android:id="@+id/tv_restrict_status"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:text="限制"
+        android:gravity="center"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_16sp"
+        />
     </LinearLayout>
 </LinearLayout>

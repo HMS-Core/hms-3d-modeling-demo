@@ -7,32 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_56">
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/dimens_16"
-            android:paddingRight="@dimen/dimens_8"
-            android:src="@drawable/go_back_icon" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_back"
-            android:text="@string/setting_use_text"
-            android:textColor="@color/splash_text_color"
-            android:textSize="@dimen/dimens_18sp"
-
-            />
-
-    </RelativeLayout>
+    <include layout="@layout/title_layout"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_tab"

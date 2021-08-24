@@ -2,37 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/splash_app_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-
-    <include layout="@layout/title_layout"/>
+    android:fitsSystemWindows="true"
+    android:background="@color/bottom_black">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <SurfaceView
+        <com.huawei.hms.magicresource.view.ResizeAbleSurfaceView
             android:id="@+id/surfaceView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
 
         <RelativeLayout
+            android:layout_below="@+id/rl_title"
             android:id="@+id/rl_top"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimens_80"
+            android:layout_height="130dp"
             android:background="@color/shadow_color">
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_mid"
-            android:layout_width="@dimen/dimens_250"
-            android:layout_height="@dimen/dimens_250"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/rl_top"
-            android:background="@drawable/bg_capture_border">
+            >
+
         </RelativeLayout>
 
 
@@ -47,7 +48,7 @@
             android:layout_toRightOf="@+id/rl_mid"
             android:layout_alignTop="@+id/rl_mid"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimens_250"
+            android:layout_height="300dp"
             android:background="@color/shadow_color">
         </RelativeLayout>
 
@@ -55,11 +56,12 @@
             android:layout_toLeftOf="@+id/rl_mid"
             android:layout_alignTop="@+id/rl_mid"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimens_250"
+            android:layout_height="300dp"
             android:background="@color/shadow_color">
         </RelativeLayout>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_tip"
             android:layout_above="@+id/ll_image"
             android:layout_width="wrap_content"
@@ -70,11 +72,13 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimens_66"
             android:layout_above="@+id/ll_bottom"
             android:orientation="horizontal">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -86,8 +90,8 @@
             <RelativeLayout
                 android:background="@drawable/scan_bottom_status_bg"
                 android:id="@+id/rl_scan_doing"
-                android:layout_width="@dimen/dimens_70"
-                android:layout_height="@dimen/dimens_36"
+                android:layout_width="@dimen/dimens_80"
+                android:layout_height="@dimen/dimens_40"
                 android:layout_marginRight="@dimen/dimens_12"
                 android:layout_marginLeft="@dimen/dimens_12"
                 android:layout_gravity="center_vertical"
@@ -105,21 +109,132 @@
 
         </LinearLayout>
 
+
+        <RelativeLayout
+            android:layout_above="@+id/ll_bottom"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/dimens_66"
+            android:id="@+id/rl_toast"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_30"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/scan_toast_bg"
+            >
+
+            <TextView
+                android:paddingRight="@dimen/dimens_12"
+                android:paddingLeft="@dimen/dimens_12"
+                android:singleLine="true"
+                android:id="@+id/tv_toast_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/take_photo_point_text"
+                android:textColor="@color/scan_tips_color"
+                android:textSize="@dimen/dimens_13sp" />
+
+        </RelativeLayout>
+
+
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimens_100"
             android:layout_alignParentBottom="true"
-            android:background="@color/bottom_black"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/iv_capture"
-                android:layout_width="@dimen/dimens_60"
-                android:layout_height="@dimen/dimens_60"
-                android:src="@drawable/scan_button_icon"/>
+                android:layout_width="@dimen/dimens_70"
+                android:layout_height="@dimen/dimens_70"
+                android:src="@drawable/capture_photo_icon"/>
 
         </LinearLayout>
+
+
+        <RelativeLayout
+            android:background="@color/shadow_color"
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_56">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:paddingRight="@dimen/dimens_8"
+                android:src="@drawable/go_back_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dimens_16"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_toRightOf="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_use_text"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="@color/splash_text_color"
+                android:layout_centerVertical="true" />
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/dimens_16"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/rl_title"
+            android:id="@+id/rl_top_tips"
+            android:paddingBottom="@dimen/dimens_10"
+            android:paddingTop="@dimen/dimens_10"
+            android:background="@drawable/scan_toast_bg"
+            android:layout_marginRight="@dimen/dimens_15"
+            android:layout_marginLeft="@dimen/dimens_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_centerHorizontal="true"
+                android:paddingRight="@dimen/dimens_15"
+                android:paddingLeft="@dimen/dimens_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/materials_capture_text"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/dimens_13sp"
+                android:textColor="@color/scan_tips_color"
+                />
+
+            <TextView
+                android:layout_below="@+id/tv_message"
+                android:id="@+id/tv_sure"
+                android:paddingLeft="@dimen/dimens_8"
+                android:paddingRight="@dimen/dimens_16"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/take_photo_sure_text"
+                android:textSize="@dimen/dimens_13sp"
+                android:textColor="#FF62A6FF"
+                android:gravity="center" />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_marginTop="-12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rl_top"
+            android:layout_width="324dp"
+            android:layout_height="324dp"
+            android:src="@drawable/scan_box_icon"/>
 
     </RelativeLayout>
 

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimens_64">
         
-        <com.huawei.hms.modelingresource.view.CustomRoundAngleImageView
+        <com.huawei.hms.magicresource.view.CustomRoundAngleImageView
             android:id="@+id/iv_icon"
             android:layout_centerVertical="true"
             android:layout_width="@dimen/dimens_64"
@@ -38,10 +38,11 @@
             android:src="@drawable/upload_data_icon"
             android:layout_toLeftOf="@+id/iv_point"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimens_16"
+            android:layout_marginRight="@dimen/dimens_12"
             />
 
         <RelativeLayout
+            android:layout_toLeftOf="@+id/iv_show_status"
             android:layout_marginLeft="@dimen/dimens_8"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_icon"
@@ -57,8 +58,8 @@
                 android:focusable="true"
                 android:background="@drawable/wait_to_upload_bg"
                 android:layout_width="wrap_content"
-                android:paddingLeft="@dimen/dimens_4"
-                android:paddingRight="@dimen/dimens_4"
+                android:paddingLeft="@dimen/dimens_10"
+                android:paddingRight="@dimen/dimens_10"
                 android:layout_height="@dimen/dimens_15"
                 android:id="@+id/tv_status"/>
 
