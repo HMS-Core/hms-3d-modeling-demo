@@ -1,6 +1,6 @@
 # 华为3D建模服务示例代码
 
-[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/graphics-Guides/introduction-0000001143077297?ha_source=hms1)
+[![License](https://img.shields.io/badge/Docs-hmsguides-brightgreen)](https://developer.huawei.com/consumer/cn/doc/development/graphics-Guides/introduction-0000001143077297)
 
 [English](README.md) | 中文
 
