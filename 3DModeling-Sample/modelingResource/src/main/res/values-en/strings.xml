@@ -151,4 +151,6 @@
     <string name="view_download_catalog">View download catalog</string>
     <string name="unrestricted_text">Lift restrictions</string>
     <string name="restricted_text">restricted</string>
+    <string name="motion_capture_text">Motion capture</string>
+    <string name="create_motion_des">Capture some action</string>
 </resources>

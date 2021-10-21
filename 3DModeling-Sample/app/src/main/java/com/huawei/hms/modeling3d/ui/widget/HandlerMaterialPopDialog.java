@@ -53,15 +53,15 @@ public class HandlerMaterialPopDialog {
     TextView tvDownload;
     ArrayList<TaskInfoMaterialAppDb> dataList;
     public Modeling3dTextureTaskUtils modeling3dTextureTaskUtils;
-    int status ;
+    int status;
 
-    public HandlerMaterialPopDialog(Context mContext, RecycleMaterialAdapter adapter, TaskInfoMaterialAppDb appDb, RecycleMaterialAdapter.DataViewHolder holder, ArrayList<TaskInfoMaterialAppDb> dataList,int status) {
+    public HandlerMaterialPopDialog(Context mContext, RecycleMaterialAdapter adapter, TaskInfoMaterialAppDb appDb, RecycleMaterialAdapter.DataViewHolder holder, ArrayList<TaskInfoMaterialAppDb> dataList, int status) {
         this.mContext = mContext;
         this.appDb = appDb;
         this.holder = holder;
         this.adapter = adapter;
         this.dataList = dataList;
-        this.status = status ;
+        this.status = status;
         contentView = LayoutInflater.from(mContext).inflate(R.layout.pop_dialog_layout, null);
         popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
@@ -76,10 +76,10 @@ public class HandlerMaterialPopDialog {
         if (appDb.getStatus() == ConstantBean.MATERIAL_RECONSTRUCT_COMPLETED_STATUS) {
             tvDownload.setVisibility(View.VISIBLE);
             contentView.findViewById(R.id.tv_restrict_status).setVisibility(View.VISIBLE);
-            if (status== Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT){
-                ((TextView)contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.restricted_text);
-            }else if (status==Modeling3dReconstructConstants.RestrictStatus.RESTRICT){
-                ((TextView)contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.unrestricted_text);
+            if (status == Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT) {
+                ((TextView) contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.restricted_text);
+            } else if (status == Modeling3dReconstructConstants.RestrictStatus.RESTRICT) {
+                ((TextView) contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.unrestricted_text);
             }
         } else {
             tvDownload.setVisibility(View.GONE);
@@ -146,11 +146,11 @@ public class HandlerMaterialPopDialog {
         });
         contentView.findViewById(R.id.tv_restrict_status).setOnClickListener(v -> {
             modeling3dTextureTaskUtils = Modeling3dTextureTaskUtils.getInstance(Modeling3dApp.app);
-            new Thread(()->{
-                if (status==Modeling3dTextureConstants.RestrictStatus.UNRESTRICT){
-                   modeling3dTextureTaskUtils.setTaskRestrictStatus(appDb.getTaskId(), Modeling3dTextureConstants.RestrictStatus.RESTRICT);
-                }else {
-                    modeling3dTextureTaskUtils.setTaskRestrictStatus(appDb.getTaskId(),Modeling3dTextureConstants.RestrictStatus.UNRESTRICT);
+            new Thread(() -> {
+                if (status == Modeling3dTextureConstants.RestrictStatus.UNRESTRICT) {
+                    modeling3dTextureTaskUtils.setTaskRestrictStatus(appDb.getTaskId(), Modeling3dTextureConstants.RestrictStatus.RESTRICT);
+                } else {
+                    modeling3dTextureTaskUtils.setTaskRestrictStatus(appDb.getTaskId(), Modeling3dTextureConstants.RestrictStatus.UNRESTRICT);
                 }
             }).start();
             if (popupWindow != null) {

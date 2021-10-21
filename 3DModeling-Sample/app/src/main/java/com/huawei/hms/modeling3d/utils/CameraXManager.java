@@ -210,6 +210,9 @@ public class CameraXManager {
         } else if (screenType == ConstantBean.SCREEN_MODEL_TYPE_TWO) {
             getPicWidthValue = width[2];
             getPicHeightValue = height[2];
+        }else {
+            getPicWidthValue = 2048;
+            getPicHeightValue = 2048;
         }
     }
 

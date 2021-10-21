@@ -11,11 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.huawei.hms.magicresource.view.ResizeAbleSurfaceView
-            android:id="@+id/surfaceView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+<!--        <com.huawei.hms.magicresource.view.ResizeAbleSurfaceView-->
+<!--            android:id="@+id/surfaceView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            />-->
+
+        <androidx.camera.view.PreviewView
+            android:fitsSystemWindows="true"
+            android:id="@+id/view_finder"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rl_top"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             />
 
         <RelativeLayout

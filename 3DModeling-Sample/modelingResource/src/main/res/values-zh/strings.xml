@@ -151,4 +151,6 @@
     <string name="view_download_catalog">查看下载目录</string>
     <string name="unrestricted_text">解除限制</string>
     <string name="restricted_text">限制</string>
+    <string name="motion_capture_text">动作捕捉</string>
+    <string name="create_motion_des">捕捉一些动作</string>
 </resources>

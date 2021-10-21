@@ -35,6 +35,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.huawei.cameratakelib.utils.LogUtil;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
+import com.huawei.hms.modeling3d.ui.widget.SelectModelDialog;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadConfig;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadListener;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadResult;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
@@ -180,15 +182,20 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
 
     @Override
     public void onClickDownLoad(TaskInfoAppDb appDb, RecycleHistoryAdapter.DataViewHolder holder) {
+        SelectModelDialog modelDialog = new SelectModelDialog(getContext(),HistoryModelDataFragment.this,appDb);
+        modelDialog.setCanceledOnTouchOutside(false);
+        modelDialog.show();
+    }
+
+    public void showNewDownLoad(TaskInfoAppDb appDb,String model){
         initEngine();
         dialog = new ProgressCustomDialog(getContext(), ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.downloading_dialog_text));
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         dialog.setListener(HistoryModelDataFragment.this, appDb);
         magic3dReconstructEngine.setReconstructDownloadListener(magic3dReconstructDownloadListener);
-        magic3dReconstructEngine.downloadModel(appDb.getTaskId(), appDb.getFileSavePath());
+        magic3dReconstructEngine.downloadModelWithConfig(appDb.getTaskId(), appDb.getFileSavePath(), new Modeling3dReconstructDownloadConfig.Factory().setModelFormat(model).create());
     }
-
 
     private final Modeling3dReconstructUploadListener uploadListener = new Modeling3dReconstructUploadListener() {
         @Override
@@ -270,7 +277,7 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
     public void loadPage() {
         for (int i = 0; i < dataBeans.size(); i++) {
             TaskInfoAppDb task = dataBeans.get(i);
-            if (task.getStatus() < ConstantBean.MODELS_RECONSTRUCT_COMPLETED_STATUS) {
+            if (task.getStatus() < 5) {
                 if (task.getTaskId() != null) {
                     new Thread("queryThread") {
                         @Override

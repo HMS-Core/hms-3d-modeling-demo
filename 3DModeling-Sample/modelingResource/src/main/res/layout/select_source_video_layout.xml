@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/splash_app_bg"
+    >
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <TextView
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Choose from Video"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/go_back_icon" />
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@android:color/white"
+            android:id="@+id/text_file_path_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Video file path"/>
+        <EditText
+            android:cursorVisible="false"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_file_path_input"
+            android:layout_toLeftOf="@+id/button_file_path_input"
+            android:id="@+id/file_path_input"/>
+        <Button
+            android:background="@drawable/load_photo"
+            android:layout_centerVertical="true"
+            android:id="@+id/button_file_path_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_folder_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text=""/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_folder_created"
+            android:id="@+id/folder_created"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/text_image_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text=""/>
+
+        <TextView
+            android:layout_below="@+id/text_image_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JPEG"/>
+
+        <Spinner
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_image_format"
+            android:id="@+id/image_format"></Spinner>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:background="@drawable/scan_bottom_status_bg"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textColor="@color/bottom_whit"
+            android:id="@+id/button_start"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <TextView
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/iv_show"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:paddingRight="@dimen/dimens_30"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="170dp"
+        android:layout_height="250dp"
+        android:id="@+id/rl_add_surface">
+
+
+    </RelativeLayout>
+</RelativeLayout>

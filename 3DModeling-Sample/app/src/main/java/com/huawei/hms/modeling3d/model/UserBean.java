@@ -17,7 +17,7 @@ package com.huawei.hms.modeling3d.model;
 import java.io.Serializable;
 
 public class UserBean implements Serializable {
-
+    private static final long serialVersionUID = -5713945027627603702L;
     private String selectScanModel = ConstantBean.SCAN_MODEL_TYPE_TWO ;
     private Integer selectResolutionModel = ConstantBean.SCREEN_MODEL_TYPE_ONE ;
     private String selectBuildModel = ConstantBean.SCAN_RGB_TYPE;

@@ -35,6 +35,16 @@
 </tr></table>
 
 
+### 动作捕捉
+
+其中包括：实时视频流检测、视频检测、单张图片检测
+
+<table><tr>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLive.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideo.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="download page" border=2></td>
+</tr></table>
+
 详细介绍请参考[华为3D建模服务SDK](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-introduction-4)。
 
 ## 工程目录结构
@@ -47,6 +57,9 @@ app
             	|-- CaptureMaterialActivity // 材质生成采集上传
             	|-- HistoryModelDataFragment // 3D建模下载
             	|-- HistoryMaterialDataFragment // 材质生成下载
+        |-- utils
+        	|-- skeleton
+        		|-- LocalSkeletonProcessor // 动作捕捉引擎
     	|-- Modeling3dDemo
 
 ## 更多场景

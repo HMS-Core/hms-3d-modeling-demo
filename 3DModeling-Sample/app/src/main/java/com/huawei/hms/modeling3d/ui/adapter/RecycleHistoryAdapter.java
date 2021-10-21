@@ -18,8 +18,6 @@ package com.huawei.hms.modeling3d.ui.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +45,6 @@ import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAdapter.DataViewHolder> {
 
@@ -135,7 +132,7 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
         holder.tvTime.setText(Utils.systemCurrentToData(news.getCreateTime()));
         holder.ivPoint.setOnClickListener(v -> {
             Modeling3dReconstructTaskUtils magic3DReconstructTaskUtils = Modeling3dReconstructTaskUtils.getInstance(Modeling3dApp.app);
-            new Thread(){
+            new Thread("magicTask"){
                 @Override
                 public void run() {
                     super.run();

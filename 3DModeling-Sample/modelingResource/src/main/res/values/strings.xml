@@ -126,8 +126,8 @@
     <string name="upload_models_materials_file_text">Upload materials to build models/materials</string>
     <string name="select_folder_text">Select folder</string>
     <string name="item_text">item</string>
-    <string name="model_material_text">Model material</string>
-    <string name="model_material_material_text">Material material</string>
+    <string name="model_material_text">Model</string>
+    <string name="model_material_material_text">Material</string>
     <string name="upload_material_type_text">Upload material type</string>
     <string name="next_step_text">Next step</string>
     <string name="first_step_text">first step</string>
@@ -151,4 +151,6 @@
     <string name="view_download_catalog">View download catalog</string>
     <string name="unrestricted_text">Lift restrictions</string>
     <string name="restricted_text">restricted</string>
+    <string name="motion_capture_text">Motion capture</string>
+    <string name="create_motion_des">Capture some action</string>
 </resources>

@@ -27,19 +27,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.view.PreviewView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.huawei.cameratakelib.CameraTakeManager;
-import com.huawei.cameratakelib.SurfaceViewCallback;
-import com.huawei.cameratakelib.listener.CameraTakeListener;
 import com.huawei.cameratakelib.utils.LogUtil;
 import com.huawei.hms.magicresource.db.TaskInfoAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
 import com.huawei.hms.magicresource.util.Constants;
-import com.huawei.hms.magicresource.view.ResizeAbleSurfaceView;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureEngine;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureInitResult;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureSetting;
@@ -52,9 +49,10 @@ import com.huawei.hms.modeling3d.model.UserBean;
 import com.huawei.hms.modeling3d.ui.adapter.RecycleImageAdapter;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
-
+import com.huawei.hms.modeling3d.utils.CameraXManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -88,8 +86,8 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     @BindView(R.id.iv_capture)
     ImageView ivCapture;
 
-    @BindView(R.id.surfaceView)
-    ResizeAbleSurfaceView surfaceView;
+//    @BindView(R.id.surfaceView)
+//    ResizeAbleSurfaceView surfaceView;
 
     @BindView(R.id.tv_tip)
     TextView tvTip;
@@ -109,10 +107,14 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     @BindView(R.id.rl_top_tips)
     RelativeLayout rlTopTips;
 
+    @BindView(R.id.view_finder)
+    PreviewView previewView;
+
+    @BindView(R.id.rl_title)
+    RelativeLayout rlTitle ;
+
+
     private Unbinder unbinder;
-    private CameraTakeManager cameraTakeManager;
-    private int currentPhotoNum = 0;
-    private int maxPhotoNum = 5;
     private int index;
     private String createTime;
     private RecycleImageAdapter adapter;
@@ -128,6 +130,8 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     private String globalTaskId;
 
     UserBean userBean ;
+    CameraXManager xManager;
+    String saveInnerPath ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,6 +159,8 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
                 rlTopTips.setVisibility(View.GONE);
             }
         }
+        createTime = String.valueOf(System.currentTimeMillis());
+        saveInnerPath = new Constants(CaptureMaterialActivity.this).getCaptureImageFile() +"material/"+createTime+"/";
     }
 
     private void init() {
@@ -165,35 +171,11 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     }
 
     private void initCamera() {
-        cameraTakeManager = new CameraTakeManager(this, surfaceView, new CameraTakeListener() {
-            @Override
-            public void onSuccess(File bitmapFile, Bitmap mBitmap) {
-                rlToast.setVisibility(View.GONE);
-                tvTip.setVisibility(View.VISIBLE);
-                llImage.setVisibility(View.VISIBLE);
-                LogUtil.i("onSuccess path = " + bitmapFile.getPath());
-                currentPhotoNum++;
-                index++;
-                imagePaths.add(bitmapFile.getPath());
-                adapter.notifyDataSetChanged();
-                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                isTakePhoto = false;
-            }
-
-            @Override
-            public void onFail(String error) {
-                LogUtil.i("onFail error = " + error);
-                Toast.makeText(CaptureMaterialActivity.this, error, Toast.LENGTH_LONG).show();
-                isTakePhoto = false;
-            }
-        }, SurfaceViewCallback.MATERIAL_MODEL);
-        if (createTime != null && createTime.length() > 0) {
-            cameraTakeManager.getSurfaceViewCallback().setCreateTime(createTime);
-            cameraTakeManager.getSurfaceViewCallback().setIndex(index);
-        }
+        xManager = new CameraXManager(this, previewView, 4);
+        xManager.startCamera();
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_capture, R.id.tv_upload,R.id.tv_sure})
+    @OnClick({R.id.iv_back, R.id.iv_capture, R.id.tv_upload, R.id.tv_sure})
     void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -204,7 +186,9 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
                     long time = System.currentTimeMillis();
                     if (time - lastClickTime > 1000) {
                         lastClickTime = time;
-                        takePhoto();
+                        if (index<5) {
+                            takePhoto();
+                        }
                     }
                 }
                 break;
@@ -225,23 +209,43 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     }
 
     private void takePhoto() {
-        LogUtil.i("iv_capture currentPhotoNum = " + currentPhotoNum);
-        if (!isTakePhoto) {
-            if (createTime == null || createTime.length() <= 0) {
-                createTime = String.valueOf(System.currentTimeMillis());
-                index = 0;
-                cameraTakeManager.getSurfaceViewCallback().setCreateTime(createTime);
-                cameraTakeManager.getSurfaceViewCallback().setIndex(index);
+        xManager.takePicture();
+        xManager.setTakePicBack(bitmap -> saveBitmap(bitmap));
+    }
+
+    private void saveBitmap(Bitmap bitmap) {
+
+        File filePic = null;
+        try {
+            filePic = new File(saveInnerPath + "/" + System.currentTimeMillis() + ".jpg");
+            if (!filePic.exists()) {
+                filePic.getParentFile().mkdirs();
+                filePic.createNewFile();
             }
-            if (currentPhotoNum < maxPhotoNum) {
-                int top = (int) rlMid.getY();
-                int width = rlMid.getWidth();
-                cameraTakeManager.takePhoto(top, width);
-                isTakePhoto = true;
-            } else {
-                LogUtil.i("Excessive number of photos");
-            }
+            FileOutputStream fos = new FileOutputStream(filePic);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        File finalFilePic = filePic;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rlToast.setVisibility(View.GONE);
+                tvTip.setVisibility(View.VISIBLE);
+                llImage.setVisibility(View.VISIBLE);
+                LogUtil.i("onSuccess path = " + finalFilePic.getPath());
+                index++;
+                imagePaths.add(finalFilePic.getPath());
+                adapter.notifyDataSetChanged();
+                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                isTakePhoto = false;
+            }
+        });
+
     }
 
     private void upLoadMaterial() {
@@ -253,11 +257,10 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
         Observable.create((Observable.OnSubscribe<Modeling3dTextureInitResult>) subscriber -> {
             modeling3dTextureInitResult = modeling3dTextureEngine.initTask(setting);
             String taskId = modeling3dTextureInitResult.getTaskId();
-            String filePath = new Constants(CaptureMaterialActivity.this).getCaptureMaterialImageFile() + createTime + "/";
             if (taskId != null && !taskId.equals("")) {
                 globalTaskId = taskId;
                 modeling3dTextureEngine.setTextureUploadListener(uploadListener);
-                modeling3dTextureEngine.asyncUploadFile(taskId, filePath);
+                modeling3dTextureEngine.asyncUploadFile(taskId, saveInnerPath);
             } else {
                 subscriber.onNext(modeling3dTextureInitResult);
             }
@@ -282,11 +285,11 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     }
 
     private void clearImage() {
-        createTime = null;
-        currentPhotoNum = 0;
+        createTime = String.valueOf(System.currentTimeMillis());
         index = 0;
         imagePaths.clear();
         adapter.notifyDataSetChanged();
+        saveInnerPath = new Constants(CaptureMaterialActivity.this).getCaptureImageFile() +"material/"+createTime+"/";
     }
 
     @Override
@@ -303,7 +306,6 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
 
     @Override
     public void onPause() {
-        cameraTakeManager.getSurfaceViewCallback().onPause();
         super.onPause();
     }
 
@@ -311,7 +313,6 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        cameraTakeManager.destroy();
     }
 
     @Override
@@ -322,7 +323,7 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
         if (d) {
             imagePaths.remove(path);
             adapter.notifyDataSetChanged();
-            currentPhotoNum--;
+            index--;
         }
     }
 
@@ -341,9 +342,6 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
                     @Override
                     public void run() {
                         Toast.makeText(getApplicationContext(), getString(R.string.upload_text_success), Toast.LENGTH_SHORT).show();
-                        if (cameraTakeManager.getSurfaceViewCallback().getWidthDes() < 1024) {
-                            Toast.makeText(getApplicationContext(), "The current resolution does not meet the requirements of 1024 x 1024. The effect may be poor.", Toast.LENGTH_SHORT).show();
-                        }
                         clearImage();
                     }
                 });
@@ -352,7 +350,7 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
                 taskInfoDb.setTaskId(taskId);
                 taskInfoDb.setCreateTime(System.currentTimeMillis());
                 taskInfoDb.setIsDownload(0);
-                taskInfoDb.setFileUploadPath(new Constants(CaptureMaterialActivity.this).getCaptureMaterialImageFile() + cameraTakeManager.getSurfaceViewCallback().getCreateTime());
+                taskInfoDb.setFileUploadPath(saveInnerPath);
                 TaskInfoMaterialAppDbUtils.insert(taskInfoDb);
             }
 

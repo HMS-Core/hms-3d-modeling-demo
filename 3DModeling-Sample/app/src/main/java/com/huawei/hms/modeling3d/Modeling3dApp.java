@@ -21,6 +21,9 @@ import android.content.Context;
 import com.huawei.hms.magicresource.db.DatabaseAppUtils;
 import com.huawei.hms.magicresource.materialdb.DatabaseMaterialAppUtils;
 import com.huawei.hms.magicresource.util.OverseasContextWrapper;
+import com.huawei.hms.materialgeneratesdk.MaterialGenApplication;
+import com.huawei.hms.motioncapturesdk.MotionCaptureApplication;
+import com.huawei.hms.objreconstructsdk.ReconstructApplication;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
@@ -41,7 +44,11 @@ public class Modeling3dApp extends Application {
         DatabaseMaterialAppUtils.initDatabase(this);
         app = this;
         initAutoSize();
+//        ReconstructApplication.getInstance().setAccessToken("CgB6e3x9SrM7/s4Qi7qY/vCJCO2HpHaIzp6KD4OEsxuTTktN5OEQEdyjzBS1o6Hz/BctpcdRRfuPU0sHK+RQ6ts1");
+//        MaterialGenApplication.getInstance().setApiKey("CgB6e3x9SrM7/s4Qi7qY/vCJCO2HpHaIzp6KD4OEsxuTTktN5OEQEdyjzBS1o6Hz/BctpcdRRfuPU0sHK+RQ6ts1");
 
+        //Dynamic loading of dynamic paving model
+        MotionCaptureApplication.getInstance();
     }
 
     private void initAutoSize() {

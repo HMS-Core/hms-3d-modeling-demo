@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dimens_4"
+    android:paddingTop="@dimen/dimens_4"
+    >
+
+    <CheckBox
+        android:button="@drawable/check_state_bg"
+        android:id="@+id/item_check_box"
+        android:layout_width="@dimen/dimens_30"
+        android:layout_height="@dimen/dimens_30"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="@dimen/dimens_26"
+        android:layout_height="@dimen/dimens_26"
+        android:id="@+id/item_click_box"
+        android:src="@drawable/unselect_rb_icon"/>
+
+
+    <ImageView
+        android:layout_marginLeft="@dimen/dimens_10"
+        android:id="@+id/item_file_icon"
+        android:layout_width="@dimen/dimens_48"
+        android:layout_height="@dimen/dimens_48"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/file_style_yellow" />
+
+    <LinearLayout
+        android:paddingLeft="@dimen/dimens_10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/bottom_whit"
+            android:textSize="@dimen/dimens_14sp"
+            android:id="@+id/item_file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="xxxx" />
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_has_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021/6/12 - 20项"
+            android:textSize="@dimen/dimens_9sp"
+            android:textColor="@color/memory_size_color"
+             />
+
+    </LinearLayout>
+
+    <ImageView
+        android:paddingLeft="@dimen/dimens_56"
+        android:id="@+id/item_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/right_icon"/>
+
+</LinearLayout>

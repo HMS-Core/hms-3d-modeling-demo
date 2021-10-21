@@ -24,7 +24,7 @@ It includes image uploading, task query and model downloadling.
 </tr></table>
 
 
-### Vision module
+### Material Generation
 It includes image uploading, task query and material downloadling.
 
 <table><tr>
@@ -34,7 +34,15 @@ It includes image uploading, task query and material downloadling.
 </tr></table>
 
 
+### Motion Capture
 
+It includes live video detection, video detection and photo detection.
+
+<table><tr>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLiveEN.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideoEN.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhotoEN.png" width=320 title="download page" border=2></td>
+</tr></table>
 
 For details about the HMS Core 3D Modeling SDK, please refer to [HUAWEI 3D Modeling Kit](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/ml-introduction-4)
 
@@ -49,6 +57,9 @@ app
             	|-- CaptureMaterialActivity // Uploads images and triggers a material generation task.
             	|-- HistoryModelDataFragment // Downloads a generated 3D object model.
             	|-- HistoryMaterialDataFragment // Downloads the generated texture maps.
+        |-- utils
+        	|-- skeleton
+        		|-- LocalSkeletonProcessor // Motion capture engine
     	|-- Modeling3dDemo
 
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dimens_16"
+    android:background="@drawable/scan_bottom_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimens_16"
+    android:paddingLeft="@dimen/dimens_24"
+    android:paddingRight="@dimen/dimens_24">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_56"
+        android:gravity="center_vertical"
+        android:text="@string/turntable_speed_text"
+        android:textColor="@color/scan_tips_color"
+        android:textSize="@dimen/dimens_20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40">
+
+        <EditText
+            android:id="@+id/edt_num"
+            android:background="@color/transparent"
+            android:maxLength="3"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_40"
+            android:gravity="center_vertical"
+            android:hint="Input turntable speed 20~200"
+            android:inputType="number"
+            android:textSize="@dimen/dimens_14sp"
+            />
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/second_revolution_text"
+            android:textSize="@dimen/dimens_10sp"
+            android:textColor="#FF000000"
+             />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_marginTop="@dimen/dimens_10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_40"
+        android:gravity="center"
+        android:text="@string/sure_text"
+        android:textColor="@color/home_text_select"
+        android:textSize="@dimen/dimens_16sp" />
+
+</LinearLayout>

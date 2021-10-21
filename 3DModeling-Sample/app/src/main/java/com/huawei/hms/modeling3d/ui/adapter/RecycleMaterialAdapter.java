@@ -18,8 +18,6 @@ package com.huawei.hms.modeling3d.ui.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +42,9 @@ import com.huawei.hms.modeling3d.Modeling3dApp;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.widget.HandlerMaterialPopDialog;
-import com.huawei.hms.modeling3d.ui.widget.HandlerPopDialog;
-import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
-import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterialAdapter.DataViewHolder> {
 
@@ -69,7 +63,7 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_ls_item, parent, false);
-        return new RecycleMaterialAdapter.DataViewHolder(view);
+        return new DataViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")

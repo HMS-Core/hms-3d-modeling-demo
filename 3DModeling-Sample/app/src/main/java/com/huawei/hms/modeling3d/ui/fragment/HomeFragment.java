@@ -36,8 +36,11 @@ import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.UserBean;
 import com.huawei.hms.modeling3d.ui.activity.CaptureMaterialActivity;
+import com.huawei.hms.modeling3d.ui.activity.ChooserActivity;
+import com.huawei.hms.modeling3d.ui.activity.EmptySelectActivity;
 import com.huawei.hms.modeling3d.ui.activity.HistoryActivity;
 import com.huawei.hms.modeling3d.ui.activity.NewScanActivity;
+import com.huawei.hms.modeling3d.ui.widget.ScanBottomDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
 
 import java.util.Objects;
@@ -103,7 +106,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @OnClick({R.id.rl_create_model, R.id.rl_create_material, R.id.rl_my_material, R.id.rl_my_model})
+    @OnClick({R.id.rl_create_model, R.id.rl_create_material, R.id.rl_my_material, R.id.rl_my_model,R.id.rl_create_motion,R.id.rl_upload_file})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -112,7 +115,7 @@ public class HomeFragment extends Fragment {
                     if (userBean != null && userBean.getSelectBuildModel() != null) {
                         if (userBean.getSelectBuildModel().equals(getString(R.string.rgb))) {
                             Context context = getActivity().getApplicationContext();
-                            Intent rgbIntent = new Intent(context, NewScanActivity.class);
+                            Intent rgbIntent = new Intent(context, EmptySelectActivity.class);
                             startActivity(rgbIntent);
                         }
                     }
@@ -143,6 +146,21 @@ public class HomeFragment extends Fragment {
                 intent = new Intent(getContext(), HistoryActivity.class);
                 intent.putExtra("index", 0);
                 startActivity(intent);
+                break;
+            case R.id.rl_create_motion:
+                intent = new Intent(getContext(), ChooserActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.rl_upload_file:
+                if (EasyPermissions.hasPermissions(getActivity(), PERMISSIONS)) {
+                    ScanBottomDialog dialog = new ScanBottomDialog(getContext());
+                    dialog.show();
+                } else {
+                    anInterface.askFromType(3);
+                    EasyPermissions.requestPermissions(getActivity(), "To use the app, you need to open permissions",
+                            RC_CAMERA_AND_EXTERNAL_STORAGE, PERMISSIONS);
+                }
                 break;
         }
     }

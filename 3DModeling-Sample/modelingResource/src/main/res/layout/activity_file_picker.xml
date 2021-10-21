@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_app_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_56">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimens_16"
+            android:paddingRight="@dimen/dimens_15"
+            android:src="@drawable/go_back_icon" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_back"
+            android:text="@string/setting_use_text"
+            android:textColor="@color/splash_text_color"
+            android:textSize="@dimen/dimens_12sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_show_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimens_16"
+        android:text="@string/select_folder_text"
+        android:textColor="#FFFFFFFF"
+        android:textSize="@dimen/dimens_12sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/file_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_bottom"
+            android:layout_marginTop="@dimen/dimens_12"
+            android:overScrollMode="never"
+            android:paddingLeft="@dimen/dimens_16"
+            android:paddingRight="@dimen/dimens_16" />
+
+        <RelativeLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_70"
+            android:layout_alignParentBottom="true"
+            android:background="#FF1F1627"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:paddingBottom="@dimen/dimens_4"
+                android:paddingTop="@dimen/dimens_4"
+                android:paddingRight="@dimen/dimens_22"
+                android:paddingLeft="@dimen/dimens_22"
+                android:id="@+id/ll_do_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/small_upload_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/upload_text"
+                    android:textColor="@color/bottom_whit"
+                    android:textSize="@dimen/dimens_10sp" />
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_copy"
+                android:gravity="center"
+                android:textSize="@dimen/dimens_16sp"
+                android:textColor="@color/bottom_whit"
+                android:paddingRight="@dimen/dimens_24"
+                android:paddingLeft="@dimen/dimens_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copy current path"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
