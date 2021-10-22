@@ -20,6 +20,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class FileSizeUtil {
     public static String TAG = "FileSizeUtil";
@@ -71,7 +73,7 @@ public class FileSizeUtil {
     }
 
     private static double FormetFileSize(long fileS, int sizeType) {
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("#.00", DecimalFormatSymbols.getInstance(Locale.US));
         double fileSizeLong = 0;
         switch (sizeType) {
             case SIZETYPE_B:
