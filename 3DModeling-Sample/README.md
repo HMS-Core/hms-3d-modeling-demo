@@ -23,6 +23,35 @@ It includes image uploading, task query and model downloadling.
 <td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelDownloadEN.png" width=320 title="download page" border=2></td>
 </tr></table>
 
+#### Shoes Reconstruction
+**Suggestions on Shoe Modeling**
+Shooting Devices
+- Light box: provides a simple and pure background that does not reflect light and ensures bright and even lighting, which brings a better modeling effect.
+- Turntable: requires no human labor to turn around an object for image shooting.
+- Gimbal: ensures stable distance between the phone and object, accurate focus, and clear images, which brings a better modeling effect.
+
+**Shooting Steps**
+Put the turntable in the light box in which the background is simple and does not reflect light, and the lighting is bright and even. Put the shoe on the turntable. As it turns five rounds at a fixed speed, take 108 images of the shoe in total.
+1. Place the phone camera at an angle of zero degrees above the shoe's horizontal axis. Take 24 images as the turntable turns one round.。
+
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFirstStep.jpg" width=300 title="First Step" border=2></td>
+
+2. Place the phone camera at an angle of 45 degrees above the shoe's horizontal axis. Take 24 images as the turntable turns one round.
+
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureSecondStep.jpg" width=300 title="Second Step" border=2></td>
+
+3. Place the phone camera at an angle of 90 degrees above the shoe's horizontal axis and make sure that the camera faces the insole. Take 12 images as the turntable turns half a round.
+
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureThirdStep.jpg" width=300 title="Third Step" border=2></td>
+
+4. Put the shoe on its side. Place the phone camera at an angle of zero to 15 degrees above the shoe's horizontal axis. Take 24 images as the turntable turns one round.
+
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFourthStep.jpg" width=300 title="Fourth Step" border=2></td>
+
+5. Put the shoe on its side. Place the phone camera at an angle of 45 degrees above the shoe's horizontal axis. Take 24 images as the turntable turns one round. Ensure each image contains both the shoe upper and outsole.
+
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFifthStep.jpg" width=300 title="Fifth Step" border=2></td>
+
 ### Material Generation
 It includes image uploading, task query and material downloadling.
 
@@ -32,43 +61,14 @@ It includes image uploading, task query and material downloadling.
 <td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialDownloadEN.png" width=320 title="download page" border=2></td>
 </tr></table>
 
-#### 鞋子建模
-**鞋子建模推荐方式**
-推荐拍摄设备
-- 灯箱：背景简单纯色无反光，光照明亮均匀，效果更好。
-- 转盘：需要围绕物体360°拍摄，转盘可以代替人旋转。
-- 手机稳定器：手机与物体拍摄距离稳定，对焦准确无模糊，效果更好。
-
-**拍摄步骤**
-转盘放置灯箱中，保证灯箱简单纯色无反光，光照明亮均匀，鞋子放置在转盘上，随着转盘转动，均匀拍摄图片，如下所示需要拍摄5圈，共108张照片。
-1. 手机0°放置，转盘转动一圈拍摄24张。
-
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFirstStep.jpg" width=300 title="First Step" border=2></td>
-
-2. 手机45°放置，转盘转动一圈拍摄24张。
-
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureSecondStep.jpg" width=300 title="Second Step" border=2></td>
-
-3. 手机90°放置，相机拍向鞋窝，转盘转动半圈拍摄12张。
-
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureThirdStep.jpg" width=300 title="Third Step" border=2></td>
-
-4. 鞋子侧放，手机0°~15°，转盘转动一圈拍摄24张。
-
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFourthStep.jpg" width=300 title="Fourth Step" border=2></td>
-
-5. 鞋子侧放，手机45°放置，转盘转动一圈拍摄24张。俯视45°拍摄时，保证图片可以同时看到鞋面和外鞋底。
-
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/ModelCaptureFifthStep.jpg" width=300 title="Fifth Step" border=2></td>
-
 ### Motion Capture
 
 It includes live video detection, video detection and photo detection.
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLiveEN.png" width=320 title="Live page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideoEN.png" width=320 title="Video page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhotoEN.png" width=320 title="Photo page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLive.png" width=320 title="Live page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideoE.png" width=320 title="Video page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="Photo page" border=2></td>
 </tr></table>
 
 For details about the HMS Core 3D Modeling SDK, please refer to [HUAWEI 3D Modeling Kit](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/ml-introduction-4)
