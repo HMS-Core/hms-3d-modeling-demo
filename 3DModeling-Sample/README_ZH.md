@@ -58,7 +58,7 @@
 
 <table><tr>
 <td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLive.png" width=320 title="Live page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideoE.png" width=320 title="Video page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideo.png" width=320 title="Video page" border=2></td>
 <td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="Photo page" border=2></td>
 </tr></table>
 
