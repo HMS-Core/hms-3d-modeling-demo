@@ -57,9 +57,9 @@
 其中包括：上传采集图片，查询材质生成进度、下载材质。
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLive.png" width=320 title="Live page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideo.png" width=320 title="Video page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="Photo page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialCapture.png" width=320 title="capture page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialUpload.png" width=320 title="upload page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MaterialDownload.png" width=320 title="download page" border=2></td>
 </tr></table>
 
 
@@ -68,9 +68,9 @@
 其中包括：实时视频流检测、视频检测、单张图片检测
 
 <table><tr>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLiveEN.png" width=320 title="Live page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideoEN.png" width=320 title="Video page" border=2></td>
-<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhotoEN.png" width=320 title="Photo page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureLive.png" width=320 title="Live page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCaptureVideo.png" width=320 title="Video page" border=2></td>
+<td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="Photo page" border=2></td>
 </tr></table>
 
 详细介绍请参考[华为3D建模服务SDK](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-introduction-4)。
