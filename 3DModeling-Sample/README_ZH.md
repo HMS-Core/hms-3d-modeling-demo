@@ -73,7 +73,7 @@
 <td><img src="https://github.com/HMS-Core/hms-3d-modeling-demo/blob/master/3DModeling-Sample/resources/MotionCapturePhoto.png" width=320 title="Photo page" border=2></td>
 </tr></table>
 
-详细介绍请参考[华为3D建模服务SDK](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-introduction-4)。
+详细介绍请参考[华为3D建模服务SDK](https://developer.huawei.com/consumer/cn/doc/development/graphics-Guides/introduction-0000001143077297)。
 
 ## 工程目录结构
 app
@@ -92,7 +92,7 @@ app
 
 ## 更多场景
 华为3D建模服务（HMS 3D Modeling Kit） 提供3D建模套件，为开发者应用3D建模能力开发各类应用提供优质体验。
-更多应用场景，可参考：[华为3D建模服务集成案例](https://developer.huawei.com/consumer/cn/doc/development/HMS-Guides/ml-case-banggood)。
+更多应用场景，可参考：[华为3D建模服务集成案例](https://developer.huawei.com/consumer/cn/doc/development/graphics-Guides/case-one-0000001148975606)。
 
 ## 运行步骤
  - 将本代码库克隆到本地。
