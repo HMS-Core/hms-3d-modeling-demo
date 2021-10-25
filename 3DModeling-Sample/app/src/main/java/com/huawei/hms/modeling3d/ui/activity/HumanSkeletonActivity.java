@@ -55,8 +55,7 @@ import java.lang.ref.WeakReference;
 /**
  * 人体骨骼扫描主页面
  *
- * @author zhanghui WX882937
- * @since 2020-05-10
+ * @since 2021-10-25
  */
 public final class HumanSkeletonActivity extends AppCompatActivity
         implements OnRequestPermissionsResultCallback, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
@@ -119,8 +118,7 @@ public final class HumanSkeletonActivity extends AppCompatActivity
     /**
      * Handler 消息类
      *
-     * @author zhanghui WX882937
-     * @since 2020-05-10
+     * @since 2021-10-25
      */
     private static class MsgHandler extends Handler {
         WeakReference<HumanSkeletonActivity> mMainActivityWeakReference;
