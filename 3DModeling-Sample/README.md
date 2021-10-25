@@ -93,7 +93,7 @@ app
 
 ## More Scenarios
 HUAWEI 3D Modeling Kit allows your apps to easily leverage Huawei's long-term proven expertise in 3D Modeling Kit to support diverse 3D Modeling applications throughout a wide range of industries.
-For more application scenarios, see: [Huawei 3D Modeling Service Integration Cases.](https://developer.huawei.com/consumer/en/doc/development/graphics-Guides/case-one-0000001148975606c)
+For more application scenarios, see: [Huawei 3D Modeling Service Integration Cases.](https://developer.huawei.com/consumer/en/doc/development/graphics-Guides/case-one-0000001148975606)
 
 ## Getting Started
  - Clone the code library to the local computer.
