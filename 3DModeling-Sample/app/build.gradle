@@ -69,7 +69,7 @@ dependencies {
     implementation 'com.huawei.hms:modeling3d-material-generate:1.2.0.300'
     implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.2.0.300'
 
-    implementation 'com.huawei.hms:modeling3d-motion-capture:1.2.0.300'
-    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.2.0.300'
+    implementation 'com.huawei.hms:modeling3d-motion-capture:1.2.0.301'
+    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.2.0.301'
 }
 apply plugin: 'com.huawei.agconnect'
