@@ -73,7 +73,7 @@ public class FileSizeUtil {
     }
 
     private static double FormetFileSize(long fileS, int sizeType) {
-        DecimalFormat df = new DecimalFormat("#.00", DecimalFormatSymbols.getInstance(Locale.US));
+        DecimalFormat df = new DecimalFormat("#.00", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         double fileSizeLong = 0;
         switch (sizeType) {
             case SIZETYPE_B:

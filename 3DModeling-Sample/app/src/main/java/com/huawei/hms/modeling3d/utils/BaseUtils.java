@@ -20,7 +20,6 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 
-import com.huawei.cameratakelib.utils.FileUtil;
 import com.huawei.hms.magicresource.util.Utils;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.model.UserBean;

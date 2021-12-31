@@ -25,6 +25,10 @@ public class SelectModelDialog extends Dialog {
     RelativeLayout rlSlam;
     ImageView ivRgb;
     ImageView ivSlam;
+    RelativeLayout rlLow;
+    RelativeLayout rlHigh;
+    ImageView ivLow;
+    ImageView ivHigh;
     TextView tvCancel;
     HistoryModelDataFragment dataFragment;
     TaskInfoAppDb appDb;
@@ -38,6 +42,7 @@ public class SelectModelDialog extends Dialog {
     }
 
     String model = "OBJ";
+    Integer textureMode = 0;
 
     public SelectModelDialog(@NonNull Context context, HistoryModelDataFragment fragment, TaskInfoAppDb appDb) {
         super(context, R.style.BottomAnimDialogStyle);
@@ -71,6 +76,10 @@ public class SelectModelDialog extends Dialog {
         rlSlam = view.findViewById(R.id.rl_slam);
         ivRgb = view.findViewById(R.id.iv_rgb);
         ivSlam = view.findViewById(R.id.iv_slam);
+        rlLow = view.findViewById(R.id.rl_low);
+        rlHigh = view.findViewById(R.id.rl_high);
+        ivLow = view.findViewById(R.id.iv_low);
+        ivHigh = view.findViewById(R.id.iv_high);
         tvCancel = view.findViewById(R.id.tv_cancel);
         rlRgb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +98,27 @@ public class SelectModelDialog extends Dialog {
             }
         });
 
+        rlLow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivLow.setImageResource(R.drawable.select_rb_icon);
+                ivHigh.setImageResource(R.drawable.unselect_rb_icon);
+                textureMode = 0;
+            }
+        });
+        rlHigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivLow.setImageResource(R.drawable.unselect_rb_icon);
+                ivHigh.setImageResource(R.drawable.select_rb_icon);
+                textureMode = 1;
+            }
+        });
+
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataFragment.showNewDownLoad(appDb, model);
+                dataFragment.showNewDownLoad(appDb, model,textureMode);
                 dismiss();
             }
         });

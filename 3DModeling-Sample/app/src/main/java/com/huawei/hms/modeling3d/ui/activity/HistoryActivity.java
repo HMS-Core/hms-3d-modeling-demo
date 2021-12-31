@@ -16,20 +16,19 @@
 package com.huawei.hms.modeling3d.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.ui.adapter.ContentPagerAdapter;
 import com.huawei.hms.modeling3d.ui.fragment.HistoryMaterialDataFragment;
 import com.huawei.hms.modeling3d.ui.fragment.HistoryModelDataFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 

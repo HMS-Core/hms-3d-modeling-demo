@@ -26,6 +26,7 @@ import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureUploadResult;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.adapter.FileAdapter;
+import com.huawei.hms.modeling3d.ui.widget.PreviewConfigDialog;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.utils.ToastUtil;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
@@ -126,12 +127,14 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
                             File[] files = file.listFiles();
                             if (files != null && files.length > 0) {
                                 for (File value : files) {
-                                    if (!value.getPath().contains("jpg")) {
+                                    if (value.getPath().contains("jpg")|| value.getPath().contains("png") || value.getPath().contains("Webp")) {
+                                        uploadMaterial(dataFilePath);
+                                        break;
+                                    }else {
                                         ToastUtil.showToast(FilePickerActivity.this, "At least 1 picture is required under the material folder");
                                         break;
                                     }
                                 }
-                                uploadMaterial(dataFilePath);
                             }
                         }
                         lastClickTime = System.currentTimeMillis();
@@ -172,13 +175,27 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
     int currentCount ;
 
     public void uploadModel(String saveInnerPath) {
-        progressCustomDialog = new ProgressCustomDialog(FilePickerActivity.this, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
-        progressCustomDialog.show();
-        progressCustomDialog.setListener(this);
-        progressCustomDialog.setCanceledOnTouchOutside(false);
+        PreviewConfigDialog dialog = new PreviewConfigDialog(FilePickerActivity.this);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getTvCancel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressCustomDialog = new ProgressCustomDialog(FilePickerActivity.this, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
+                progressCustomDialog.show();
+                progressCustomDialog.setListener(FilePickerActivity.this);
+                progressCustomDialog.setCanceledOnTouchOutside(false);
+                initModeTask(dialog.getTextureMode(),saveInnerPath);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void initModeTask(Integer textureMode,String saveInnerPath){
         Observable.create((Observable.OnSubscribe<Modeling3dReconstructInitResult>) subscriber -> {
             Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
                     .setReconstructMode(Constants.RGB_MODEL)
+                    .setTextureMode(textureMode)
                     .create();
             magic3dReconstructInitResult = magic3dReconstructEngine.initTask(setting);
             String taskId = magic3dReconstructInitResult.getTaskId();
@@ -200,19 +217,6 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
                                 ToastUtil.showToast(FilePickerActivity.this, getString(R.string.upload_text_success));
                                 saveModelData(saveInnerPath);
 
-                                currentCount++;
-                                if (currentCount<allCount) {
-                                    ArrayList<String> data = mAdapter.getChoosePaths();
-                                    String dataFilePath = data.get(currentCount);
-                                    File file = new File(dataFilePath);
-                                    if (fileType.equals(ConstantBean.UPLOAD_TO_BUILD_MODELS)) {
-                                        if (Objects.requireNonNull(file.list()).length >= 20) {
-                                            uploadModel(dataFilePath);
-                                        } else {
-                                            ToastUtil.showToast(FilePickerActivity.this, "More than 20 pictures in the model folder");
-                                        }
-                                    }
-                                }
                             });
                         }
                     }
@@ -223,21 +227,6 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
                             progressCustomDialog.dismiss();
                             ToastUtil.showToast(FilePickerActivity.this, message);
                             saveModelData(saveInnerPath);
-
-                            currentCount++;
-
-                            if (currentCount<allCount) {
-                                ArrayList<String> data = mAdapter.getChoosePaths();
-                                String dataFilePath = data.get(currentCount);
-                                File file = new File(dataFilePath);
-                                if (fileType.equals(ConstantBean.UPLOAD_TO_BUILD_MODELS)) {
-                                    if (Objects.requireNonNull(file.list()).length >= 20) {
-                                        uploadModel(dataFilePath);
-                                    } else {
-                                        ToastUtil.showToast(FilePickerActivity.this, "More than 20 pictures in the model folder");
-                                    }
-                                }
-                            }
                         });
                     }
                 });
@@ -302,12 +291,6 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
                                 saveMaterial(savePath);
                                 Toast.makeText(getApplicationContext(), getString(R.string.upload_text_success), Toast.LENGTH_SHORT).show();
                                 progressCustomDialog.dismiss();
-
-                                currentCount++;
-                                if (currentCount<dataAllFile.size()){
-                                    uploadMaterial(dataAllFile.get(currentCount));
-                                }
-
                             });
                         }
                     }
@@ -317,10 +300,6 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
                         runOnUiThread(() -> {
                             progressCustomDialog.dismiss();
                             ToastUtil.showToast(FilePickerActivity.this, message + "" + errorCode);
-                            currentCount++;
-                            if (currentCount<dataAllFile.size()){
-                                uploadMaterial(dataAllFile.get(currentCount));
-                            }
                         });
                     }
                 });

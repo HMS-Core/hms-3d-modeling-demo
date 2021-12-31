@@ -153,4 +153,9 @@
     <string name="restricted_text">限制</string>
     <string name="motion_capture_text">动作捕捉</string>
     <string name="create_motion_des">捕捉一些动作</string>
+    <string name="choose_download_format_text">选择下载格式</string>
+    <string name="select_accuracy_mode_text">选择精度模式</string>
+    <string name="low_accuracy_text">普通贴图</string>
+    <string name="high_precision_text">PBR</string>
+    <string name="limit_text">限制</string>
 </resources>

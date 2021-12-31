@@ -72,6 +72,10 @@ public class VideoToFrames implements Runnable {
         this.callback = callback;
     }
 
+    public void stopDecode() {
+        stopDecode = true;
+    }
+
     public void setSaveFrames(String dir, VideoOutputImageFormat imageFormat) throws IOException {
         videoOutputImageFormat = imageFormat;
         File theDir = new File(dir);

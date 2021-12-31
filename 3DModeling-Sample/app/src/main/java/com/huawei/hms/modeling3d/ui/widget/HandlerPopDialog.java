@@ -99,16 +99,11 @@ public class HandlerPopDialog {
         tvDownload.setOnClickListener(v -> {
             String savePath = TaskInfoAppDbUtils.getTasksByTaskId(appDb.getTaskId()).getFileSavePath();
             if (TextUtils.isEmpty(savePath)) {
-                adapter.setOnDownLoadClick(appDb, holder);
+                popupWindow.dismiss();
             } else {
-                File file = new File(savePath);
-                if (!file.exists() || file.listFiles() == null || file.listFiles().length != 3) {
-                    Utils.deleteDirectory(savePath);
-                    adapter.setOnDownLoadClick(appDb, holder);
-                } else {
-                    Toast.makeText(mContext, "The model file already exists.", Toast.LENGTH_LONG).show();
-                }
+                Utils.deleteDirectory(savePath);
             }
+            adapter.setOnDownLoadClick(appDb, holder);
             if (popupWindow != null) {
                 popupWindow.dismiss();
             }

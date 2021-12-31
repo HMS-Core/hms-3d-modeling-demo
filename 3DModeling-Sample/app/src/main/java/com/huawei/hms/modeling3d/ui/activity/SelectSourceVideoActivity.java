@@ -81,6 +81,9 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
     private RelativeLayout glLayout;
     private BoneGLSurfaceView boneRenderManager;
     GLSurfaceView glSurfaceView;
+    VideoToFrames videoToFrames ;
+
+    int index ;
 
     final Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -118,7 +121,7 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
                 outputDir = Environment.getExternalStorageDirectory() + "/" + "motionCapture/" + editTextOutputFolder.getText().toString();
                 editTextInputFilePath = (EditText) findViewById(R.id.file_path_input);
                 String inputFilePath = editTextInputFilePath.getText().toString();
-                VideoToFrames videoToFrames = new VideoToFrames();
+                videoToFrames = new VideoToFrames();
                 videoToFrames.setCallback(self);
                 buttonFilePathInput.setEnabled(false);
                 try {
@@ -186,6 +189,9 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
         if (localSkeletonProcessor != null) {
             localSkeletonProcessor.stop();
         }
+        if (videoToFrames!=null){
+            videoToFrames.stopDecode();
+        }
     }
 
     public void onDecodeFrame(int index) {
@@ -210,7 +216,10 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
                 .setWidth(width)
                 .setHeight(height)
                 .setQuadrant(rotation)
+                .setItemIdentity(index)
                 .create();
+
+        index++;
 
         SparseArray<Modeling3dMotionCaptureSkeleton> data = localSkeletonProcessor.detectInImageSynchronize(Modeling3dFrame.fromByteArray(imagedata, property));
         if (data.size() != 0) {

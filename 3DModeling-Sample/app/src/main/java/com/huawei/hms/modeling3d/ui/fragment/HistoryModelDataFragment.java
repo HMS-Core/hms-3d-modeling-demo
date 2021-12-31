@@ -32,10 +32,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.huawei.cameratakelib.utils.LogUtil;
 import com.huawei.hms.modeling3d.model.ConstantBean;
+import com.huawei.hms.modeling3d.ui.activity.NewScanActivity;
+import com.huawei.hms.modeling3d.ui.widget.PreviewConfigDialog;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.ui.widget.SelectModelDialog;
+import com.huawei.hms.modeling3d.utils.LogUtil;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadConfig;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadListener;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadResult;
@@ -128,7 +130,7 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
             public void run() {
                 loadPage();
             }
-        }, 1000, 15000);
+        }, 1000, 30000);
 
     }
 
@@ -136,31 +138,50 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        timer = null;
+        if (timer!=null){
+            timer.cancel();
+            timer = null ;
+        }
     }
 
     @Override
     public void onClick(View parent, int position) {
         initEngine();
         magic3dReconstructEngine.setReconstructUploadListener(uploadListener);
-        dialog = new ProgressCustomDialog(mContext, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
-        dialog.show();
-        dialog.setListener(HistoryModelDataFragment.this, dataBeans.get(position));
-        dialog.setCanceledOnTouchOutside(false);
+
+        PreviewConfigDialog mDialog = new PreviewConfigDialog(getActivity());
+        mDialog.show();
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.getTvCancel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog = new ProgressCustomDialog(mContext, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
+                dialog.show();
+                dialog.setListener(HistoryModelDataFragment.this, dataBeans.get(position));
+                dialog.setCanceledOnTouchOutside(false);
+                initModeTask(mDialog.getTextureMode(),position);
+                mDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void initModeTask(Integer textureMode ,int position){
         TaskInfoAppDb news = dataBeans.get(position);
         if (!TextUtils.isEmpty(news.getTaskId())) {
             magic3dReconstructEngine.uploadFile(news.getTaskId(), news.getFileUploadPath());
         } else {
             int type ;
-                    if(news.getModelType().equals(mContext.getString(R.string.slam))){
-                        type = Constants.SLAM_MODEL ;
-                    }else if (news.getModelType().equals(mContext.getString(R.string.rgb))){
-                        type = Constants.RGB_MODEL;
-                    }else {
-                        type=Integer.parseInt(news.getModelType());
-                    }
+            if(news.getModelType().equals(mContext.getString(R.string.slam))){
+                type = Constants.SLAM_MODEL ;
+            }else if (news.getModelType().equals(mContext.getString(R.string.rgb))){
+                type = Constants.RGB_MODEL;
+            }else {
+                type=Integer.parseInt(news.getModelType());
+            }
             Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
                     .setReconstructMode(type)
+                    .setReconstructMode(textureMode)
                     .create();
             new Thread(() -> {
                 Modeling3dReconstructInitResult result = magic3dReconstructEngine.initTask(setting);
@@ -168,7 +189,7 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
                 if (taskId == null || taskId.equals("")) {
                     new Handler(mContext.getMainLooper()).post(() -> {
                         dialog.dismiss();
-                        Toast.makeText(mContext, "upload failed", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "upload failed"+result.getRetCode(), Toast.LENGTH_LONG).show();
                     });
                 } else {
                     news.setTaskId(taskId);
@@ -187,14 +208,14 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
         modelDialog.show();
     }
 
-    public void showNewDownLoad(TaskInfoAppDb appDb,String model){
+    public void showNewDownLoad(TaskInfoAppDb appDb, String model, Integer textureMode){
         initEngine();
         dialog = new ProgressCustomDialog(getContext(), ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.downloading_dialog_text));
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
         dialog.setListener(HistoryModelDataFragment.this, appDb);
         magic3dReconstructEngine.setReconstructDownloadListener(magic3dReconstructDownloadListener);
-        magic3dReconstructEngine.downloadModelWithConfig(appDb.getTaskId(), appDb.getFileSavePath(), new Modeling3dReconstructDownloadConfig.Factory().setModelFormat(model).create());
+        magic3dReconstructEngine.downloadModelWithConfig(appDb.getTaskId(), appDb.getFileSavePath(), new Modeling3dReconstructDownloadConfig.Factory().setModelFormat(model).setTextureMode(textureMode).create());
     }
 
     private final Modeling3dReconstructUploadListener uploadListener = new Modeling3dReconstructUploadListener() {

@@ -17,6 +17,7 @@ package com.huawei.hms.modeling3d.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,11 +33,11 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.huawei.cameratakelib.utils.LogUtil;
 import com.huawei.hms.magicresource.db.TaskInfoAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
 import com.huawei.hms.magicresource.util.Constants;
+import com.huawei.hms.magicresource.view.ResizeAbleSurfaceView;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureEngine;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureInitResult;
 import com.huawei.hms.materialgeneratesdk.cloud.Modeling3dTextureSetting;
@@ -50,6 +51,8 @@ import com.huawei.hms.modeling3d.ui.adapter.RecycleImageAdapter;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
 import com.huawei.hms.modeling3d.utils.CameraXManager;
+import com.huawei.hms.modeling3d.utils.LogUtil;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -175,7 +178,7 @@ public class CaptureMaterialActivity extends AppCompatActivity implements Recycl
         xManager.startCamera();
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_capture, R.id.tv_upload, R.id.tv_sure})
+    @OnClick({R.id.iv_back, R.id.iv_capture, R.id.tv_upload,R.id.tv_sure})
     void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:

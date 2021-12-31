@@ -61,7 +61,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimens_40"
-        android:text="限制"
+        android:text="@string/limit_text"
         android:gravity="center"
         android:textColor="@color/scan_tips_color"
         android:textSize="@dimen/dimens_16sp"

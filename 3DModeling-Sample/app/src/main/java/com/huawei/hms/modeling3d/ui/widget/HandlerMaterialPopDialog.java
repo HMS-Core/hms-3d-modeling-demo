@@ -26,7 +26,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.huawei.cameratakelib.utils.FileUtil;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
 import com.huawei.hms.magicresource.util.Utils;
@@ -36,6 +35,7 @@ import com.huawei.hms.modeling3d.Modeling3dApp;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.adapter.RecycleMaterialAdapter;
+import com.huawei.hms.modeling3d.utils.FileUtil;
 import com.huawei.hms.objreconstructsdk.Modeling3dReconstructConstants;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
 
@@ -102,11 +102,11 @@ public class HandlerMaterialPopDialog {
                 adapter.setOnDownLoadClick(appDb, holder);
             } else {
                 File file = new File(savePath);
-                if (!file.exists() || file.listFiles() == null || file.listFiles().length != 4) {
+                if (file.exists()){
+                    Toast.makeText(mContext, "Material file already exists", Toast.LENGTH_LONG).show();
+                }else {
                     Utils.deleteDirectory(savePath);
                     adapter.setOnDownLoadClick(appDb, holder);
-                } else {
-                    Toast.makeText(mContext, "Material file already exists", Toast.LENGTH_LONG).show();
                 }
             }
             if (popupWindow != null) {

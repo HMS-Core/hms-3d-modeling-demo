@@ -27,9 +27,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioAttributes;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.Surface;
 import android.view.View;
@@ -56,12 +58,14 @@ import com.huawei.hms.magicresource.view.CustomRoundAngleImageView;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.model.UserBean;
+import com.huawei.hms.modeling3d.ui.widget.PreviewConfigDialog;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.ui.widget.ShootingStepsDialog;
 import com.huawei.hms.modeling3d.ui.widget.TurntableSpeedDialog;
 import com.huawei.hms.modeling3d.ui.widget.UploadDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
 import com.huawei.hms.modeling3d.utils.CameraXManager;
+import com.huawei.hms.modeling3d.utils.ToastUtil;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructInitResult;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructSetting;
@@ -525,13 +529,29 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
 
     @Override
     public void onClick() {
-        progressCustomDialog = new ProgressCustomDialog(NewScanActivity.this, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
-        progressCustomDialog.show();
-        progressCustomDialog.setListener(NewScanActivity.this);
-        progressCustomDialog.setCanceledOnTouchOutside(false);
+        PreviewConfigDialog dialog = new PreviewConfigDialog(NewScanActivity.this);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getTvCancel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressCustomDialog = new ProgressCustomDialog(NewScanActivity.this, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
+                progressCustomDialog.show();
+                progressCustomDialog.setListener(NewScanActivity.this);
+                progressCustomDialog.setCanceledOnTouchOutside(false);
+                initModeTask(dialog.getTextureMode());
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+
+    public void initModeTask(Integer textureMode){
         Observable.create((Observable.OnSubscribe<Modeling3dReconstructInitResult>) subscriber -> {
             Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
                     .setReconstructMode(rgbMode)
+                    .setTextureMode(textureMode)
                     .create();
             magic3dReconstructInitResult = magic3dReconstructEngine.initTask(setting);
             String taskId = magic3dReconstructInitResult.getTaskId();
@@ -560,7 +580,6 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
                 Toast.makeText(NewScanActivity.this, result.getRetMsg(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private final Modeling3dReconstructUploadListener uploadListener = new Modeling3dReconstructUploadListener() {

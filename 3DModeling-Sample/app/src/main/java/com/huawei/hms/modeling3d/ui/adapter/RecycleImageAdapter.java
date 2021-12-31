@@ -57,7 +57,7 @@ public class RecycleImageAdapter extends RecyclerView.Adapter<RecycleImageAdapte
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_material, parent, false);
-        return new DataViewHolder(view);
+        return new RecycleImageAdapter.DataViewHolder(view);
     }
 
     @Override

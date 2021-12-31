@@ -15,6 +15,7 @@
  */
 package com.huawei.hms.magicresource.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 
@@ -33,12 +34,14 @@ public class Constants {
         }
     }
 
+    @SuppressLint("SdCardPath")
     public String getRgbDownFile() {
-        return rootPath + "model/download/";
+        return "/sdcard/3dmodelingkit/" + "model/download/";
     }
 
+    @SuppressLint("SdCardPath")
     public String getMaterialDownFile() {
-        return rootPath + "material/download/";
+        return "/sdcard/3dmodelingkit/" + "material/download/";
     }
 
     public String getCaptureImageFile() {

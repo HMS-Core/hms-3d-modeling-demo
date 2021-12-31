@@ -5,74 +5,159 @@
     android:layout_margin="@dimen/dimens_16"
     android:background="@drawable/scan_bottom_bg"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dimens_16"
-    android:paddingBottom="@dimen/dimens_16"
     android:paddingLeft="@dimen/dimens_24"
-    android:paddingRight="@dimen/dimens_24">
+    android:paddingTop="@dimen/dimens_16"
+    android:paddingRight="@dimen/dimens_24"
+    android:paddingBottom="@dimen/dimens_16">
 
 
-    <RelativeLayout
-        android:layout_marginTop="@dimen/dimens_10"
-        android:id="@+id/rl_slam"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_40">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_round"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="OBJ"
-            android:textColor="@color/scan_tips_color"
-            android:textSize="@dimen/dimens_16sp" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_slam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/select_rb_icon"
-            />
+            <LinearLayout
+                android:id="@+id/ll_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dimens_4"
+                    android:text="@string/choose_download_format_text"
+                    android:textColor="@color/bottom_black"
+                    android:textSize="@dimen/dimens_14sp" />
 
-    <RelativeLayout
-        android:id="@+id/rl_rgb"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_40">
+                <RelativeLayout
+                    android:id="@+id/rl_slam"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimens_40"
+                    android:layout_marginTop="@dimen/dimens_10">
 
-        <TextView
-            android:id="@+id/tv_common"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="GLTF"
-            android:textColor="@color/scan_tips_color"
-            android:textSize="@dimen/dimens_16sp" />
+                    <TextView
+                        android:id="@+id/tv_round"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="OBJ"
+                        android:textColor="@color/scan_tips_color"
+                        android:textSize="@dimen/dimens_16sp" />
 
-        <ImageView
-            android:id="@+id/iv_rgb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/unselect_rb_icon"
-            />
+                    <ImageView
+                        android:id="@+id/iv_slam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/select_rb_icon" />
 
-    </RelativeLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_rgb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimens_40">
+
+                    <TextView
+                        android:id="@+id/tv_common"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="GLTF"
+                        android:textColor="@color/scan_tips_color"
+                        android:textSize="@dimen/dimens_16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_rgb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/unselect_rb_icon" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimens_10"
+                android:paddingBottom="@dimen/dimens_4"
+                android:text="@string/select_accuracy_mode_text"
+                android:textColor="@color/bottom_black"
+                android:textSize="@dimen/dimens_14sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_low"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_40"
+                android:layout_marginTop="@dimen/dimens_10">
+
+                <TextView
+                    android:id="@+id/tv_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/low_accuracy_text"
+                    android:textColor="@color/scan_tips_color"
+                    android:textSize="@dimen/dimens_16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/select_rb_icon" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_high"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_40">
+
+                <TextView
+                    android:id="@+id/tv_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/high_precision_text"
+                    android:textColor="@color/scan_tips_color"
+                    android:textSize="@dimen/dimens_16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_high"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/unselect_rb_icon" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dimens_10"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimens_40"
+        android:layout_marginTop="@dimen/dimens_10"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="@string/sure_text"
             android:textColor="@color/home_text_select"

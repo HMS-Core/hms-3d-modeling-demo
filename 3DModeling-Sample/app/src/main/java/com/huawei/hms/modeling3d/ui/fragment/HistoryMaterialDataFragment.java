@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.huawei.cameratakelib.utils.LogUtil;
 import com.huawei.hms.magicresource.db.TaskInfoAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDb;
 import com.huawei.hms.magicresource.materialdb.TaskInfoMaterialAppDbUtils;
@@ -43,6 +42,7 @@ import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.adapter.RecycleMaterialAdapter;
 import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
+import com.huawei.hms.modeling3d.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -66,7 +66,6 @@ public class HistoryMaterialDataFragment extends Fragment implements RecycleMate
     public ArrayList<TaskInfoMaterialAppDb> dataBeans = new ArrayList<>();
     private Context mContext;
     ProgressCustomDialog dialog;
-    private Timer timer = new Timer();
 
     String taskId ;
 
@@ -108,12 +107,12 @@ public class HistoryMaterialDataFragment extends Fragment implements RecycleMate
 
         dataBeans = TaskInfoMaterialAppDbUtils.getAllTasks();
         adapter.setDataList(dataBeans);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                loadPage();
-            }
-        }, 0, 1000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPage();
     }
 
     @Override
@@ -132,7 +131,7 @@ public class HistoryMaterialDataFragment extends Fragment implements RecycleMate
         @Override
         public void onDownloadProgress(String taskId, double progress, Object ext) {
             ((Activity) mContext).runOnUiThread(() -> {
-
+                dialog.setCurrentProgress(progress);
             });
         }
 
