@@ -19,7 +19,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:name="com.huawei.hms.modeling3d.Modeling3dApp"
         android:allowBackup="true"
-        android:icon="@mipmap/magic3"
+        android:icon="@mipmap/modeling3"
         android:label="@string/splash_app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
