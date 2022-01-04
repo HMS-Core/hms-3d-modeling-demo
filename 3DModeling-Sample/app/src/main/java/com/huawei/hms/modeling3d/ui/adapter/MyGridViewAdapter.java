@@ -72,7 +72,7 @@ public class MyGridViewAdapter extends BaseAdapter {
                 holder = (ViewHolder) convertView.getTag();
             }
             Bitmap bitmap = mDataList.get(position).getBitmap();
-            Glide.with(mContext).load(bitmap).error(R.drawable.magic3d2).into(holder.imageView);
+            Glide.with(mContext).load(bitmap).error(R.drawable.modeling3d2).into(holder.imageView);
         } catch (Exception e) {
             Log.e("MyGridViewAdapter", e.getMessage());
         }
