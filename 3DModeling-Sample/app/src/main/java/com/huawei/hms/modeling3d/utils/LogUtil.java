@@ -28,18 +28,12 @@ public class LogUtil {
     public static boolean showE = true;
     public static boolean showWTF = true;
 
-    /**
-     * 得到tag（所在类.方法（L:行））
-     *
-     * @return
-     */
     private static String generateTag() {
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[4];
         String callerClazzName = stackTraceElement.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName.lastIndexOf(".") + 1);
         String tag = "%s.%s(L:%d)";
         tag = String.format(tag, new Object[]{callerClazzName, stackTraceElement.getMethodName(), Integer.valueOf(stackTraceElement.getLineNumber())});
-        //给tag设置前缀
         tag = TextUtils.isEmpty(tagPrefix) ? tag : tagPrefix + ":" + tag;
         return tag;
     }
