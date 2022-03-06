@@ -52,24 +52,24 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 /**
- * 人体骨骼扫描主页面
+ * Human Skeletal Scan Home Page
  *
  */
 public final class HumanSkeletonActivity extends AppCompatActivity
         implements OnRequestPermissionsResultCallback, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     /**
-     * 自动拍照
+     * auto take
      */
     public static final int AUTO_TAKE_PHOTO = 101;
 
     /**
-     * 刷新置信度显示界面
+     * Refresh the confidence display screen.
      */
     public static final int UPDATE_SCORES_VIEW = LocalSkeletonProcessor.UPDATE_SCORES_VIEW;
 
     /**
-     * 刷新相似度显示界面
+     * Refresh the similarity display screen.
      */
     public static final int UPDATE_SIMILARITY_VIEW = 102;
 
@@ -81,7 +81,7 @@ public final class HumanSkeletonActivity extends AppCompatActivity
 
     private CameraSourcePreview preview;
 
-    // 显示置信度数据
+    // Display Confidence Data
     private TextView infoTxtView;
 
     private SwitchButtonView switchButton;
