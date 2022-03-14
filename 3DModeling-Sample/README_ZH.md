@@ -117,7 +117,8 @@ app
 您只需将应用级build.gradle中的applicationId修改为与所申请的agconnect-services.json相同的package name，即可体验3D Modeling Kit云侧服务。
 
 ## 支持的环境
-推荐使用Android 4.4及以上版本的设备。
+推荐使用Android 5.0及以上版本的设备。
+动作捕捉能力要求ARM64位芯片手机
 
 ##  许可证
 此示例代码已获得[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0)。
