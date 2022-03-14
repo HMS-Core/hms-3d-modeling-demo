@@ -113,7 +113,8 @@ You can only use a custom package name to apply for the **agconnect-services.jso
 To use the on-cloud services of 3D Modeling Kit, replace the **applicationId** in the app-level **build.gradle** file with the package name used to apply for the **agconnect-services.json** file.
 
 ## Environment Requirements
-Android 4.4 or later
+Android 5.0 or later.
+Motion capture requires a 64-bit ARM-based Android phone.
 
 ##  License
 The sample code is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
