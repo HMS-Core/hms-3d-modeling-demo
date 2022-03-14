@@ -52,109 +52,24 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 /**
- * 人体骨骼扫描主页面
+ * Human Skeleton Scan main page
  *
  */
 public final class HumanSkeletonActivity extends AppCompatActivity
         implements OnRequestPermissionsResultCallback, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-    /**
-     * 自动拍照
-     */
-    public static final int AUTO_TAKE_PHOTO = 101;
-
-    /**
-     * 刷新置信度显示界面
-     */
-    public static final int UPDATE_SCORES_VIEW = LocalSkeletonProcessor.UPDATE_SCORES_VIEW;
-
-    /**
-     * 刷新相似度显示界面
-     */
-    public static final int UPDATE_SIMILARITY_VIEW = 102;
-
     private static final String TAG = "HumanSkeletonActivity";
-
-    private static boolean isOpenStatus = false;
 
     private CameraSource cameraSource = null;
 
     private CameraSourcePreview preview;
 
-    // 显示置信度数据
-    private TextView infoTxtView;
-
-    private SwitchButtonView switchButton;
-
-    private Button selectTemplate;
-
-    private Button modifyThreshold;
-
-    private Handler mHandler = new MsgHandler(this);
-
-    private Bitmap bitmap;
-
-    private Bitmap bitmapCopy;
-
-    private RelativeLayout zoomImageLayout;
-
-    private ImageView zoomImageView;
-
-    private TextView similarityTv;
-
-    private RelativeLayout similarityImageview;
-
     private BoneGLSurfaceView boneRenderManager;
-    TextView tvStopPreview;
-
     LocalSkeletonProcessor localSkeletonProcessor;
 
     GLSurfaceView glSurfaceView;
 
     private RelativeLayout glLayout;
-
-    private static class MsgHandler extends Handler {
-        WeakReference<HumanSkeletonActivity> mMainActivityWeakReference;
-
-        MsgHandler(HumanSkeletonActivity mainActivity) {
-            mMainActivityWeakReference = new WeakReference<>(mainActivity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            HumanSkeletonActivity mainActivity = mMainActivityWeakReference.get();
-            if (mainActivity == null) {
-                return;
-            }
-            Log.d(TAG, "msg what :" + msg.what);
-            switch (msg.what) {
-                case AUTO_TAKE_PHOTO:
-                    if (mainActivity.zoomImageLayout.getVisibility() == View.VISIBLE) {
-                        return;
-                    }
-                    mainActivity.takePicture();
-                    break;
-                case UPDATE_SIMILARITY_VIEW:
-                    Bundle bundle = msg.getData();
-                    float result = bundle.getFloat("similarity");
-                    mainActivity.similarityTv.setVisibility(View.VISIBLE);
-                    mainActivity.similarityTv.setText("similarity:" + (int) (result * 100) + "%  ");
-                    break;
-                case UPDATE_SCORES_VIEW:
-                    String infoStr = (msg.obj == null) ? null : msg.obj.toString();
-                    mainActivity.infoTxtView.setText(infoStr);
-                    if (infoStr == null || infoStr.isEmpty()) {
-                        mainActivity.infoTxtView.setVisibility(View.GONE);
-                    } else {
-                        mainActivity.infoTxtView.setVisibility(View.VISIBLE);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,37 +78,9 @@ public final class HumanSkeletonActivity extends AppCompatActivity
         setContentView(R.layout.activity_human_skeleton);
         ChooserActivity.setIsAsynchronous(true);
         preview = findViewById(R.id.firePreview);
-        similarityTv = findViewById(R.id.tv_similarity);
-        similarityImageview = findViewById(R.id.similarity_imageview);
-        zoomImageLayout = findViewById(R.id.zoomImageLayout);
-        zoomImageView = findViewById(R.id.take_picture_overlay);
-        selectTemplate = findViewById(R.id.select_template);
-        switchButton = findViewById(R.id.switch_button_view);
-        tvStopPreview = findViewById(R.id.tv_stop_preview);
         glLayout = findViewById(R.id.rl_add_surface);
-        switchButton.setOnToggleStateChangeListener(new SwitchButtonView.OnToggleStateChangeListener() {
-            @Override
-            public void onToggleStateChange(boolean isOpen) {
-                if (isOpen) {
-                    isOpenStatus = true;
-                    similarityImageview.setVisibility(View.VISIBLE);
-                    modifyThreshold.setVisibility(View.VISIBLE);
-
-                } else {
-                    isOpenStatus = false;
-                    similarityImageview.setVisibility(View.GONE);
-                    modifyThreshold.setVisibility(View.GONE);
-                }
-            }
-        });
-        findViewById(R.id.zoomImageClose).setOnClickListener(this);
-        findViewById(R.id.zoomImageSave).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
-        modifyThreshold = findViewById(R.id.threshold_mod);
-        modifyThreshold.setOnClickListener(this);
-        selectTemplate.setOnClickListener(this);
-        localSkeletonProcessor = new LocalSkeletonProcessor(HumanSkeletonActivity.this);
-        infoTxtView = findViewById(R.id.live_info_txt);
+        localSkeletonProcessor = new LocalSkeletonProcessor();
         ToggleButton facingSwitch = findViewById(R.id.facingSwitch);
         facingSwitch.setOnCheckedChangeListener(this);
         if (Camera.getNumberOfCameras() == 1) {
@@ -213,17 +100,7 @@ public final class HumanSkeletonActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.zoomImageClose) {
-            zoomImageLayout.setVisibility(View.GONE);
-            recycleBitmap();
-            startCameraSource();
-        } else if (view.getId() == R.id.zoomImageSave) {
-            BitmapUtils.saveToAlbum(bitmapCopy, getApplicationContext());
-            zoomImageLayout.setVisibility(View.GONE);
-            recycleBitmap();
-            startCameraSource();
-            Toast.makeText(this, "Save success", Toast.LENGTH_SHORT).show();
-        } else if (view.getId() == R.id.back) {
+        if (view.getId() == R.id.back) {
             finish();
         }
     }
@@ -302,61 +179,7 @@ public final class HumanSkeletonActivity extends AppCompatActivity
             localSkeletonProcessor.stop();
         }
 
-        isOpenStatus = false;
         ChooserActivity.setIsAsynchronous(true);
     }
 
-    private void takePicture() {
-        preview.stop();
-        mHandler.removeMessages(AUTO_TAKE_PHOTO);
-        zoomImageLayout.setVisibility(View.VISIBLE);
-        LocalDataManager localDataManager = new LocalDataManager();
-        localDataManager.setLandScape(false);
-        bitmap = BitmapUtils.getBitmap(localSkeletonProcessor.getProcessingImage(),
-                localSkeletonProcessor.getFrameMetadata());
-
-        float previewWidth = localDataManager.getImageMaxWidth(localSkeletonProcessor.getFrameMetadata());
-        float previewHeight = localDataManager.getImageMaxHeight(localSkeletonProcessor.getFrameMetadata());
-        bitmapCopy = Bitmap.createBitmap(bitmap).copy(Bitmap.Config.ARGB_8888, true);
-
-        Canvas canvas = new Canvas(bitmapCopy);
-        float min = Math.min(previewWidth, previewHeight);
-        float max = Math.max(previewWidth, previewHeight);
-        setBitmapBorder(canvas);
-        localDataManager.setCameraInfo(glSurfaceView, canvas, min, max);
-        zoomImageView.setImageBitmap(bitmapCopy);
-    }
-
-    private void setBitmapBorder(Canvas canvas) {
-        Paint paint = new Paint();
-
-        paint.setColor(Color.WHITE);
-        paint.setStyle(Paint.Style.STROKE);
-
-        paint.setStrokeWidth(15);
-        Rect rect = canvas.getClipBounds();
-        canvas.drawRect(rect, paint);
-    }
-
-    private void recycleBitmap() {
-        if (bitmap != null && !bitmap.isRecycled()) {
-            bitmap.recycle();
-            bitmap = null;
-        }
-        if (bitmapCopy != null && !bitmapCopy.isRecycled()) {
-            bitmapCopy.recycle();
-            bitmapCopy = null;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (zoomImageLayout.getVisibility() == View.VISIBLE) {
-            zoomImageLayout.setVisibility(View.GONE);
-            recycleBitmap();
-            startCameraSource();
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

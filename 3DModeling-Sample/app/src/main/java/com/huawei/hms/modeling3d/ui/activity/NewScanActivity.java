@@ -18,6 +18,7 @@ package com.huawei.hms.modeling3d.ui.activity;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -167,14 +168,14 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         userBean = BaseUtils.getUser(NewScanActivity.this);
-        if (userBean.getSelectRGBMode().equals(ConstantBean.TURNTABLE_MODE)){
+        if (userBean.getSelectRGBMode().equals(ConstantBean.TURNTABLE_MODE)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
         setContentView(R.layout.new_scan_layout);
         unbinder = ButterKnife.bind(this);
         initView();
         initPhotoSize();
-
+        hideBottomUIMenu();
     }
 
     private void initView() {
@@ -221,7 +222,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
                     rlShowNum.setVisibility(View.VISIBLE);
                 }
             } else {
-                continuousShootingInterval = 150;
+                continuousShootingInterval = 500;
             }
 
         }
@@ -233,9 +234,15 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
     }
 
 
-    @OnClick({R.id.tv_sure, R.id.iv_back, R.id.rl_upload_doing, R.id.capture_button})
+    @OnClick({R.id.tv_sure, R.id.iv_back, R.id.rl_upload_doing, R.id.capture_button, R.id.iv_right})
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.iv_right:
+                Intent intent = new Intent(NewScanActivity.this, SettingModelActivity.class);
+                startActivity(intent);
+                finish();
+                break;
 
             case R.id.tv_sure:
                 userBean.setShowScanTips(false);
@@ -513,7 +520,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
             @Override
             public void onNext(Integer result) {
                 if (userBean.getSelectRGBMode() != null && userBean.getSelectRGBMode().equals(ConstantBean.TURNTABLE_MODE)) {
-                    stepNum=1;
+                    stepNum = 1;
                     tvShowSteps.setText(String.valueOf(stepNum));
                     ivCaptureButton.setVisibility(View.GONE);
                 }
@@ -547,7 +554,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
     }
 
 
-    public void initModeTask(Integer textureMode){
+    public void initModeTask(Integer textureMode) {
         Observable.create((Observable.OnSubscribe<Modeling3dReconstructInitResult>) subscriber -> {
             Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
                     .setReconstructMode(rgbMode)
@@ -596,7 +603,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
                 NewScanActivity.this.runOnUiThread(() -> {
                     clearImage();
                     if (userBean.getSelectRGBMode() != null && userBean.getSelectRGBMode().equals(ConstantBean.TURNTABLE_MODE)) {
-                        stepNum=1;
+                        stepNum = 1;
                         tvShowSteps.setText(String.valueOf(stepNum));
                         ivCaptureButton.setVisibility(View.GONE);
                     }
@@ -672,7 +679,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
         if (userBean.getSelectScanModel().equals(ConstantBean.SCAN_MODEL_TYPE_TWO)) {
             isPause = false;
             stepNum++;
-            saveInnerPath = new Constants(NewScanActivity.this).getCaptureImageFile() +"model"+ createTime;
+            saveInnerPath = new Constants(NewScanActivity.this).getCaptureImageFile() + "model" + createTime;
             File file = new File(saveInnerPath);
             if (!file.exists()) {
                 file.mkdir();
@@ -681,7 +688,7 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
             isPause = true;
         } else {
             stepNum++;
-            saveInnerPath = new Constants(NewScanActivity.this).getCaptureImageFile() +"model"+ createTime;
+            saveInnerPath = new Constants(NewScanActivity.this).getCaptureImageFile() + "model" + createTime;
             File file = new File(saveInnerPath);
             if (!file.exists()) {
                 file.mkdir();
@@ -741,5 +748,22 @@ public class NewScanActivity extends AppCompatActivity implements UploadDialog.O
     public void onBackPressed() {
         super.onBackPressed();
         saveData();
+    }
+
+    /**
+     * Hide virtual keys and go full screen
+     */
+    protected void hideBottomUIMenu() {
+        //Hide virtual keys and go full screen
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) {
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 }

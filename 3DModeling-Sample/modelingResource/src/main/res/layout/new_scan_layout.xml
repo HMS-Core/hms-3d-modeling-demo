@@ -150,6 +150,15 @@
             android:paddingLeft="@dimen/dimens_16"
             android:layout_centerVertical="true"/>
 
+        <ImageView
+            android:src="@drawable/set_app_icon"
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dimens_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            />
 
     </RelativeLayout>
 

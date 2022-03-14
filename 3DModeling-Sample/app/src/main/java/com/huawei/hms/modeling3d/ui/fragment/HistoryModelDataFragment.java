@@ -65,7 +65,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class HistoryModelDataFragment extends Fragment implements RecycleHistoryAdapter.OnItemClickListener , RecycleHistoryAdapter.OnItemClickDownloadListener, ProgressCustomDialog.OnItemCancelClickListener {
+public class HistoryModelDataFragment extends Fragment implements RecycleHistoryAdapter.OnItemClickListener, RecycleHistoryAdapter.OnItemClickDownloadListener, ProgressCustomDialog.OnItemCancelClickListener {
     private Unbinder unbinder;
     private Modeling3dReconstructEngine magic3dReconstructEngine;
     public Modeling3dReconstructTaskUtils magic3DReconstructTaskUtils;
@@ -138,9 +138,9 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (timer!=null){
+        if (timer != null) {
             timer.cancel();
-            timer = null ;
+            timer = null;
         }
     }
 
@@ -159,56 +159,45 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
                 dialog.show();
                 dialog.setListener(HistoryModelDataFragment.this, dataBeans.get(position));
                 dialog.setCanceledOnTouchOutside(false);
-                initModeTask(mDialog.getTextureMode(),position);
+                initModeTask(mDialog.getTextureMode(), position);
                 mDialog.dismiss();
             }
         });
     }
 
 
-    public void initModeTask(Integer textureMode ,int position){
+    public void initModeTask(Integer textureMode, int position) {
         TaskInfoAppDb news = dataBeans.get(position);
-        if (!TextUtils.isEmpty(news.getTaskId())) {
-            magic3dReconstructEngine.uploadFile(news.getTaskId(), news.getFileUploadPath());
-        } else {
-            int type ;
-            if(news.getModelType().equals(mContext.getString(R.string.slam))){
-                type = Constants.SLAM_MODEL ;
-            }else if (news.getModelType().equals(mContext.getString(R.string.rgb))){
-                type = Constants.RGB_MODEL;
-            }else {
-                type=Integer.parseInt(news.getModelType());
+        int type = 0;
+        Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
+                .setTextureMode(textureMode)
+                .setReconstructMode(type)
+                .create();
+        new Thread(() -> {
+            Modeling3dReconstructInitResult result = magic3dReconstructEngine.initTask(setting);
+            String taskId = result.getTaskId();
+            if (taskId == null || taskId.equals("")) {
+                new Handler(mContext.getMainLooper()).post(() -> {
+                    dialog.dismiss();
+                    Toast.makeText(mContext, "upload failed" + result.getRetCode(), Toast.LENGTH_LONG).show();
+                });
+            } else {
+                news.setTaskId(taskId);
+                // Update the latest data containing taskID
+                TaskInfoAppDbUtils.updateTaskIdAndStatusByPath(news.getFileUploadPath(), taskId, ConstantBean.MODELS_INIT_STATUS);
+                magic3dReconstructEngine.uploadFile(taskId, news.getFileUploadPath());
             }
-            Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
-                    .setReconstructMode(type)
-                    .setReconstructMode(textureMode)
-                    .create();
-            new Thread(() -> {
-                Modeling3dReconstructInitResult result = magic3dReconstructEngine.initTask(setting);
-                String taskId = result.getTaskId();
-                if (taskId == null || taskId.equals("")) {
-                    new Handler(mContext.getMainLooper()).post(() -> {
-                        dialog.dismiss();
-                        Toast.makeText(mContext, "upload failed"+result.getRetCode(), Toast.LENGTH_LONG).show();
-                    });
-                } else {
-                    news.setTaskId(taskId);
-                    // Update the latest data containing taskID
-                    TaskInfoAppDbUtils.updateTaskIdAndStatusByPath(news.getFileUploadPath(), taskId, ConstantBean.MODELS_INIT_STATUS);
-                    magic3dReconstructEngine.uploadFile(taskId, news.getFileUploadPath());
-                }
-            }).start();
-        }
+        }).start();
     }
 
     @Override
     public void onClickDownLoad(TaskInfoAppDb appDb, RecycleHistoryAdapter.DataViewHolder holder) {
-        SelectModelDialog modelDialog = new SelectModelDialog(getContext(),HistoryModelDataFragment.this,appDb);
+        SelectModelDialog modelDialog = new SelectModelDialog(getContext(), HistoryModelDataFragment.this, appDb);
         modelDialog.setCanceledOnTouchOutside(false);
         modelDialog.show();
     }
 
-    public void showNewDownLoad(TaskInfoAppDb appDb, String model, Integer textureMode){
+    public void showNewDownLoad(TaskInfoAppDb appDb, String model, Integer textureMode) {
         initEngine();
         dialog = new ProgressCustomDialog(getContext(), ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.downloading_dialog_text));
         dialog.setCanceledOnTouchOutside(false);

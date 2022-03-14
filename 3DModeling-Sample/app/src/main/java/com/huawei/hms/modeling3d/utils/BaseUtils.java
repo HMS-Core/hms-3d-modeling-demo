@@ -18,19 +18,14 @@ package com.huawei.hms.modeling3d.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
-import android.util.Log;
-
-import com.huawei.hms.magicresource.util.Utils;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.model.UserBean;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -67,6 +62,5 @@ public class BaseUtils {
         }
         return user;
     }
-
 
 }

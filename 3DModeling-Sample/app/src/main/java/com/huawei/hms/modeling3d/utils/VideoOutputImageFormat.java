@@ -16,7 +16,7 @@
 package com.huawei.hms.modeling3d.utils;
 
 public enum VideoOutputImageFormat {
-    JPEG("JPEG");
+    NV21("NV21");
     private String friendlyName;
 
     private VideoOutputImageFormat(String friendlyName) {

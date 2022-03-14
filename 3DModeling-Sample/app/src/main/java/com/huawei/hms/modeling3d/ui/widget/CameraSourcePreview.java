@@ -40,18 +40,14 @@ public class CameraSourcePreview extends ViewGroup {
     private Context context;
     private SurfaceView surfaceView;
     private boolean startRequested;
-    private boolean surfaceAvailable;
     private CameraSource cameraSource;
 
     private GraphicOverlay overlay;
-    private GLSurfaceView glSurfaceView;
 
     public CameraSourcePreview(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         startRequested = false;
-        surfaceAvailable = false;
-
         surfaceView = new SurfaceView(context);
         surfaceView.getHolder().addCallback(new SurfaceCallback());
         addView(surfaceView);
@@ -76,7 +72,6 @@ public class CameraSourcePreview extends ViewGroup {
     }
 
     public void start(CameraSource cameraSource, GLSurfaceView overlay) throws IOException {
-        this.glSurfaceView = overlay;
         start(cameraSource);
     }
 
@@ -118,7 +113,6 @@ public class CameraSourcePreview extends ViewGroup {
     private class SurfaceCallback implements SurfaceHolder.Callback {
         @Override
         public void surfaceCreated(SurfaceHolder surface) {
-            surfaceAvailable = true;
             try {
                 startIfReady();
             } catch (IOException e) {
@@ -128,7 +122,7 @@ public class CameraSourcePreview extends ViewGroup {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder surface) {
-            surfaceAvailable = false;
+
         }
 
         @Override

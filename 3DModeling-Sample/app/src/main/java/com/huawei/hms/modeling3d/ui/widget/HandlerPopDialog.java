@@ -37,6 +37,7 @@ import com.huawei.hms.modeling3d.ui.adapter.RecycleHistoryAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HandlerPopDialog {
     private Context mContext;
@@ -48,15 +49,15 @@ public class HandlerPopDialog {
     TextView tvDownload;
     ArrayList<TaskInfoAppDb> dataList;
     public Modeling3dReconstructTaskUtils magic3DReconstructTaskUtils;
-    int status ;
+    int status;
 
-    public HandlerPopDialog(Context mContext, RecycleHistoryAdapter adapter, TaskInfoAppDb appDb, RecycleHistoryAdapter.DataViewHolder holder, ArrayList<TaskInfoAppDb> dataList ,int status) {
+    public HandlerPopDialog(Context mContext, RecycleHistoryAdapter adapter, TaskInfoAppDb appDb, RecycleHistoryAdapter.DataViewHolder holder, ArrayList<TaskInfoAppDb> dataList, int status) {
         this.mContext = mContext;
         this.appDb = appDb;
         this.holder = holder;
         this.adapter = adapter;
         this.dataList = dataList;
-        this.status = status ;
+        this.status = status;
         contentView = LayoutInflater.from(mContext).inflate(R.layout.pop_dialog_layout, null);
         popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
@@ -71,10 +72,10 @@ public class HandlerPopDialog {
         if (appDb.getStatus() == ConstantBean.MODELS_RECONSTRUCT_COMPLETED_STATUS) {
             tvDownload.setVisibility(View.VISIBLE);
             contentView.findViewById(R.id.tv_restrict_status).setVisibility(View.VISIBLE);
-            if (status==Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT){
-                ((TextView)contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.restricted_text);
-            }else if (status==Modeling3dReconstructConstants.RestrictStatus.RESTRICT){
-                ((TextView)contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.unrestricted_text);
+            if (status == Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT) {
+                ((TextView) contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.restricted_text);
+            } else if (status == Modeling3dReconstructConstants.RestrictStatus.RESTRICT) {
+                ((TextView) contentView.findViewById(R.id.tv_restrict_status)).setText(R.string.unrestricted_text);
             }
         } else {
             tvDownload.setVisibility(View.GONE);
@@ -89,10 +90,15 @@ public class HandlerPopDialog {
             String savePath = TaskInfoAppDbUtils.getTasksByTaskId(appDb.getTaskId()).getFileSavePath();
             if (TextUtils.isEmpty(savePath)) {
                 contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
-            }else {
-                contentView.findViewById(R.id.tv_open_file).setVisibility(View.VISIBLE);
+            } else {
+                File file = new File(savePath);
+                if (Objects.requireNonNull(file.listFiles()).length > 0) {
+                    contentView.findViewById(R.id.tv_open_file).setVisibility(View.VISIBLE);
+                } else {
+                    contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
         }
 
@@ -133,17 +139,17 @@ public class HandlerPopDialog {
         });
 
         contentView.findViewById(R.id.tv_open_file).setOnClickListener(view -> {
-            String savePath = TaskInfoAppDbUtils.getTasksByTaskId(appDb.getTaskId()).getFileSavePath() ;
-            Toast.makeText(mContext,savePath,Toast.LENGTH_LONG).show();
+            String savePath = TaskInfoAppDbUtils.getTasksByTaskId(appDb.getTaskId()).getFileSavePath();
+            Toast.makeText(mContext, savePath, Toast.LENGTH_LONG).show();
         });
 
         contentView.findViewById(R.id.tv_restrict_status).setOnClickListener(v -> {
             magic3DReconstructTaskUtils = Modeling3dReconstructTaskUtils.getInstance(Modeling3dApp.app);
-            new Thread(()->{
-                if (status==Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT){
-                    magic3DReconstructTaskUtils.setTaskRestrictStatus(appDb.getTaskId(),Modeling3dReconstructConstants.RestrictStatus.RESTRICT);
-                }else {
-                    magic3DReconstructTaskUtils.setTaskRestrictStatus(appDb.getTaskId(),Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT);
+            new Thread(() -> {
+                if (status == Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT) {
+                    magic3DReconstructTaskUtils.setTaskRestrictStatus(appDb.getTaskId(), Modeling3dReconstructConstants.RestrictStatus.RESTRICT);
+                } else {
+                    magic3DReconstructTaskUtils.setTaskRestrictStatus(appDb.getTaskId(), Modeling3dReconstructConstants.RestrictStatus.UNRESTRICT);
                 }
             }).start();
             if (popupWindow != null) {

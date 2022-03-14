@@ -1,4 +1,4 @@
 include ':modelingResource'
 include ':app'
-include ':cameratakelib'
+//include ':cameratakelib'
 rootProject.name = "Modeling3dApp"

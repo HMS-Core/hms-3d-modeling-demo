@@ -24,7 +24,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
- * @ignore 任务工具类
+ * @ignore task tool
  * @since 2020-03-12
  */
 public class TaskInfoAppDbUtils {

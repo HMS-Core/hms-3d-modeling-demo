@@ -36,10 +36,10 @@ public class MyGridViewAdapter extends BaseAdapter {
     private List<GridItem> mDataList;
 
     /**
-     * 构造方法
+     * construct method
      *
-     * @param dataList list列表
-     * @param context 上下文
+     * @param dataList list
+     * @param context context
      */
     public MyGridViewAdapter(List<GridItem> dataList, Context context) {
         super();

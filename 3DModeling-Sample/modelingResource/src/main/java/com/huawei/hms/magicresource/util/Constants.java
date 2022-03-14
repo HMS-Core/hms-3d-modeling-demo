@@ -34,14 +34,12 @@ public class Constants {
         }
     }
 
-    @SuppressLint("SdCardPath")
     public String getRgbDownFile() {
-        return "/sdcard/3dmodelingkit/" + "model/download/";
+        return rootPath + "model/download/";
     }
 
-    @SuppressLint("SdCardPath")
     public String getMaterialDownFile() {
-        return "/sdcard/3dmodelingkit/" + "material/download/";
+        return rootPath + "material/download/";
     }
 
     public String getCaptureImageFile() {

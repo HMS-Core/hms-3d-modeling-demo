@@ -48,7 +48,7 @@ public class ScanBottomDialog extends Dialog {
         this.model = defaultModel;
     }
 
-    // model是空 选择材质重建文件夹用
+    // model is null choose the directory to use
     public ScanBottomDialog(@NonNull Context context) {
         super(context, R.style.BottomAnimDialogStyle);
         this.mContext = context;

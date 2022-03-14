@@ -77,7 +77,7 @@ public class RecycleImageAdapter extends RecyclerView.Adapter<RecycleImageAdapte
             paint1.setStyle(Paint.Style.STROKE);
             paint1.setStrokeWidth(strokeWidth);
             RectF rectF2 = new RectF(strokeWidth / 2, strokeWidth / 2, bitmap.getWidth() - strokeWidth / 2, bitmap.getHeight() - strokeWidth / 2);
-            paint1.setColor(ContextCompat.getColor(mContext, R.color.hwid_auth_button_color_text_white));
+            paint1.setColor(ContextCompat.getColor(mContext, R.color.bottom_whit));
             canvas.drawRoundRect(rectF2, angle, angle, paint1);
             holder.ivMaterial.setImageBitmap(temp);
         }

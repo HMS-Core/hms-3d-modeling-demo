@@ -56,16 +56,13 @@ public class LocalSkeletonProcessor extends HmsMotionProcessorBase<List<Modeling
 
     /**
      * Construction method
-     *
-     * @param context Context
      */
-    public LocalSkeletonProcessor(Context context) {
+    public LocalSkeletonProcessor() {
         Modeling3dMotionCaptureEngineSetting setting = new Modeling3dMotionCaptureEngineSetting.Factory()
                 .setAnalyzeType(Modeling3dMotionCaptureEngineSetting.TYPE_3DSKELETON_QUATERNION
                         | Modeling3dMotionCaptureEngineSetting.TYPE_3DSKELETON)
                 .create();
         detector = Modeling3dMotionCaptureEngineFactory.getInstance().getMotionCaptureEngine(setting);
-        this.mContext = context ;
     }
 
 

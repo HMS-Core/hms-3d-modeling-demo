@@ -41,6 +41,7 @@ import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HandlerMaterialPopDialog {
 
@@ -90,7 +91,12 @@ public class HandlerMaterialPopDialog {
             if (TextUtils.isEmpty(savePath)) {
                 contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
             } else {
-                contentView.findViewById(R.id.tv_open_file).setVisibility(View.VISIBLE);
+                File file = new File(savePath);
+                if (Objects.requireNonNull(file.listFiles()).length > 0) {
+                    contentView.findViewById(R.id.tv_open_file).setVisibility(View.VISIBLE);
+                } else {
+                    contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
+                }
             }
         } catch (Exception e) {
             contentView.findViewById(R.id.tv_open_file).setVisibility(View.GONE);
@@ -102,9 +108,9 @@ public class HandlerMaterialPopDialog {
                 adapter.setOnDownLoadClick(appDb, holder);
             } else {
                 File file = new File(savePath);
-                if (file.exists()){
+                if (file.exists() && Objects.requireNonNull(file.listFiles()).length > 0) {
                     Toast.makeText(mContext, "Material file already exists", Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     Utils.deleteDirectory(savePath);
                     adapter.setOnDownLoadClick(appDb, holder);
                 }

@@ -98,7 +98,7 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
         setContentView(R.layout.select_source_video_layout);
 
         initImageFormatSpinner();
-        localSkeletonProcessor = new LocalSkeletonProcessor(SelectSourceVideoActivity.this);
+        localSkeletonProcessor = new LocalSkeletonProcessor();
         buttonFilePathInput = (Button) findViewById(R.id.button_file_path_input);
         buttonFilePathInput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,13 +156,13 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
 
     private void startChooseImageIntentForResult() {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*");
+        intent.setType("vnd.android.cursor.dir/video");
         startActivityForResult(intent, REQUEST_CHOOSE_IMAGE);
 
     }
 
     private void initImageFormatSpinner() {
-        videoOutputImageFormat = VideoOutputImageFormat.JPEG;
+        videoOutputImageFormat = VideoOutputImageFormat.NV21;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -207,7 +207,7 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
     }
 
     @Override
-    public void getIndexBitmap(Bitmap bitmap, final Image image, final byte[] imagedata) {
+    public void getIndexBitmap(final Image image, final byte[] imagedata) {
         Rect crop = image.getCropRect();
         int width = crop.width();
         int height = crop.height();
@@ -229,9 +229,6 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
                 key = data.keyAt(i);
                 Modeling3dMotionCaptureSkeleton obj = data.get(key);
                 filterData(obj);
-            }
-            if (bitmap != null && !bitmap.isRecycled()) {
-                bitmap.recycle();
             }
         } else {
             runOnUiThread(new Runnable() {
@@ -284,7 +281,7 @@ public class SelectSourceVideoActivity extends Activity implements VideoToFrames
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         try {
             mmr.setDataSource(mUri);
-            String rotationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION); // 视频旋转方向
+            String rotationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION); // Video rotation direction
             return Integer.parseInt(rotationStr) / 90;
         } catch (Exception ex) {
             ex.printStackTrace();

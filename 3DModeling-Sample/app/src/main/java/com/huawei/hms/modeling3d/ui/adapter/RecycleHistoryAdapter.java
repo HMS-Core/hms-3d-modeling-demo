@@ -42,6 +42,7 @@ import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.widget.HandlerPopDialog;
 import com.huawei.hms.modeling3d.ui.widget.PreviewConfigDialog;
+import com.huawei.hms.modeling3d.utils.BaseUtils;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructDownloadConfig;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
 import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructPreviewConfig;
@@ -62,7 +63,7 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
 
     private OnItemClickDownloadListener onItemClickDownloadListener = null;
 
-    PreviewConfigDialog dialog ;
+    PreviewConfigDialog dialog;
 
     public RecycleHistoryAdapter(ArrayList<TaskInfoAppDb> dataList, Context context) {
         this.dataList = dataList;
@@ -166,9 +167,9 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
             }.start();
         });
 
-        if (news.getFileUploadPath()!=null) {
+        if (news.getFileUploadPath() != null) {
             File file = new File(news.getFileUploadPath());
-            if (file.exists()){
+            if (file.exists()) {
                 holder.tvMemory.setText("" + FileSizeUtil.getFileOrFilesSize(news.getFileUploadPath(), FileSizeUtil.SIZETYPE_MB) + "Mb");
                 File files = new File(news.getFileUploadPath());
                 File[] fileNew = files.listFiles();

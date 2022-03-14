@@ -65,7 +65,7 @@ public class VideoToFrames implements Runnable {
 
         void onDecodeFrame(int index);
 
-        void getIndexBitmap(Bitmap bitmap, Image image, byte[] data);
+        void getIndexBitmap( Image image, byte[] data);
     }
 
     public void setCallback(Callback callback) {
@@ -201,7 +201,7 @@ public class VideoToFrames implements Runnable {
                     }
 
                     if (videoOutputImageFormat != null) {
-                        if (videoOutputImageFormat == VideoOutputImageFormat.JPEG) {
+                        if (videoOutputImageFormat == VideoOutputImageFormat.NV21) {
                             dealWithImage(image);
                         }
                     }
@@ -217,15 +217,8 @@ public class VideoToFrames implements Runnable {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void dealWithImage(Image image) {
-        Rect crop = image.getCropRect();
-        int width = crop.width();
-        int height = crop.height();
         byte[] data = YUV_420_888_TO_NV21(image);
-        YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        yuvImage.compressToJpeg(new Rect(0, 0, width, height), 100, outputStream);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size());
-        callback.getIndexBitmap(bitmap, image, data);
+        callback.getIndexBitmap(image, data);
     }
 
     private static int selectTrack(MediaExtractor extractor) {

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera.any" />
@@ -25,9 +25,10 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:exported="true"
             android:name="com.huawei.hms.modeling3d.ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,16 +61,9 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
 
-        <provider
-        android:authorities="com.huawei.hms.modeling3d.fileprovider"
-        android:name="androidx.core.content.FileProvider"
-        android:grantUriPermissions="true"
-        android:exported="false">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/filepaths"/>
-    </provider>
-
+        <activity android:name=".ui.activity.SettingModelActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            />
 
         <meta-data
             android:name="design_width_in_dp"

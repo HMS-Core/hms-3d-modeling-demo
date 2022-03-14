@@ -138,7 +138,7 @@ public class SelectSourcePhotoActivity extends AppCompatActivity {
                 showChooseDialog(view);
             }
         });
-        localSkeletonProcessor = new LocalSkeletonProcessor( SelectSourcePhotoActivity.this);
+        localSkeletonProcessor = new LocalSkeletonProcessor();
 
         glLayout = findViewById(R.id.rl_add_surface);
         glSurfaceView = new GLSurfaceView(this);

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_app_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_shooting_mode"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_56"
+                android:layout_marginLeft="@dimen/dimens_16"
+                android:layout_marginTop="@dimen/dimens_8"
+                android:layout_marginRight="@dimen/dimens_16"
+                android:background="@drawable/mine_login_bg"
+                android:paddingLeft="@dimen/dimens_16"
+                android:paddingRight="@dimen/dimens_8"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_shooting_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/shooting_mode_use_text" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimens_10"
+                    android:layout_marginRight="@dimen/dimens_10"
+                    android:layout_toEndOf="@+id/iv_shooting_mode"
+                    android:layout_toRightOf="@+id/iv_shooting_mode">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/shooting_mode"
+                        android:textColor="@color/splash_text_color"
+                        android:textSize="@dimen/dimens_14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_shooting_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimens_8"
+                        android:layout_toLeftOf="@+id/iv_next_next_next_next"
+                        android:text=""
+                        android:textColor="@color/scan_model_text_color"
+                        android:textSize="@dimen/dimens_12sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_next_next_next_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/right_icon" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
