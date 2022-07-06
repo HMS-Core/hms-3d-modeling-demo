@@ -117,6 +117,11 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
                         Modeling3dReconstructEngine engine = Modeling3dReconstructEngine.getInstance(mContext);
                         dialog = new PreviewConfigDialog(mContext);
                         dialog.show();
+                        if (news.getTaskId().contains("2X")){
+                            dialog.getRlStartModel().setVisibility(View.GONE);
+                        }else {
+                            dialog.getLlMdel().setVisibility(View.GONE);
+                        }
                         dialog.getTvCancel().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -142,6 +147,27 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
                 break;
             case ConstantBean.MODELS_RECONSTRUCT_FAILED_STATUS:
                 holder.tvStatus.setText(R.string.finish_fail_text);
+                holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_PASSED :
+                holder.tvStatus.setText(R.string.risk_control_passed);
+                holder.tvStatus.setBackgroundResource(R.drawable.finish_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_PAILED :
+                holder.tvStatus.setText(R.string.risk_control_fails);
+                holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_IS_BEING_REVIEWED :
+                holder.tvStatus.setText(R.string.risk_control_is_being_reviewed);
                 holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
                 holder.ivShowStatus.setVisibility(View.INVISIBLE);
 
@@ -183,6 +209,13 @@ public class RecycleHistoryAdapter extends RecyclerView.Adapter<RecycleHistoryAd
                 }
             }
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext,news.getTaskId(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

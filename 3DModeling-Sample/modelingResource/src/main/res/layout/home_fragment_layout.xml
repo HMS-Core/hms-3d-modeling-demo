@@ -124,7 +124,7 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_marginLeft="@dimen/dimens_30"
+                android:layout_marginLeft="@dimen/dimens_56"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

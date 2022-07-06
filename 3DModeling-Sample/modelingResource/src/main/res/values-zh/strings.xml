@@ -141,8 +141,8 @@
     <string name="turntable_in_a_circle_text">鞋子侧放，手机0°~15°放置，转盘转动一圈</string>
     <string name="in_a_circle_text">鞋子侧放，手机45°放置，转盘转动一圈</string>
     <string name="ordinary_shooting_text">普通拍摄</string>
-    <string name="need_to_be_taken_text">开始拍摄后，请环绕物体一周；尽量确保物体周围的环境简洁；至少需要拍摄20张。</string>
-    <string name="turntable_shooting_text">转盘拍摄</string>
+    <string name="need_to_be_taken_text">环绕物体拍摄2至3圈或将物体放置在转盘上，以平视、俯视等角度拍摄；保证物体在画面占比大，相邻两张照片重合度70%以上，推荐拍摄50张图片以上。骨骼绑定任务需要先正对物体拍摄几张，再进行后续采集。</string>
+    <string name="turntable_shooting_text">转盘拍摄(鞋类)</string>
     <string name="shooting_is_supported_text">拍摄步骤相对复杂；且需求借助转盘、手机稳定器等设备；仅支持横屏拍摄</string>
     <string name="object_shoes_text">适用对象：鞋子</string>
     <string name="turntable_speed_text">设置转盘转速</string>
@@ -158,4 +158,18 @@
     <string name="low_accuracy_text">普通贴图</string>
     <string name="high_precision_text">PBR</string>
     <string name="limit_text">限制</string>
+    <string name="bone_binding">骨骼绑定</string>
+    <string name="biped">二足</string>
+    <string name="object_modeling_text">物体建模</string>
+    <string name="bone_binding_text">骨骼绑定</string>
+    <string name="take_photo_bond_text">拍摄正面照2~4张</string>
+    <string name="risk_control_is_being_reviewed">风控审核中</string>
+    <string name="risk_control_passed">风控通过</string>
+    <string name="risk_control_fails">风控不通过</string>
+
+    <string name="first_text">手机0°放置，转盘转动前，先拍2~4张正面照片，转盘转动一圈再拍摄24张。</string>
+    <string name="second_text">手机45°放置，转盘转动一圈拍摄24张。</string>
+    <string name="thrid_text">手机60°~90°放置，手机拍向骨骼绑定物体的头顶和肩部，建议转盘转动拍摄24张。</string>
+    <string name="four_text">物体背面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
+    <string name="five_text">物体正面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
 </resources>

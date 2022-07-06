@@ -21,42 +21,36 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_start_model"
+                android:id="@+id/rl_start_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/ll_model"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dimens_4"
-                    android:text="@string/choose_download_format_text"
+                    android:layout_marginTop="@dimen/dimens_10"
+                    android:text="@string/modeling_text"
                     android:textColor="@color/bottom_black"
                     android:textSize="@dimen/dimens_14sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_slam"
+                    android:id="@+id/rl_low"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimens_40"
-                    android:layout_marginTop="@dimen/dimens_10">
+                    android:paddingLeft="@dimen/dimens_22">
 
                     <TextView
-                        android:id="@+id/tv_round"
+                        android:id="@+id/tv_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="OBJ"
+                        android:text="@string/low_accuracy_text"
                         android:textColor="@color/scan_tips_color"
                         android:textSize="@dimen/dimens_16sp" />
 
                     <ImageView
-                        android:id="@+id/iv_slam"
+                        android:id="@+id/iv_low"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -65,23 +59,23 @@
 
                 </RelativeLayout>
 
-
                 <RelativeLayout
-                    android:id="@+id/rl_rgb"
+                    android:id="@+id/rl_high"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimens_40">
+                    android:layout_height="@dimen/dimens_40"
+                    android:paddingLeft="@dimen/dimens_22">
 
                     <TextView
-                        android:id="@+id/tv_common"
+                        android:id="@+id/tv_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="GLTF"
+                        android:text="@string/high_precision_text"
                         android:textColor="@color/scan_tips_color"
                         android:textSize="@dimen/dimens_16sp" />
 
                     <ImageView
-                        android:id="@+id/iv_rgb"
+                        android:id="@+id/iv_high"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -89,91 +83,33 @@
                         android:src="@drawable/unselect_rb_icon" />
 
                 </RelativeLayout>
+
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimens_10"
-                android:paddingBottom="@dimen/dimens_4"
-                android:text="@string/select_accuracy_mode_text"
-                android:textColor="@color/bottom_black"
-                android:textSize="@dimen/dimens_14sp" />
-
-            <RelativeLayout
-                android:id="@+id/rl_low"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimens_40"
-                android:layout_marginTop="@dimen/dimens_10">
-
-                <TextView
-                    android:id="@+id/tv_low"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/low_accuracy_text"
-                    android:textColor="@color/scan_tips_color"
-                    android:textSize="@dimen/dimens_16sp" />
-
-                <ImageView
-                    android:id="@+id/iv_low"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/select_rb_icon" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_high"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimens_40">
-
-                <TextView
-                    android:id="@+id/tv_high"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/high_precision_text"
-                    android:textColor="@color/scan_tips_color"
-                    android:textSize="@dimen/dimens_16sp" />
-
-                <ImageView
-                    android:id="@+id/iv_high"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/unselect_rb_icon" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
             <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/ll_bone_binding"
+                android:id="@+id/ll_model"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/dimens_16"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dimens_4"
                     android:text="@string/biped"
                     android:textColor="@color/bottom_black"
                     android:textSize="@dimen/dimens_14sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_biped"
+                    android:id="@+id/rl_round"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimens_40"
-                    android:layout_marginTop="@dimen/dimens_10">
+                    android:layout_marginTop="@dimen/dimens_10"
+                    android:paddingLeft="@dimen/dimens_22">
 
                     <TextView
-                        android:id="@+id/tv_biped"
+                        android:id="@+id/tv_round"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -182,17 +118,16 @@
                         android:textSize="@dimen/dimens_16sp" />
 
                     <ImageView
-                        android:id="@+id/iv_biped"
+                        android:id="@+id/iv_round"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/select_rb_icon" />
+                        android:src="@drawable/unselect_rb_icon" />
 
                 </RelativeLayout>
 
             </LinearLayout>
-
 
         </LinearLayout>
 

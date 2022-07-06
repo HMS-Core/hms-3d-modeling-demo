@@ -38,6 +38,9 @@ public class ConstantBean {
     public static final int MODELS_RECONSTRUCT_START_STATUS = 2;
     public static final int MODELS_RECONSTRUCT_COMPLETED_STATUS = 3;
     public static final int MODELS_RECONSTRUCT_FAILED_STATUS = 4;
+    public static final int MODEL_RISK_CONTROL_IS_BEING_REVIEWED = 5;
+    public static final int MODEL_RISK_CONTROL_PASSED = 6;
+    public static final int MODEL_RISK_CONTROL_PAILED = 7;
 
     public static final int MATERIAL_UPLOAD_COMPLETED_STATUS = 1;
     public static final int MATERIAL_RECONSTRUCT_START_STATUS = 2;

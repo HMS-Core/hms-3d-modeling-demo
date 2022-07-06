@@ -95,12 +95,17 @@ public class ScanBottomDialog extends Dialog {
             uploadType = ConstantBean.UPLOAD_TO_BUILD_MODELS;
         } else {
             tvLeft.setVisibility(View.GONE);
+            tvCancel.setVisibility(View.GONE);
             if (model.equals(mContext.getResources().getString(R.string.slam))) {
                 ivRgb.setImageResource(R.drawable.unselect_rb_icon);
-                ivSlam.setImageResource(R.drawable.select_rb_icon);
-            } else {
-                ivRgb.setImageResource(R.drawable.select_rb_icon);
                 ivSlam.setImageResource(R.drawable.unselect_rb_icon);
+                ivRgb.setVisibility(View.INVISIBLE);
+                ivSlam.setVisibility(View.INVISIBLE);
+            } else {
+                ivRgb.setImageResource(R.drawable.unselect_rb_icon);
+                ivSlam.setImageResource(R.drawable.unselect_rb_icon);
+                ivRgb.setVisibility(View.INVISIBLE);
+                ivSlam.setVisibility(View.INVISIBLE);
             }
         }
         rlRgb.setOnClickListener(new View.OnClickListener() {

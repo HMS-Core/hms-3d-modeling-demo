@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,11 +38,16 @@ import com.huawei.hms.modeling3d.ui.fragment.HistoryModelDataFragment;
 public class PreviewConfigDialog extends Dialog {
     RelativeLayout rlLow;
     RelativeLayout rlHigh;
+    RelativeLayout rlRound;
     ImageView ivLow;
     ImageView ivHigh;
+    ImageView ivRound;
     TextView tvCancel;
     Integer textureMode = 0;
     Context mContext;
+
+    LinearLayout rlStartModel;
+    LinearLayout llMdel;
 
     public TextView getTvCancel() {
         return tvCancel;
@@ -64,6 +70,10 @@ public class PreviewConfigDialog extends Dialog {
         this.mContext = context;
     }
 
+    public LinearLayout getRlStartModel() {
+        return rlStartModel;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +82,7 @@ public class PreviewConfigDialog extends Dialog {
 
     private void init() {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.select_model_dialog_layout, null);
+        View view = inflater.inflate(R.layout.preview_config_dialog_layout, null);
         Window window = this.getWindow();
         if (window != null) {
             window.setGravity(Gravity.BOTTOM);
@@ -84,13 +94,20 @@ public class PreviewConfigDialog extends Dialog {
         setContentView(view);
     }
 
+    public LinearLayout getLlMdel() {
+        return llMdel;
+    }
+
     private void initView(View view) {
         rlLow = view.findViewById(R.id.rl_low);
         rlHigh = view.findViewById(R.id.rl_high);
+        rlRound = view.findViewById(R.id.rl_round);
+        rlStartModel = view.findViewById(R.id.rl_start_model);
+        llMdel = view.findViewById(R.id.ll_model);
         ivLow = view.findViewById(R.id.iv_low);
         ivHigh = view.findViewById(R.id.iv_high);
+        ivRound = view.findViewById(R.id.iv_round);
         tvCancel = view.findViewById(R.id.tv_cancel);
-        view.findViewById(R.id.ll_model).setVisibility(View.GONE);
 
 
         rlLow.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +115,7 @@ public class PreviewConfigDialog extends Dialog {
             public void onClick(View v) {
                 ivLow.setImageResource(R.drawable.select_rb_icon);
                 ivHigh.setImageResource(R.drawable.unselect_rb_icon);
+                ivRound.setImageResource(R.drawable.unselect_rb_icon);
                 textureMode = 0;
             }
         });
@@ -106,7 +124,18 @@ public class PreviewConfigDialog extends Dialog {
             public void onClick(View v) {
                 ivLow.setImageResource(R.drawable.unselect_rb_icon);
                 ivHigh.setImageResource(R.drawable.select_rb_icon);
+                ivRound.setImageResource(R.drawable.unselect_rb_icon);
                 textureMode = 1;
+            }
+        });
+
+        rlRound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivLow.setImageResource(R.drawable.unselect_rb_icon);
+                ivRound.setImageResource(R.drawable.select_rb_icon);
+                ivHigh.setImageResource(R.drawable.unselect_rb_icon);
+                textureMode = 2;
             }
         });
 

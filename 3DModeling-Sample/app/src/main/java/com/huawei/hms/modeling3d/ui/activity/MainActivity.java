@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (perms.size()>3) {
 
             if (permissionType==1){
-                Intent rgbIntent = new Intent(MainActivity.this, NewScanActivity.class);
+                Intent rgbIntent = new Intent(MainActivity.this, EmptySelectActivity.class);
                 startActivity(rgbIntent);
             }else if (permissionType==2){
                 Intent intent = new Intent(MainActivity.this, CaptureMaterialActivity.class);

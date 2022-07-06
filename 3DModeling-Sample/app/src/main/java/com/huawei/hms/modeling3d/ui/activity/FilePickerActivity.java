@@ -193,10 +193,18 @@ public class FilePickerActivity extends AppCompatActivity implements ProgressCus
 
     public void initModeTask(Integer textureMode,String saveInnerPath){
         Observable.create((Observable.OnSubscribe<Modeling3dReconstructInitResult>) subscriber -> {
-            Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
-                    .setReconstructMode(Constants.RGB_MODEL)
-                    .setTextureMode(textureMode)
-                    .create();
+            Modeling3dReconstructSetting setting = null;
+            if (textureMode == 2) {
+                setting = new Modeling3dReconstructSetting.Factory()
+                        .setReconstructMode(Constants.RGB_MODEL)
+                        .setTaskType(textureMode)
+                        .create();
+            } else {
+                setting = new Modeling3dReconstructSetting.Factory()
+                        .setReconstructMode(Constants.RGB_MODEL)
+                        .setTextureMode(textureMode)
+                        .create();
+            }
             magic3dReconstructInitResult = magic3dReconstructEngine.initTask(setting);
             String taskId = magic3dReconstructInitResult.getTaskId();
             if (taskId == null || taskId.equals("")) {

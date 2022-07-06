@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.huawei.hms.modeling3d"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 4
         versionName "1.4"
@@ -22,6 +22,7 @@ android {
 
     packagingOptions {
         pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 
     buildTypes {
@@ -34,7 +35,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    //指定jdk版本
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -66,10 +66,13 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha20"
 
     implementation 'com.huawei.hms:modeling3d-material-generate:1.4.0.300'
-    implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.4.0.300'
+    implementation 'com.huawei.hms:modeling3d-objectreconstruct-slam:1.6.0.301'
 
     implementation 'com.huawei.hms:modeling3d-motion-capture:1.3.0.300'
     implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.3.0.300'
+    // you need to implement arengine and arcore to use the image capture function
+    implementation 'com.huawei.hms:arenginesdk:3.7.0.3'
+    implementation 'com.google.ar:core:1.30.0'
 
 }
 apply plugin: 'com.huawei.agconnect'

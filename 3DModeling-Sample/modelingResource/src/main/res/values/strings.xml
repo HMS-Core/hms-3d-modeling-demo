@@ -141,8 +141,8 @@
     <string name="turntable_in_a_circle_text">Put the shoe on its side. Place the phone camera at an angle of 0 to 15 degrees above the shoe\'s horizontal axis. The turntable turns one round.</string>
     <string name="in_a_circle_text">Put the shoe on its side. Place the phone camera at an angle of 45 degrees above the shoe\'s horizontal axis. The turntable turns one round.</string>
     <string name="ordinary_shooting_text">Ordinary shooting</string>
-    <string name="need_to_be_taken_text">After you start shooting, please circle around the object; try to ensure that the environment around the object is concise; at least 20 shots need to be taken.</string>
-    <string name="turntable_shooting_text">Turntable shooting</string>
+    <string name="need_to_be_taken_text">Hold the phone and take multiple shots of the object from different positions; or place the phone in a fixed position and put the object on a turntable, and then take multiple shots. Rotate the object fully when shooting it from each angle, such as from the top and face on. Ensure the object occupies most of the cameras view and the overlap ratio between shots is greater than 70%. You are advised to take at least 50 images.</string>
+    <string name="turntable_shooting_text">Turntable Shots (Footwear)</string>
     <string name="shooting_is_supported_text">The shooting steps are relatively complicated; and equipment such as turntables and mobile phone stabilizers are required; only horizontal screen shooting is supported</string>
     <string name="object_shoes_text">Applicable object: shoes</string>
     <string name="turntable_speed_text">Set the turntable speed</string>
@@ -158,4 +158,18 @@
     <string name="low_accuracy_text">Normal texture</string>
     <string name="high_precision_text">PBR</string>
     <string name="limit_text">limit</string>
+    <string name="bone_binding">Auto_Rigging</string>
+    <string name="biped">Biped</string>
+    <string name="object_modeling_text">Object modeling</string>
+    <string name="bone_binding_text">Auto_Rigging</string>
+    <string name="take_photo_bond_text">Take 2 to 4 frontal photos</string>
+    <string name="risk_control_is_being_reviewed">Risk control is being reviewed.</string>
+    <string name="risk_control_passed">Risk control passed.</string>
+    <string name="risk_control_fails">Risk control fails.</string>
+
+    <string name="first_text">Place the phone at 0°. Before rotating the carousel, take two to four positive photos. Rotate the carousel once and take another 24 photos.</string>
+    <string name="second_text">Place the phone at 45° and rotate the turntable once to take 24 pictures.</string>
+    <string name="thrid_text">Place the mobile phone at 60° to 90° and shoot the top and shoulders of the bone-bound object. You are advised to rotate the turntable to take 24 pictures.</string>
+    <string name="four_text">Place your phone directly above the object with the camera facing downward. Turn the carousel around to take 12 pictures.</string>
+    <string name="five_text">The back of the object lies on the turntable. Place the mobile phone directly above the object, with the camera facing down, and rotate the turntable to take 12 pictures.</string>
 </resources>

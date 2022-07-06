@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.model.UserBean;
+import com.huawei.hms.modeling3d.ui.widget.SelectCameraTypeDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
 
 import butterknife.ButterKnife;
@@ -43,8 +44,8 @@ public class EmptySelectActivity extends AppCompatActivity {
                 break;
             case R.id.ll_normal_scan :
                 userBean.setSelectRGBMode(ConstantBean.NORMAL_MODE);
-                startActivity(intent);
-                finish();
+                SelectCameraTypeDialog typeDialog = new SelectCameraTypeDialog(EmptySelectActivity.this);
+                typeDialog.show();
                 break;
 
             case R.id.ll_round_scan :

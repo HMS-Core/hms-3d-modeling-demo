@@ -68,7 +68,7 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
     @NonNull
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_ls_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_material_ls_item, parent, false);
         return new RecycleMaterialAdapter.DataViewHolder(view);
     }
 
@@ -112,6 +112,27 @@ public class RecycleMaterialAdapter extends RecyclerView.Adapter<RecycleMaterial
                 holder.tvStatus.setText(R.string.finish_fail_text1);
                 holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
                 holder.ivShowStatus.setVisibility(View.INVISIBLE);
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_PASSED :
+                holder.tvStatus.setText(R.string.risk_control_passed);
+                holder.tvStatus.setBackgroundResource(R.drawable.finish_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_PAILED :
+                holder.tvStatus.setText(R.string.risk_control_fails);
+                holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
+                break;
+
+            case ConstantBean.MODEL_RISK_CONTROL_IS_BEING_REVIEWED :
+                holder.tvStatus.setText(R.string.risk_control_is_being_reviewed);
+                holder.tvStatus.setBackgroundResource(R.drawable.fail_status_bg);
+                holder.ivShowStatus.setVisibility(View.INVISIBLE);
+
                 break;
         }
         holder.tvTime.setText(Utils.systemCurrentToData(news.getCreateTime()));

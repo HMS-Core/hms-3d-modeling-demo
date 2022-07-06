@@ -6,26 +6,50 @@ package com.huawei.hms.modeling3d.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.huawei.hms.magicresource.db.TaskInfoAppDb;
+import com.huawei.hms.magicresource.db.TaskInfoAppDbUtils;
+import com.huawei.hms.magicresource.util.Constants;
 
 import com.huawei.hms.modeling3d.R;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.model.UserBean;
+import com.huawei.hms.modeling3d.ui.widget.ProgressCustomDialog;
 import com.huawei.hms.modeling3d.ui.widget.ScanBottomDialog;
 import com.huawei.hms.modeling3d.ui.widget.ScanResolutionBottomDialog;
+import com.huawei.hms.modeling3d.ui.widget.UploadSlamDialog;
 import com.huawei.hms.modeling3d.utils.BaseUtils;
 import com.huawei.hms.modeling3d.utils.ToastUtil;
+import com.huawei.hms.modeling3dcapturesdk.Modeling3dCaptureImageEngine;
+import com.huawei.hms.modeling3dcapturesdk.Modeling3dCaptureImageListener;
+import com.huawei.hms.modeling3dcapturesdk.Modeling3dCaptureSetting;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructEngine;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructInitResult;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructSetting;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructTaskUtils;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructUploadListener;
+import com.huawei.hms.objreconstructsdk.cloud.Modeling3dReconstructUploadResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * SettingModelActivity
@@ -33,7 +57,7 @@ import butterknife.OnClick;
  * @author HW
  * @since 2020-09-18
  */
-public class SettingModelActivity extends AppCompatActivity implements ScanBottomDialog.SelectModelClick {
+public class SettingModelActivity extends AppCompatActivity implements ScanBottomDialog.SelectModelClick, ProgressCustomDialog.OnItemCancelClickListener {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -51,8 +75,14 @@ public class SettingModelActivity extends AppCompatActivity implements ScanBotto
     int modelScreen;
     String rgbModel;
 
-
     UserBean userBean;
+
+    Handler upLoadHandle;
+    Modeling3dReconstructEngine magic3dReconstructEngine;
+    private Modeling3dReconstructInitResult magic3dReconstructInitResult;
+    private String modelTaskId;
+    Modeling3dReconstructTaskUtils magic3dReconstructTaskUtils;
+
 
     public void getModel(int i) {
         modelScreen = i;
@@ -91,18 +121,16 @@ public class SettingModelActivity extends AppCompatActivity implements ScanBotto
         tvShootingMode.setText(getScnStr(scanModel));
     }
 
-    private int getRgbText(String selectRGBMode) {
-        if (selectRGBMode.equals(ConstantBean.TURNTABLE_MODE)) {
-            return R.string.turntable_mode_text;
-        } else {
-            return R.string.normal_mode_text;
-        }
-    }
 
-    @OnClick({ R.id.iv_back, R.id.rl_shooting_mode})
+    @OnClick({R.id.iv_back, R.id.rl_shooting_mode, R.id.rl_scan_model,})
     public void onViewClicked(View view) {
         ScanResolutionBottomDialog bottomDialog;
         switch (view.getId()) {
+
+            case R.id.rl_scan_model:
+                ScanBottomDialog dialog = new ScanBottomDialog(this, this, SettingModelActivity.this.getResources().getString(R.string.rgb));
+                dialog.show();
+                break;
 
             case R.id.iv_back:
                 changePage();
@@ -121,11 +149,138 @@ public class SettingModelActivity extends AppCompatActivity implements ScanBotto
     public void modelClick(String clickModel) {
         userBean.setSelectBuildModel(clickModel);
         model = clickModel;
-        if (clickModel.equals(getString(R.string.rgb))) {
-            rlShootingMode.setVisibility(View.VISIBLE);
-        } else {
-            rlShootingMode.setVisibility(View.GONE);
+        if (model.equals(SettingModelActivity.this.getResources().getString(R.string.slam))) {
+            openSlam();
         }
+    }
+
+    private void openSlam() {
+
+
+        Modeling3dCaptureImageEngine captureImageEngine = Modeling3dCaptureImageEngine.getInstance();
+        Modeling3dCaptureSetting setting = new Modeling3dCaptureSetting.Factory()
+                .setAzimuthNum(30)
+                .setLatitudeNum(3)
+                .setRadius(2)
+                .create();
+        captureImageEngine.setCaptureConfig(setting);
+
+        String savePath = new Constants(SettingModelActivity.this).getCaptureImageFile() + System.currentTimeMillis();
+
+        captureImageEngine.captureImage(savePath, SettingModelActivity.this, new Modeling3dCaptureImageListener(){
+            @Override
+            public void onResult() {
+                UploadSlamDialog dialog = new UploadSlamDialog(SettingModelActivity.this);
+                dialog.show();
+                dialog.setCanceledOnTouchOutside(false);
+
+                dialog.getTvSure().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        uploadFile(savePath);
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.getTvCancel().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onProgress(int progress) {
+
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+        });
+    }
+
+    private void uploadFile(String savePath) {
+        ProgressCustomDialog progressCustomDialog = new ProgressCustomDialog(SettingModelActivity.this, ConstantBean.PROGRESS_CUSTOM_DIALOG_TYPE_ONE, getString(R.string.doing_post_text));
+        progressCustomDialog.show();
+        progressCustomDialog.setListener(SettingModelActivity.this);
+        progressCustomDialog.setCanceledOnTouchOutside(false);
+        magic3dReconstructEngine = Modeling3dReconstructEngine.getInstance(SettingModelActivity.this);
+        magic3dReconstructTaskUtils = Modeling3dReconstructTaskUtils.getInstance(SettingModelActivity.this);
+        Observable.create((Observable.OnSubscribe<Modeling3dReconstructInitResult>) subscriber -> {
+            Modeling3dReconstructSetting setting = null;
+            setting = new Modeling3dReconstructSetting.Factory()
+                    .setReconstructMode(Constants.RGB_MODEL)
+                    .setTextureMode(1)
+                    .create();
+            magic3dReconstructInitResult = magic3dReconstructEngine.initTask(setting);
+            String taskId = magic3dReconstructInitResult.getTaskId();
+            if (taskId == null || taskId.equals("")) {
+                subscriber.onNext(magic3dReconstructInitResult);
+            } else {
+                modelTaskId = taskId;
+                magic3dReconstructEngine.setReconstructUploadListener(new Modeling3dReconstructUploadListener() {
+                    @Override
+                    public void onUploadProgress(String s, double v, Object o) {
+                        progressCustomDialog.setCurrentProgress(v);
+                    }
+
+                    @Override
+                    public void onResult(String s, Modeling3dReconstructUploadResult modeling3dReconstructUploadResult, Object o) {
+                        if (modeling3dReconstructUploadResult.isComplete()) {
+                            runOnUiThread(() -> {
+                                progressCustomDialog.dismiss();
+                                ToastUtil.showToast(SettingModelActivity.this, getString(R.string.upload_text_success));
+                                saveModelData(savePath);
+
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onError(String s, int i, String message) {
+                        runOnUiThread(() -> {
+                            progressCustomDialog.dismiss();
+                            ToastUtil.showToast(SettingModelActivity.this, message);
+                            saveModelData(savePath);
+                        });
+                    }
+                });
+                magic3dReconstructEngine.uploadFile(taskId, savePath);
+            }
+            subscriber.onCompleted();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Modeling3dReconstructInitResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Modeling3dReconstructInitResult result) {
+                progressCustomDialog.dismiss();
+                Toast.makeText(SettingModelActivity.this, result.getRetMsg()+result.getRetCode(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void saveModelData(String saveInnerPath) {
+        TaskInfoAppDb taskInfoDb = new TaskInfoAppDb();
+        taskInfoDb.setStatus(ConstantBean.MODELS_UPLOAD_COMPLETED_STATUS);
+        taskInfoDb.setCreateTime(System.currentTimeMillis());
+        taskInfoDb.setIsDownload(0);
+        taskInfoDb.setFileUploadPath(saveInnerPath);
+        taskInfoDb.setModelType(getString(R.string.rgb));
+        taskInfoDb.setTaskId(modelTaskId);
+        TaskInfoAppDbUtils.insert(taskInfoDb);
     }
 
     @Override
@@ -145,18 +300,15 @@ public class SettingModelActivity extends AppCompatActivity implements ScanBotto
 
     public void changePage() {
 
-        if (model.equals(getResources().getString(R.string.slam))) {
-            ToastUtil.showToast(SettingModelActivity.this,"slam mode is temporarily unavailable");
-        } else {
-            userBean.setSelectBuildModel(getString(R.string.rgb));
-            try {
-                BaseUtils.saveUser(SettingModelActivity.this, userBean);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Intent intent = new Intent(SettingModelActivity.this, NewScanActivity.class);
-            startActivity(intent);
+        userBean.setSelectBuildModel(getString(R.string.rgb));
+        try {
+            BaseUtils.saveUser(SettingModelActivity.this, userBean);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        Intent intent = new Intent(SettingModelActivity.this, NewScanActivity.class);
+        startActivity(intent);
+
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
@@ -166,5 +318,34 @@ public class SettingModelActivity extends AppCompatActivity implements ScanBotto
     public void getRgbModel(String normalMode) {
         rgbModel = normalMode;
         userBean.setSelectRGBMode(normalMode);
+    }
+
+    @Override
+    public void onCancel(TaskInfoAppDb appDb) {
+        if (modelTaskId != null) {
+            Observable.create((Observable.OnSubscribe<Integer>) subscriber -> {
+                int result = magic3dReconstructEngine.cancelUpload(modelTaskId);
+                subscriber.onNext(result);
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Integer>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(Integer result) {
+                    if (result == 1) {
+                        Toast.makeText(SettingModelActivity.this, "Cancel failed.", Toast.LENGTH_SHORT).show();
+                    } else if (result == 0) {
+                        Toast.makeText(SettingModelActivity.this, "Canceled successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 }

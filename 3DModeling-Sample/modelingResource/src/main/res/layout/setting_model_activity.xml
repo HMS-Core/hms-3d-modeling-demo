@@ -18,6 +18,63 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:visibility="visible"
+                android:id="@+id/rl_scan_model"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_56"
+                android:layout_marginLeft="@dimen/dimens_16"
+                android:layout_marginTop="@dimen/dimens_16"
+                android:layout_marginRight="@dimen/dimens_16"
+                android:background="@drawable/mine_login_bg"
+                android:paddingLeft="@dimen/dimens_16"
+                android:paddingRight="@dimen/dimens_8">
+
+                <ImageView
+                    android:id="@+id/iv_about_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/scan_model_icon" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimens_10"
+                    android:layout_marginRight="@dimen/dimens_10"
+                    android:layout_toEndOf="@+id/iv_about_icon"
+                    android:layout_toRightOf="@+id/iv_about_icon">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/scan_model_text"
+                        android:textColor="@color/splash_text_color"
+                        android:textSize="@dimen/dimens_14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimens_8"
+                        android:layout_toLeftOf="@+id/iv_next"
+                        android:text=""
+                        android:textColor="@color/scan_model_text_color"
+                        android:textSize="@dimen/dimens_12sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/right_icon" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/rl_shooting_mode"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimens_56"

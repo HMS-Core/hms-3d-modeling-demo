@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.gson.Gson;
 import com.huawei.hms.modeling3d.model.ConstantBean;
 import com.huawei.hms.modeling3d.ui.activity.NewScanActivity;
 import com.huawei.hms.modeling3d.ui.widget.PreviewConfigDialog;
@@ -168,12 +170,19 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
 
     public void initModeTask(Integer textureMode, int position) {
         TaskInfoAppDb news = dataBeans.get(position);
-        int type = 0;
-        Modeling3dReconstructSetting setting = new Modeling3dReconstructSetting.Factory()
-                .setTextureMode(textureMode)
-                .setReconstructMode(type)
-                .create();
         new Thread(() -> {
+            Modeling3dReconstructSetting setting = null;
+            if (textureMode == 2) {
+                setting = new Modeling3dReconstructSetting.Factory()
+                        .setReconstructMode(Constants.RGB_MODEL)
+                        .setTaskType(textureMode)
+                        .create();
+            } else {
+                setting = new Modeling3dReconstructSetting.Factory()
+                        .setReconstructMode(Constants.RGB_MODEL)
+                        .setTextureMode(textureMode)
+                        .create();
+            }
             Modeling3dReconstructInitResult result = magic3dReconstructEngine.initTask(setting);
             String taskId = result.getTaskId();
             if (taskId == null || taskId.equals("")) {
@@ -195,6 +204,10 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
         SelectModelDialog modelDialog = new SelectModelDialog(getContext(), HistoryModelDataFragment.this, appDb);
         modelDialog.setCanceledOnTouchOutside(false);
         modelDialog.show();
+        if (appDb.getTaskId().contains("2X")) {
+            modelDialog.getLlBoneBinding().setVisibility(View.VISIBLE);
+            modelDialog.getRlStartModel().setVisibility(View.GONE);
+        }
     }
 
     public void showNewDownLoad(TaskInfoAppDb appDb, String model, Integer textureMode) {
@@ -287,28 +300,28 @@ public class HistoryModelDataFragment extends Fragment implements RecycleHistory
     public void loadPage() {
         for (int i = 0; i < dataBeans.size(); i++) {
             TaskInfoAppDb task = dataBeans.get(i);
-            if (task.getStatus() < 5) {
-                if (task.getTaskId() != null) {
-                    new Thread("queryThread") {
-                        @Override
-                        public void run() {
-                            Modeling3dReconstructQueryResult queryResult = magic3DReconstructTaskUtils.queryTask(task.getTaskId());
-                            if (queryResult.getRetCode() == 0) {
-                                int ret = queryResult.getStatus();
-                                TaskInfoAppDbUtils.updateStatusByTaskId(queryResult.getTaskId(), ret);
-                                Lock lock = new ReentrantLock();
-                                try {
-                                    lock.lock();
-                                    task.setStatus(ret);
-                                    ((Activity) mContext).runOnUiThread(() -> adapter.notifyDataSetChanged());
-                                } finally {
-                                    lock.unlock();
-                                }
+
+            if (task.getTaskId() != null) {
+                new Thread("queryThread") {
+                    @Override
+                    public void run() {
+                        Modeling3dReconstructQueryResult queryResult = magic3DReconstructTaskUtils.queryTask(task.getTaskId());
+                        if (queryResult.getRetCode() == 0) {
+                            int ret = queryResult.getStatus();
+                            TaskInfoAppDbUtils.updateStatusByTaskId(queryResult.getTaskId(), ret);
+                            Lock lock = new ReentrantLock();
+                            try {
+                                lock.lock();
+                                task.setStatus(ret);
+                                ((Activity) mContext).runOnUiThread(() -> adapter.notifyDataSetChanged());
+                            } finally {
+                                lock.unlock();
                             }
                         }
-                    }.start();
-                }
+                    }
+                }.start();
             }
+
         }
     }
 

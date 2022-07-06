@@ -166,7 +166,7 @@ public class HistoryMaterialDataFragment extends Fragment implements RecycleMate
     public void loadPage() {
         for (int i = 0; i < dataBeans.size(); i++) {
             TaskInfoMaterialAppDb task = dataBeans.get(i);
-            if (task.getStatus() < 5) {
+            if (task.getStatus() < 8) {
                 if (task.getTaskId() != null) {
                     new Thread("queryThread") {
                         @Override

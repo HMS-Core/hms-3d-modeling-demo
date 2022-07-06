@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ public class SelectModelDialog extends Dialog {
     Context mContext;
     RelativeLayout rlRgb;
     RelativeLayout rlSlam;
+    LinearLayout rlStartModel;
+    LinearLayout llBoneBinding;
     ImageView ivRgb;
     ImageView ivSlam;
     RelativeLayout rlLow;
@@ -71,9 +74,19 @@ public class SelectModelDialog extends Dialog {
         setContentView(view);
     }
 
+    public LinearLayout getRlStartModel() {
+        return rlStartModel;
+    }
+
+    public LinearLayout getLlBoneBinding() {
+        return llBoneBinding;
+    }
+
     private void initView(View view) {
         rlRgb = view.findViewById(R.id.rl_rgb);
         rlSlam = view.findViewById(R.id.rl_slam);
+        rlStartModel = view.findViewById(R.id.ll_start_model);
+        llBoneBinding = view.findViewById(R.id.ll_bone_binding);
         ivRgb = view.findViewById(R.id.iv_rgb);
         ivSlam = view.findViewById(R.id.iv_slam);
         rlLow = view.findViewById(R.id.rl_low);

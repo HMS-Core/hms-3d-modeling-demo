@@ -17,6 +17,7 @@
     </FrameLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/home_bottom_heigh"
