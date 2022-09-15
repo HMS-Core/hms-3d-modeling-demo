@@ -160,8 +160,8 @@
     <string name="limit_text">limit</string>
     <string name="bone_binding">Auto_Rigging</string>
     <string name="biped">Biped</string>
-    <string name="object_modeling_text">Object modeling</string>
     <string name="bone_binding_text">Auto_Rigging</string>
+    <string name="object_modeling_text">Object modeling</string>
     <string name="take_photo_bond_text">Take 2 to 4 frontal photos</string>
     <string name="risk_control_is_being_reviewed">Risk control is being reviewed.</string>
     <string name="risk_control_passed">Risk control passed.</string>
@@ -172,4 +172,5 @@
     <string name="thrid_text">Place the mobile phone at 60° to 90° and shoot the top and shoulders of the bone-bound object. You are advised to rotate the turntable to take 24 pictures.</string>
     <string name="four_text">Place your phone directly above the object with the camera facing downward. Turn the carousel around to take 12 pictures.</string>
     <string name="five_text">The back of the object lies on the turntable. Place the mobile phone directly above the object, with the camera facing down, and rotate the turntable to take 12 pictures.</string>
+    <string name="re_scan_text">Rescan</string>
 </resources>

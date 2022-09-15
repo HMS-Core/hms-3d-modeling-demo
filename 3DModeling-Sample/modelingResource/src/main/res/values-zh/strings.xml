@@ -170,6 +170,8 @@
     <string name="first_text">手机0°放置，转盘转动前，先拍2~4张正面照片，转盘转动一圈再拍摄24张。</string>
     <string name="second_text">手机45°放置，转盘转动一圈拍摄24张。</string>
     <string name="thrid_text">手机60°~90°放置，手机拍向骨骼绑定物体的头顶和肩部，建议转盘转动拍摄24张。</string>
-    <string name="four_text">物体背面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
-    <string name="five_text">物体正面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
+    <string name="four_text">物体正面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
+    <string name="five_text">物体背面躺在转盘，手机放置在物体正上方，摄像头朝下，转盘转动一圈拍摄12张。</string>
+
+    <string name="re_scan_text">续扫</string>
 </resources>

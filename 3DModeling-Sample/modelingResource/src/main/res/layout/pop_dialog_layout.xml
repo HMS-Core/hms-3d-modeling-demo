@@ -66,5 +66,29 @@
         android:textColor="@color/scan_tips_color"
         android:textSize="@dimen/dimens_16sp"
         />
+
+
+        <TextView
+            android:id="@+id/tv_scan_again"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_40"
+            android:text="@string/re_scan_text"
+            android:gravity="center"
+            android:textColor="@color/scan_tips_color"
+            android:textSize="@dimen/dimens_16sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_show_ar"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_40"
+            android:text="AR Preview"
+            android:gravity="center"
+            android:textColor="@color/scan_tips_color"
+            android:textSize="@dimen/dimens_16sp"
+            />
+
     </LinearLayout>
 </LinearLayout>
