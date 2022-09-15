@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/bottom_black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_56">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:paddingRight="@dimen/dimens_8"
+            android:src="@drawable/go_back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimens_16"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_normal_scan"
+                android:padding="@dimen/dimens_16"
+                android:background="@drawable/select_mode_bg"
+                android:gravity="center_horizontal"
+                android:layout_marginRight="@dimen/dimens_16"
+                android:layout_marginLeft="@dimen/dimens_16"
+                android:layout_marginTop="@dimen/dimens_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/normal_mode_top_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ordinary_shooting_text"
+                    android:textSize="@dimen/dimens_18sp"
+                    android:textColor="#FF2A3046"
+                    android:layout_marginTop="@dimen/dimens_16"
+                     />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dimens_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/need_to_be_taken_text"
+                    android:textSize="@dimen/dimens_14sp"
+                    android:textColor="@color/scan_tips_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_round_scan"
+                android:padding="@dimen/dimens_16"
+                android:background="@drawable/select_mode_bg"
+                android:gravity="center_horizontal"
+                android:layout_marginRight="@dimen/dimens_16"
+                android:layout_marginLeft="@dimen/dimens_16"
+                android:layout_marginTop="@dimen/dimens_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/turntable_mode_icon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/turntable_shooting_text"
+                    android:textSize="@dimen/dimens_18sp"
+                    android:textColor="#FF2A3046"
+                    android:layout_marginTop="@dimen/dimens_16"
+                    />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dimens_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shooting_is_supported_text"
+                    android:textSize="@dimen/dimens_14sp"
+                    android:textColor="@color/scan_tips_color"
+                    />
+
+                <TextView
+                    android:layout_marginTop="@dimen/dimens_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/object_shoes_text"
+                    android:textSize="@dimen/dimens_14sp"
+                    android:textColor="@color/scan_tips_color"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

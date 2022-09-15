@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:background="@drawable/splash_app_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bottom_black"
+    android:paddingBottom="@dimen/dimens_16"
+    android:paddingLeft="@dimen/dimens_16"
+    android:paddingRight="@dimen/dimens_16"
+    android:paddingTop="@dimen/dimens_16">
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:textSize="30sp"
+        android:text="Motion Capture"
+
+        android:textColor="#FFCC00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+    <LinearLayout
+        android:layout_marginTop="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/live"
+                android:layout_centerInParent="true"
+                android:background="@drawable/other_circle_stroke_background"
+                android:layout_width="100dp"
+                android:textColor="#fff"
+                android:text="Live"
+                android:layout_height="100dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/still"
+                android:layout_centerInParent="true"
+                android:background="@drawable/other_circle_stroke_background"
+                android:layout_width="100dp"
+                android:textColor="#fff"
+                android:text="Video"
+                android:layout_height="100dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/photo"
+                android:layout_centerInParent="true"
+                android:background="@drawable/other_circle_stroke_background"
+                android:layout_width="100dp"
+                android:textColor="#fff"
+                android:text="Photo"
+                android:layout_height="100dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+</ScrollView>

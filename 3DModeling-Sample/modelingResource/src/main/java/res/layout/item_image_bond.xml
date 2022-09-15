@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="84dp"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/show_scan_iv_bg"
+    android:paddingTop="@dimen/dimens_2"
+    android:paddingBottom="@dimen/dimens_2"
+    android:paddingLeft="@dimen/dimens_2"
+    android:paddingRight="@dimen/dimens_2"
+    android:layout_marginLeft="5dp"
+    android:layout_height="84dp">
+
+    <com.huawei.hms.magicresource.view.CustomRoundAngleImageView
+        android:id="@+id/iv_material"
+        android:layout_width="@dimen/dimens_80"
+        android:layout_height="@dimen/dimens_80"
+        roundiv:radius="@dimen/dimens_8"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/dimens_16"
+        android:layout_height="@dimen/dimens_16"
+        android:src="@drawable/delete_icon"/>
+
+</RelativeLayout>

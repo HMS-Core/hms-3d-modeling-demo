@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="66dp"
+    android:layout_height="66dp">
+
+    <ImageView
+        android:id="@+id/iv_material"
+        android:layout_width="@dimen/dimens_56"
+        android:layout_height="@dimen/dimens_56"
+        android:layout_margin="5dp"/>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/dimens_16"
+        android:layout_height="@dimen/dimens_16"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/delete_icon"/>
+
+</FrameLayout>

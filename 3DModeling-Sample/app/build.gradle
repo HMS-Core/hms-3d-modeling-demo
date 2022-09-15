@@ -1,21 +1,20 @@
 apply plugin: 'com.android.application'
 
-configurations { natives }
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.huawei.hms.modeling3d"
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 4
         versionName "1.4"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         packagingOptions {
-            //com.android.builder.merge.DuplicateRelativeFileException: More than one file was found with OS independent path 'META-INF/rxjava.properties'
+            //solve com.android.builder.merge.DuplicateRelativeFileException: More than one file was found with OS independent path 'META-INF/rxjava.properties'
             exclude 'META-INF/rxjava.properties'
         }
     }
@@ -25,16 +24,28 @@ android {
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 
-    buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    android.ndkVersion '20.1.5948944'
+
+    signingConfigs {
+        if (Boolean.parseBoolean(rootProject.ext.needHwSign)) {
+            release {
+                apply from: 'hwSign.gradle'
+            }
+        } else {
+            release {
+                v2SigningEnabled false
+            }
         }
     }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "Modeling-Demo.apk"
+            }
+    }
+
+    //specify jdk version
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,8 +55,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'me.jessyan:autosize:1.2.1'
     api 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
@@ -65,12 +76,16 @@ dependencies {
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha20"
 
-    implementation 'com.huawei.hms:modeling3d-material-generate:1.4.0.300'
-    implementation 'com.huawei.hms:modeling3d-objectreconstruct-slam:1.6.0.301'
+    implementation 'com.huawei.hms:modeling3d-material-generate:1.7.0.301'
+    implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.7.0.301'
 
-    implementation 'com.huawei.hms:modeling3d-motion-capture:1.3.0.300'
-    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.3.0.300'
-    // you need to implement arengine and arcore to use the image capture function
+    implementation 'com.huawei.hms:modeling3d-motion-capture:1.7.0.301'
+    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.7.0.301'
+
+    implementation 'com.huawei.hms:xrkitsdk:1.4.0.0'
+
+    implementation 'com.huawei.hms:modeling3d-objectreconstruct-slam:1.7.0.301'
+
     implementation 'com.huawei.hms:arenginesdk:3.7.0.3'
     implementation 'com.google.ar:core:1.30.0'
 

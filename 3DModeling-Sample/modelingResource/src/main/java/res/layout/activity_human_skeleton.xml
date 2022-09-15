@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:fitsSystemWindows="true"
+    android:keepScreenOn="true">
+
+    <com.huawei.hms.modeling3d.ui.widget.CameraSourcePreview
+        android:id="@+id/firePreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true">
+
+        <com.huawei.hms.modeling3d.ui.widget.GraphicOverlay
+            android:id="@+id/fireFaceOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+    </com.huawei.hms.modeling3d.ui.widget.CameraSourcePreview>
+
+    <TextView
+        android:id="@+id/live_info_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/similarity_imageview"
+        android:layout_marginBottom="30dp"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_toLeftOf="@id/similarity_imageview" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#26000000"
+        android:layout_height="48dp">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/go_back_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"></ImageButton>
+
+        <TextView
+            android:textColor="#fff"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textSize="25sp"></TextView>
+        <LinearLayout
+            android:id="@+id/switch_button_layout"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+            <Button
+                android:visibility="gone"
+                android:id="@+id/select_template"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="11dp"
+                android:layout_marginRight="10dp"
+                android:singleLine="false"
+                android:text="Template preview"/>
+            <TextView
+                android:id="@+id/tv_stop_preview"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="13dp"
+                android:text="Stop preview"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp" />
+            <com.huawei.hms.modeling3d.ui.widget.SwitchButtonView
+                android:visibility="gone"
+                android:id="@+id/switch_button_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+        <ToggleButton
+            android:id="@+id/facingSwitch"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/faceingswitch"
+            android:textOff=""
+            android:textOn="" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/zoomImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:visibility="gone"
+        android:layout_alignParentLeft="true">
+
+        <ImageView
+            android:id="@+id/take_picture_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true" />
+        <ImageButton
+            android:id="@+id/zoomImageSave"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="16dp"
+           />
+
+        <ImageButton
+            android:id="@+id/zoomImageClose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+             />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/similarity_imageview"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-19dp"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_similarity"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_above="@+id/template_image_view"
+            android:layout_marginBottom="-19dp"
+            android:textSize="13dp"
+            android:text="similarity:0%  "
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:textColor="#ffffff"/>
+        <ImageView
+            android:id="@+id/template_image_view"
+            android:layout_width="135dp"
+            android:layout_height="240dp"
+
+            />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/threshold_mod"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modify threshold"
+        android:textAllCaps="false"
+        android:textSize="13dp"
+        android:visibility="gone"
+        />
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="170dp"
+        android:layout_height="250dp"
+        android:id="@+id/rl_add_surface">
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

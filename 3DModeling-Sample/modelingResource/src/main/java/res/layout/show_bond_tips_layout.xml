@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/scan_bottom_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimens_24"
+    android:paddingTop="@dimen/dimens_24"
+    android:gravity="center_horizontal">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_page"/>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dimens_8"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="@dimen/dimens_100"
+        android:layout_height="wrap_content"
+        >
+        <com.huawei.hms.modeling3d.ui.widget.Indicator
+            android:layout_centerInParent="true"
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/dimens_10"
+        android:id="@+id/tv_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/start_text"
+        android:textColor="@color/home_text_select"
+        android:textSize="@dimen/dimens_16sp" />
+
+</LinearLayout>
