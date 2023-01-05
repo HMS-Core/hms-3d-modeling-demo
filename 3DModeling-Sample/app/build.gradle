@@ -24,20 +24,6 @@ android {
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
 
-    android.ndkVersion '20.1.5948944'
-
-    signingConfigs {
-        if (Boolean.parseBoolean(rootProject.ext.needHwSign)) {
-            release {
-                apply from: 'hwSign.gradle'
-            }
-        } else {
-            release {
-                v2SigningEnabled false
-            }
-        }
-    }
-
     android.applicationVariants.all {
         variant ->
             variant.outputs.all {
