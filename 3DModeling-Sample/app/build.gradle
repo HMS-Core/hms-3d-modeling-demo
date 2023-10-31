@@ -62,11 +62,11 @@ dependencies {
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha20"
 
-    implementation 'com.huawei.hms:modeling3d-material-generate:1.7.0.301'
-    implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.7.0.301'
+    implementation 'com.huawei.hms:modeling3d-material-generate:1.9.0.301'
+    implementation 'com.huawei.hms:modeling3d-object-reconstruct:1.9.0.301'
 
-    implementation 'com.huawei.hms:modeling3d-motion-capture:1.7.0.301'
-    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.7.0.301'
+    implementation 'com.huawei.hms:modeling3d-motion-capture:1.7.0.302'
+    implementation 'com.huawei.hms:modeling3d-motion-capture-model:1.7.0.302'
 
     implementation 'com.huawei.hms:xrkitsdk:1.4.0.0'
 
